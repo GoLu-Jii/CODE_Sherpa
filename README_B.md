@@ -29,7 +29,8 @@ The goal is to help developers form an accurate mental model of a project before
 
 ## Round-1 Goal
 
-> Validate that a repository can be **understood, explained, and visualized automatically** using deterministic static analysis — without manual documentation or AI-based guessing.
+>
+>> Validate that a repository can be **understood, explained, and visualized automatically** using deterministic static analysis — without manual documentation or AI-based guessing.
 
 ---
 
