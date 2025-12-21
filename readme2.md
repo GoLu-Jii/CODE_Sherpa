@@ -66,7 +66,7 @@ Source code flows through ingestion, analysis, context grounding, and explanatio
 8.5 These constraints ensure a stable and demonstrable prototype.<br>
 
 9. Extensibility & Scalability Points:<br>
-
+The system is built on a modular, pipeline-based architecture that allows new intelligence features to be added without disrupting the core analysis. All explanations are generated strictly from verified static code structure, ensuring reliable and safe extensibility. Integration with VS Code is designed as a pluggable interface layer, enabling future support for additional developer tools. Reuse of extracted analysis artifacts allows the system to scale efficiently to larger codebases without repeated processing.<br>
 
 10. Architecture Summary:<br>
 CODE_Sherpa addresses the challenge of understanding complex and unfamiliar codebases through a structured onboarding approach.<br>
@@ -75,6 +75,7 @@ CODE_Sherpa addresses the challenge of understanding complex and unfamiliar code
 -> Deterministic preprocessing ensures reliability before invoking generative components.<br>
 -> This design improves clarity, maintainability, and extensibility of the system.<br>
 -> The solution remains practical within hackathon constraints while being scalable for real-world developer onboarding.<br>
+
 
 
 
