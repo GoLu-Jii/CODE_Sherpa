@@ -5,15 +5,15 @@ CODE_Sherpa follows a modular, pipeline-oriented architecture that clearly separ
 
 2. High-level architecture:
 The system consists of the following loosely coupled layers:
-1. Repository Ingestion:
+a. Repository Ingestion:
 Accepts a repository and prepares a structured file layout for analysis.
-2. Static Code Analysis:
+b. Static Code Analysis:
 Extracts code structure, dependencies, and relationships without execution.
-3. Context Grounding:
+c. Context Grounding:
 Converts analysis results into structured semantic context for explanation.
-4. Explanation Engine:
+d. Explanation Engine:
 Generates guided, human-readable explanations from grounded context.
-5. Developer Interface:
+e. Developer Interface:
 Displays interactive walkthroughs within the developer workflow.
 
 3. System Workflow(End to End workflow):
@@ -28,7 +28,9 @@ Displays interactive walkthroughs within the developer workflow.
 4. Data Flow Diagrams (DFD):
 1. DFD Level 0:
 The developer provides a repository to CODE_Sherpa and receives structured explanations in return. Internal processing is abstracted to define clear system boundaries.
-2. DFD Level 1:
+<img width="2066" height="1075" alt="dfd0" src="https://github.com/user-attachments/assets/b2c08129-2ee9-4897-9efa-7fa975bff988" />
+
+3. DFD Level 1:
 Source code flows through ingestion, analysis, context grounding, and explanation generation stages, producing intermediate artifacts that are progressively refined into human-readable guidance.
 
 5. Component-Level Architecture:
@@ -63,4 +65,5 @@ CODE_Sherpa addresses the challenge of understanding complex and unfamiliar code
 -> Deterministic preprocessing ensures reliability before invoking generative components.
 -> This design improves clarity, maintainability, and extensibility of the system.
 -> The solution remains practical within hackathon constraints while being scalable for real-world developer onboarding.
+
 
