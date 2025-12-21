@@ -3,7 +3,7 @@ import os
 import json
 import subprocess
 
-# Add project root to Python path so imports work
+# Add project root to Python path
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from analyzer.analyzer import analyze_repo_files
@@ -34,8 +34,8 @@ def main():
     try:
         analysis_result = analyze_repo_files(repo_path)
 
-        # Persist analyzer output for tour & flowchart
-        with open("analysis.json", "w", encoding="utf-16") as f:
+        # Persist analyzer output for downstream steps
+        with open("analysis.json", "w") as f:
             json.dump(analysis_result, f, indent=2)
 
         print("✔ Analysis completed")
@@ -54,26 +54,6 @@ def main():
     except subprocess.CalledProcessError:
         print("✖ Tour generation failed")
         return
-
-    # Step G: Run flowchart generator
-    print("\n▶ Generating repository flowchart...")
-    try:
-        subprocess.run(
-            [sys.executable, "flowchart/flow_builder.py"],
-            check=True
-        )
-
-        if not os.path.exists("flowchart.md"):
-            print("✖ Flowchart export failed")
-            return
-
-        print("✔ Flowchart exported")
-    except subprocess.CalledProcessError:
-        print("✖ Flowchart generation failed")
-        return
-
-    # Final success message
-    print("\n✔ CODE_Sherpa pipeline completed successfully")
 
 
 if __name__ == "__main__":
