@@ -27,14 +27,7 @@ The goal is to help developers form an accurate mental model of a project before
 
 ---
 
-## Round-1 Goal
-
->
- Validate that a repository can be **understood, explained, and visualized automatically** using deterministic static analysis — without manual documentation or AI-based guessing.
-
----
-
-## Round-1 Implementation Summary
+# Round-1 Implementation Summary
 
 For the first round of the hackathon, we implemented a **fully working end-to-end prototype** that demonstrates how a codebase can be automatically analyzed and explained using deterministic static analysis.
 
@@ -48,7 +41,7 @@ The Round-1 implementation prioritizes **correctness, clarity, and reproducibili
 
 ---
 
-## Round-2 Implementation Plan
+# Round-2 Implementation Plan
 
 In the second round, we will build upon the validated Round-1 foundation to improve **intelligence, usability, and real-world developer experience**.
 
