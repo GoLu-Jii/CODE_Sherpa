@@ -99,31 +99,6 @@ The prototype operates as a simple **three-stage pipeline**:
 
 ---
 
-## Current Implementation Scope
-
-The current prototype focuses on validating the **core learning experience** and **interaction flow**.
-
-**Implemented capabilities include:**
-- Repository analysis for small to medium-sized projects.
-- Automatic identification of key code segments with line-level precision.
-- Generation of code-grounded explanations and simple comprehension checks.
-- An interactive guided walkthrough that progresses step-by-step through the codebase.
-- Local execution with support for pre-generated walkthroughs to enable reliable demos.
-
-**Intentionally out of scope for the current prototype:**
-- Multi-language support.
-- Large-scale or monorepo handling.
-- Collaboration features and analytics.
-- Advanced architectural inference or design-pattern detection.
-
----
-
-## Prototype Significance
-
-This prototype demonstrates that **meaningful, code-grounded learning experiences** can be generated automatically and delivered through a guided workflow. It validates the feasibility of CODE Sherpa’s core idea and establishes a foundation for extending the system toward larger codebases and richer learning paths.
-
----
-
 ## System Overview
 
 The CODE Sherpa system operates as a guided learning pipeline that transforms a software repository into an interactive code understanding experience:
