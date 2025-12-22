@@ -19,11 +19,29 @@ FUNCTION_GENERIC_TEMPLATE = (
     "This function contributes to the system's behavior as part of its execution."
 )
 def explain_file(file_name, analyzer_files, entry_point):
+    """
+    Explain a file's role in the system.
+    
+    Args:
+        file_name: Name of the file
+        analyzer_files: Dict of file data from unified model
+        entry_point: Entry point file name
+    
+    Returns:
+        Explanation string
+    """
     if file_name == entry_point:
         return FILE_ENTRY_TEMPLATE
-    calls = analyzer_files.get(file_name, {}).get("calls", [])
-    if calls:
+    
+    file_data = analyzer_files.get(file_name, {})
+    # Check if file has dependencies (is called by other files)
+    depends_on = file_data.get("depends_on", [])
+    # Also check if it's imported/called by checking if any file depends on it
+    # Actually, depends_on shows what THIS file depends on, not what depends on IT
+    # For now, if it has dependencies, it's likely a called file
+    if depends_on:
         return FILE_CALLED_TEMPLATE
+    
     return FILE_SUPPORT_TEMPLATE
 def explain_functions(functions, is_entry_file):
     explained = []
@@ -46,10 +64,13 @@ def main():
         sys.exit(1)
     analyzer_output_path = sys.argv[1]
     learning_order_path = sys.argv[2]
-    with open(analyzer_output_path, "r") as f:
+    
+    with open(analyzer_output_path, "r", encoding="utf-8") as f:
         analyzer_data = json.load(f)
-    with open(learning_order_path, "r") as f:
+    
+    with open(learning_order_path, "r", encoding="utf-8") as f:
         learning_order_data = json.load(f)
+    
     analyzer_files = analyzer_data.get("files", {})
     entry_point = learning_order_data["metadata"].get("entry_point")
     learning_steps = []

@@ -1,79 +1,127 @@
+"""
+flow_builder.py - Builds flowchart graph from analysis results
+Converts dependency graph to Mermaid flowchart format.
+"""
+
+import json
 import sys
 import os
-import json
-import subprocess
+from typing import Dict, List, Any
 
 # Add project root to Python path so imports work
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-from analyzer.analyzer import analyze_repo_files
+from flowchart.exporter import export_mermaid
+
+
+def build_graph_from_analysis(analysis_data: Dict[str, Any]) -> Dict[str, List]:
+    """
+    Build graph structure with edges from unified model.
+    
+    Args:
+        analysis_data: Unified model with structure:
+            {
+                "entry_point": "file.py",
+                "files": {
+                    "file.py": {
+                        "depends_on": ["other.py"],
+                        "functions": {...}
+                    }
+                }
+            }
+    
+    Returns:
+        Dictionary with "edges" list: [("source", "target"), ...]
+    """
+    edges = []
+    files = analysis_data.get("files", {})
+    
+    # Build edges from file dependencies
+    for file_path, file_data in files.items():
+        depends_on = file_data.get("depends_on", [])
+        for dep_file in depends_on:
+            # Create edge: dependency -> file (reverse direction for flow)
+            # Actually, for flowchart we want: file -> dependency (shows what file uses)
+            edges.append((file_path, dep_file))
+        
+        # Also add function-level edges within files
+        functions = file_data.get("functions", {})
+        for func_name, func_data in functions.items():
+            calls = func_data.get("calls", [])
+            for called_func in calls:
+                # Check if called function is in another file
+                for other_file, other_data in files.items():
+                    if other_file != file_path:
+                        other_functions = other_data.get("functions", {})
+                        if called_func in other_functions:
+                            # Function call across files
+                            edges.append((f"{file_path}::{func_name}", f"{other_file}::{called_func}"))
+                            break
+    
+    return {"edges": edges}
+
+
+def build_simple_file_graph(analysis_data: Dict[str, Any]) -> Dict[str, List]:
+    """
+    Build simpler graph showing only file-level dependencies.
+    
+    Args:
+        analysis_data: Unified model format
+    
+    Returns:
+        Dictionary with "edges" list for file dependencies only
+    """
+    edges = []
+    files = analysis_data.get("files", {})
+    
+    # Build edges from file dependencies
+    for file_path, file_data in files.items():
+        depends_on = file_data.get("depends_on", [])
+        for dep_file in depends_on:
+            # Normalize node names for Mermaid (replace special chars)
+            src = file_path.replace("/", "_").replace(".", "_").replace("-", "_")
+            dst = dep_file.replace("/", "_").replace(".", "_").replace("-", "_")
+            edges.append((src, dst))
+    
+    return {"edges": edges}
 
 
 def main():
-    # Step A: Check if user gave enough information
-    if len(sys.argv) < 3:
-        print("Usage: python cli/main.py analyze <repo_path>")
-        return
-
-    # Step B: Read what the user typed
-    command = sys.argv[1]
-    repo_path = sys.argv[2]
-
-    # Step C: Check if command is correct
-    if command != "analyze":
-        print(f"Unknown command: {command}")
-        return
-
-    # Step D: Check if folder really exists
-    if not os.path.exists(repo_path):
-        print("Error: Repository path not found")
-        return
-
-    # Step E: Run analyzer
-    print("▶ Running static analysis...")
+    if len(sys.argv) < 2:
+        print("Usage: python flow_builder.py <analysis.json> [--output <output_file>]", file=sys.stderr)
+        sys.exit(1)
+    
+    analysis_file = sys.argv[1]
+    output_file = "flowchart.md"
+    
+    # Parse optional output file
+    if "--output" in sys.argv:
+        idx = sys.argv.index("--output")
+        if idx + 1 < len(sys.argv):
+            output_file = sys.argv[idx + 1]
+    
+    if not os.path.exists(analysis_file):
+        print(f"Error: Analysis file not found: {analysis_file}", file=sys.stderr)
+        sys.exit(1)
+    
     try:
-        analysis_result = analyze_repo_files(repo_path)
-
-        # Persist analyzer output for tour & flowchart
-        with open("analysis.json", "w", encoding="utf-16") as f:
-            json.dump(analysis_result, f, indent=2)
-
-        print("✔ Analysis completed")
-    except Exception:
-        print("✖ Analysis failed")
-        return
-
-    # Step F: Run tour generator
-    print("\n▶ Generating guided tour...")
-    try:
-        subprocess.run(
-            [sys.executable, "tour/tour_builder.py", "analysis.json"],
-            check=True
-        )
-        print("✔ Tour generated")
-    except subprocess.CalledProcessError:
-        print("✖ Tour generation failed")
-        return
-
-    # Step G: Run flowchart generator
-    print("\n▶ Generating repository flowchart...")
-    try:
-        subprocess.run(
-            [sys.executable, "flowchart/flow_builder.py"],
-            check=True
-        )
-
-        if not os.path.exists("flowchart.md"):
-            print("✖ Flowchart export failed")
-            return
-
-        print("✔ Flowchart exported")
-    except subprocess.CalledProcessError:
-        print("✖ Flowchart generation failed")
-        return
-
-    # Final success message
-    print("\n✔ CODE_Sherpa pipeline completed successfully")
+        # Load analysis data
+        with open(analysis_file, "r", encoding="utf-8") as f:
+            analysis_data = json.load(f)
+        
+        # Build graph (using simple file-level graph)
+        graph = build_simple_file_graph(analysis_data)
+        
+        # Export to Mermaid format
+        export_mermaid(graph, output_file)
+        
+        print(f"Flowchart exported to {output_file}")
+        
+    except Exception as e:
+        print(f"Error building flowchart: {e}", file=sys.stderr)
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
 
 
 if __name__ == "__main__":

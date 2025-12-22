@@ -1,0 +1,65 @@
+{
+  "entry_point": "app.py",
+  "files": {
+    "app.py": {
+      "entry": true,
+      "imports": [
+        "routes"
+      ],
+      "functions": {
+        "main": {
+          "calls": [
+            "register_routes"
+          ]
+        }
+      },
+      "depends_on": [
+        "routes.py"
+      ]
+    },
+    "routes.py": {
+      "entry": false,
+      "imports": [
+        "service"
+      ],
+      "functions": {
+        "register_routes": {
+          "calls": [
+            "process_request"
+          ]
+        }
+      },
+      "depends_on": [
+        "service.py"
+      ]
+    },
+    "service.py": {
+      "entry": false,
+      "imports": [
+        "utils.helper"
+      ],
+      "functions": {
+        "process_request": {
+          "calls": [
+            "format_response"
+          ]
+        }
+      },
+      "depends_on": [
+        "utils/helper.py"
+      ]
+    },
+    "utils/helper.py": {
+      "entry": false,
+      "imports": [],
+      "functions": {
+        "format_response": {
+          "calls": [
+            "print"
+          ]
+        }
+      },
+      "depends_on": []
+    }
+  }
+}

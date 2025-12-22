@@ -1,0 +1,35 @@
+{
+  "learning_order": [
+    {
+      "file": "app.py",
+      "functions": [
+        "main"
+      ],
+      "is_entry": true
+    },
+    {
+      "file": "routes.py",
+      "functions": [
+        "register_routes"
+      ],
+      "is_entry": false
+    },
+    {
+      "file": "service.py",
+      "functions": [
+        "process_request"
+      ],
+      "is_entry": false
+    },
+    {
+      "file": "utils/helper.py",
+      "functions": [
+        "format_response"
+      ],
+      "is_entry": false
+    }
+  ],
+  "metadata": {
+    "entry_point": "app.py"
+  }
+}

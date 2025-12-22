@@ -94,6 +94,8 @@ At a high level, the prototype:
 - Generates concise explanations and learning checkpoints for those segments
 - Presents them as a guided, step-by-step learning flow alongside the source code
 
+**Note:** The current prototype supports **Python repositories only**. It analyzes Python source files (`.py`) using Python's Abstract Syntax Tree (AST) module to extract imports, functions, dependencies, and entry points.
+
 The objective of the prototype is to show how code comprehension can move from an *ad-hoc, manual activity* to a *structured and repeatable learning process*.
 
 ---
@@ -130,4 +132,136 @@ This workflow emphasizes **structured comprehension** over ad-hoc exploration.
 
 ## How to Run the Prototype
 
-*(To be added — this section will document the CLI-based execution steps for running the CODE Sherpa prototype on a sample repository.)*
+### Prerequisites
+
+- **Python 3.7 or higher** (Python 3.12+ recommended)
+- No external dependencies required — uses only Python standard library
+- **Language Support:** The prototype currently supports **Python repositories only**. It analyzes `.py` files and uses Python's AST (Abstract Syntax Tree) for code analysis.
+
+Verify your Python version:
+```bash
+python --version
+```
+
+### Quick Start
+
+1. **Navigate to the project directory:**
+   ```bash
+   cd CODE_Sherpa__HackTheWinter-SecondWave
+   ```
+
+2. **Run the analyzer on a repository:**
+   ```bash
+   python cli/main.py analyze <repository_path>
+   ```
+
+   **Example with sample repository:**
+   ```bash
+   python cli/main.py analyze sample_repo
+   ```
+
+   **Example with your own repository:**
+   ```bash
+   python cli/main.py analyze C:\Users\YourName\Projects\my_project
+   ```
+
+### Output Files
+
+After running, the following files will be generated in the `demo/` folder:
+
+- **`demo/analysis.json`** — Complete code analysis including:
+  - Entry point detection
+  - File-level dependencies
+  - Function definitions and call relationships
+  - Import statements
+
+- **`demo/learning_order.json`** — Structured learning path with:
+  - Ordered list of files to explore
+  - Function-level guidance
+  - Entry point identification
+
+- **`demo/flowchart.md`** — Visual dependency graph in Mermaid format showing:
+  - File-to-file dependencies
+  - Code flow visualization
+
+### Viewing Results
+
+**View the analysis:**
+```bash
+# Windows PowerShell
+Get-Content demo/analysis.json
+
+# Windows CMD / Linux / Mac
+type demo/analysis.json
+```
+
+**View the learning order:**
+```bash
+Get-Content demo/learning_order.json
+```
+
+**View the flowchart:**
+```bash
+Get-Content demo/flowchart.md
+```
+
+The flowchart can be visualized using any Mermaid-compatible viewer (e.g., GitHub, VS Code with Mermaid extension, or online Mermaid editors).
+
+### Expected Output
+
+When you run the command, you should see:
+```
+Running static analysis...
+Analysis completed
+
+Generating guided tour...
+Tour generated
+
+Generating repository flowchart...
+Flowchart exported
+
+CODE_Sherpa pipeline completed successfully
+```
+
+### Troubleshooting
+
+**Encoding errors on Windows:**
+If you encounter Unicode encoding issues, set the encoding environment variable:
+```powershell
+$env:PYTHONIOENCODING="utf-8"
+python cli/main.py analyze sample_repo
+```
+
+**Repository path not found:**
+- Use absolute paths: `python cli/main.py analyze C:\full\path\to\repo`
+- Or relative paths: `python cli/main.py analyze ./repo_name`
+- Ensure the path exists and contains Python files (`.py` extension)
+- **Note:** Only Python repositories are currently supported
+
+**Module not found errors:**
+- Ensure you're running from the project root directory
+- Verify all folders (`analyzer/`, `cli/`, `tour/`, `flowchart/`) exist
+
+### Testing Individual Components
+
+You can also run individual components separately:
+
+**Test analyzer only:**
+```bash
+python -c "from analyzer.analyzer import build_unified_model; import json; result = build_unified_model('sample_repo'); print(json.dumps(result, indent=2))"
+```
+
+**Test tour builder:**
+```bash
+python tour/tour_builder.py demo/analysis.json
+```
+
+**Test flowchart builder:**
+```bash
+python flowchart/flow_builder.py demo/analysis.json
+```
+
+**Test explainer:**
+```bash
+python tour/explainer.py demo/analysis.json demo/learning_order.json
+```

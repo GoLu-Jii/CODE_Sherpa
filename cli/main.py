@@ -6,7 +6,7 @@ import subprocess
 # Add project root to Python path
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-from analyzer.analyzer import analyze_repo_files
+from analyzer.analyzer import build_unified_model
 
 
 def main():
@@ -29,31 +29,64 @@ def main():
         print("Error: Repository path not found")
         return
 
-    # Step E: Run analyzer
-    print("▶ Running static analysis...")
+    # Step E: Create demo folder for output files
+    demo_dir = "demo"
+    os.makedirs(demo_dir, exist_ok=True)
+
+    # Step F: Run analyzer
+    print("Running static analysis...")
     try:
-        analysis_result = analyze_repo_files(repo_path)
+        analysis_result = build_unified_model(repo_path)
 
         # Persist analyzer output for downstream steps
-        with open("analysis.json", "w") as f:
+        analysis_file = os.path.join(demo_dir, "analysis.json")
+        with open(analysis_file, "w", encoding="utf-8") as f:
             json.dump(analysis_result, f, indent=2)
 
-        print("✔ Analysis completed")
-    except Exception:
-        print("✖ Analysis failed")
+        print("Analysis completed")
+    except Exception as e:
+        print(f"Analysis failed: {e}")
+        import traceback
+        traceback.print_exc()
         return
 
-    # Step F: Run tour generator
-    print("\n▶ Generating guided tour...")
+    # Step G: Run tour generator
+    print("\nGenerating guided tour...")
     try:
+        result = subprocess.run(
+            [sys.executable, "tour/tour_builder.py", analysis_file],
+            check=True,
+            capture_output=True,
+            text=True
+        )
+        # Save tour output to file
+        learning_order_file = os.path.join(demo_dir, "learning_order.json")
+        with open(learning_order_file, "w", encoding="utf-8") as f:
+            f.write(result.stdout)
+        print("Tour generated")
+    except subprocess.CalledProcessError as e:
+        print(f"Tour generation failed: {e}")
+        print(f"Error output: {e.stderr}")
+        return
+
+    # Step H: Run flowchart generator
+    print("\nGenerating repository flowchart...")
+    try:
+        flowchart_file = os.path.join(demo_dir, "flowchart.md")
         subprocess.run(
-            [sys.executable, "tour/tour_builder.py", "analysis.json"],
+            [sys.executable, "flowchart/flow_builder.py", analysis_file, "--output", flowchart_file],
             check=True
         )
-        print("✔ Tour generated")
-    except subprocess.CalledProcessError:
-        print("✖ Tour generation failed")
+        if os.path.exists(flowchart_file):
+            print("Flowchart exported")
+        else:
+            print("Flowchart export failed - file not created")
+    except subprocess.CalledProcessError as e:
+        print(f"Flowchart generation failed: {e}")
         return
+
+    # Final success message
+    print("\nCODE_Sherpa pipeline completed successfully")
 
 
 if __name__ == "__main__":

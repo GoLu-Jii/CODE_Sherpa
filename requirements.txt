@@ -1,0 +1,26 @@
+# CODE_Sherpa Requirements
+#
+# This project uses only Python standard library modules.
+# No external packages need to be installed.
+#
+# Python Version: 3.7 or higher required
+#
+# Standard library modules used:
+#   - ast          (Abstract Syntax Tree parsing)
+#   - json         (JSON serialization)
+#   - os           (Operating system interface)
+#   - pathlib      (Object-oriented filesystem paths)
+#   - subprocess   (Subprocess management)
+#   - sys          (System-specific parameters)
+#   - typing       (Type hints: Dict, List, Set, Optional, Any)
+#   - traceback    (Error stack traces)
+#
+# Installation:
+#   No installation needed! Just ensure you have Python 3.7+
+#
+# Verify Python version:
+#   python --version
+#
+# Usage:
+#   python cli/main.py analyze <repository_path>
+
