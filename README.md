@@ -1,7 +1,7 @@
 # CODE Sherpa
 
 **Theme:** Open Innovation  
-**Project Nature:** *AI-assisted Web-based Developer Tool*
+**Project Nature:** *Deterministic Codebase Analysis & Guided Learning Tool*
 
 ---
 
@@ -14,6 +14,7 @@
   - [Research \& Observations](#research--observations)
   - [Proposed Solution](#proposed-solution)
   - [Existing Approaches and Identified Gaps](#existing-approaches-and-identified-gaps)
+  - [**Unlike IDE navigation tools that expose relationships, CODE Sherpa orders and teaches them as a structured learning path.**](#unlike-ide-navigation-tools-that-expose-relationships-code-sherpa-orders-and-teaches-them-as-a-structured-learning-path)
   - [Prototype Overview](#prototype-overview)
   - [Conceptual Workflow](#conceptual-workflow)
   - [System Overview](#system-overview)
@@ -99,6 +100,8 @@ Several tools exist to help developers work with unfamiliar codebases, but they 
 Overall, existing approaches emphasize *access to information* rather than *learning the codebase*. This gap motivates the need for a **proactive, step-by-step mechanism** that helps developers form an accurate mental model of a software system.
 
 ---
+**Unlike IDE navigation tools that expose relationships, CODE Sherpa orders and teaches them as a structured learning path.**
+---
 
 ## Prototype Overview
 
@@ -132,16 +135,16 @@ The prototype operates as a **three-stage pipeline**:
 
 ## System Overview
 
-The CODE Sherpa system operates as a guided learning pipeline that transforms a software repository into an interactive code understanding experience:
+The CODE Sherpa system operates as a **deterministic, reproducible pipeline**:
 
-1. **Input** – A source code repository is provided as the learning target  
-2. **Repository Analysis** – Key files, entry points, and meaningful code segments are identified  
-3. **Structure Interpretation** – Relationships between identified segments are interpreted to form a learning sequence  
-4. **Learning Path Generation** – A step-by-step walkthrough is constructed to introduce the codebase progressively  
-5. **Contextual Guidance** – Explanations and learning prompts are presented alongside relevant code  
-6. **User Progression** – Developers move through the learning path at their own pace, building system-level understanding  
+1. **Repository Analysis**: The codebase is analyzed using static analysis to extract verified structural facts such as files, functions, imports, and call relationships.
 
-This workflow emphasizes **structured comprehension** over ad-hoc exploration.
+2. **Learning Path Derivation**: Verified relationships are interpreted to derive an ordered learning path that introduces the codebase progressively and logically.
+
+3. **Structured Outputs**: The derived understanding is presented through structured artifacts, including guided walkthrough data and a visual flowchart representing overall code flow.
+
+This approach emphasizes **structured comprehension** over ad-hoc exploration or reactive assistance.
+
 
 ---
 
