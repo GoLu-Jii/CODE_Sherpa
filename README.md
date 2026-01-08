@@ -31,6 +31,7 @@
     - [Expected Output](#expected-output)
     - [Troubleshooting](#troubleshooting)
     - [Testing Individual Components](#testing-individual-components)
+  - [System Architecture](#system-architecture)
 
 
 ---
@@ -323,3 +324,23 @@ python tour/explainer.py demo/analysis.json demo/learning_order.json
 
 - [DFD and Flowcharts README](README_A.md) 
 - [Round-2 Improvements README](README_B.md)
+
+---
+
+
+## System Architecture
+
+CODE-Sherpa is designed as a deterministic, static-analysis–driven system
+for understanding codebases through verified structure rather than inference.
+
+The system is organized as a linear pipeline:
+source code is statically analyzed into a unified JSON knowledge model,
+which is then consumed by independent generators to produce
+guided explanations and repository-level flowcharts.
+
+The authoritative system design, including component boundaries,
+interfaces, guarantees, and non-goals, is defined in
+[`round-2/system_design.md`](round2/system_design.md).
+
+A high-level architectural view and execution flow are provided in
+[`round-2/diagrams/`](round2/diagrams/) to support quick visual orientation.
