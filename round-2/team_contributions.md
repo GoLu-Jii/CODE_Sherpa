@@ -9,11 +9,9 @@ No member claims ownership outside the files listed below.
 ---
 
 ## Member 1 — Static Code Analyzer Engineer
- 
-**GitHub:** @Golu-Jii
 
-## Name - Gaurav Joshi
-## GitHub: @Golu-Jii
+**Name:** Gaurav Joshi  
+**GitHub:** @Golu-Jii
 
 **Owned folders**
 - `analyzer/`
@@ -42,10 +40,8 @@ and any form of AI inference.
 
 ## Member 2 — Guided Tour & Explanation Engineer
 
+**Name:** Parth Joshi  
 **GitHub:** @Parth-Jos-hi
-
-## Name - Parth Joshi
-## GitHub: @Parth-Jos-hi
 
 **Owned folders**
 - `tour/`
@@ -72,10 +68,8 @@ flowchart generation, or system orchestration.
 
 ## Member 3 — Flowchart & Visualization Engineer
 
+**Name:** Prateek Banoula  
 **GitHub:** @Prateekbanoula
-
-## Name - Prateek Banoula
-## GitHub: @Prateekbanoula
 
 **Owned folders**
 - `flowchart/`
@@ -101,17 +95,13 @@ or manage execution flow.
 
 ---
 
-## Member 4 — CLI , Integration and Quality Controller
+## Member 4 — CLI, Integration and Quality Controller
 
+**Name:** Raj Pratap  
 **GitHub:** @Raj-pratap07
 
-## Name - Raj Pratap
-## GitHub: @Raj-pratap07
-
 **Owned areas**
-- Member 4 owns the system integration layer, responsible for connecting all independently developed modules into a single 
-executable pipeline.
-
+- Member 4 owns the system integration layer, responsible for connecting all independently developed modules into a single executable pipeline.
 
 **Owned files**
 - `cli/main.py`
