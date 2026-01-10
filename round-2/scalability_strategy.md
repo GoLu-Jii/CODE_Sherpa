@@ -1,66 +1,340 @@
-Scalability Strategy<br>
+# CODE-Sherpa — Scalability Strategy
 
-Purpose of This Document:-<br>
--> This document describes how CODE-Sherpa behaves when usage increases or when analysis does not go perfectly. It is part of Round-2, where the goal is not to build new features, but to clearly explain and justify the behavior of the system that already exists.<br>
--> If you are looking to understand the architecture of CODE-Sherpa—what components exist and how data flows between them—you should read system_design.md first. That document defines the structure of the system.<br>
-This document focuses on a different question: how that system behaves under stress.<br>
--> Specifically, it explains what happens when repositories are large, when code patterns are difficult to analyze statically, or when the system reaches its limits. This is not a roadmap or a performance promise. It is an honest explanation of current behavior, grounded in design decisions that are already implemented.<br>
--> Understanding these limits is important. A system that behaves predictably under pressure is easier to trust than one that only works well in ideal cases. This document exists to make those boundaries explicit.<br>
+---
 
-How CODE-Sherpa Thinks About Scaling:-<br>
--> CODE-Sherpa is not designed to scale infinitely. Instead, it is designed to scale predictably, which is more appropriate for a static analysis tool.<br>
--> The core idea is simple: rather than adding complexity to chase performance or coverage, the system focuses on correctness, transparency, and clarity. Scaling is achieved by keeping the system simple and disciplined.<br>
-Several principles guide this approach:<br>
--> Predictability matters more than raw performance. Running the tool twice on the same repository should always produce the same output. The analysis may take time, but it should never be surprising.<br>
--> Simplicity is preferred over complexity. The system avoids distributed components, shared services, or background infrastructure. Each run is a straightforward process that reads files, analyzes them, and writes output.<br>
--> Determinism is prioritized over optimization. The tool does not rely on caching, heuristics, or shortcuts that could introduce inconsistent results.<br>
--> Explicit limits are better than unbounded execution. Boundaries are defined for file counts, traversal depth, and analysis time to prevent uncontrolled behavior.<br>
--> Transparency is preferred over silent failure. When the system cannot complete an analysis fully, it reports that fact clearly.<br>
--> This approach may not be flashy, but it makes the system reliable. Users can trust that the output reflects exactly what was analyzed and nothing more.<br>
+## Authority Notice
 
-What “Growth” Means in Practice:-<br>
--> Scaling in CODE-Sherpa does not refer to a single dimension. It appears in several practical ways.<br>
--> One form of growth is more users running the tool independently. Multiple developers may run CODE-Sherpa on different repositories or even the same repository at the same time. Because there is no shared state or central coordination, this type of growth does not affect system behavior.<br>
-->Another form of growth is larger repositories. A small project may contain a few dozen Python files, while a large one may contain thousands. As file count increases, more files must be parsed and more structural data must be recorded. This increases analysis time and output size but does not change how the system works.<br>
-->A third form of growth is more complex call graphs. Some repositories have simple, shallow call relationships. Others contain deep chains of function calls, circular dependencies, and layered abstractions. As call graph complexity increases, traversal and explanation become more expensive, but the same deterministic process is still applied.<br>
-Finally, there is growth in code dynamism. Python allows dynamic imports, metaprogramming, decorators, and runtime-generated behavior. As repositories rely more heavily on these patterns, static analysis reaches its natural limits.<br>
-All of these scenarios stress the system in different ways, but none of them require architectural redesign. The system either handles them within its limits or stops in a controlled and explicit way.<br>
+This document defines how **CODE-Sherpa** behaves when system usage increases or when static analysis encounters limitations.
+It documents **existing behavior only** and introduces **no new features or guarantees**.
 
-Why the Existing Design Scales Naturally:-<br>
--> CODE-Sherpa scales reasonably well largely because of what it avoids doing.<br>
--> Each execution of the tool is stateless. The system does not remember previous runs, reuse cached results, or depend on historical context. Every execution starts fresh and analyzes the repository as it exists at that moment.<br>
--> Each run is also isolated. If multiple analyses are happening at the same time, they do not interact. There is no shared memory, no shared database, and no coordination mechanism. Each process operates independently.<br>
--> There is no shared mutable state. Source files are read but never modified. Output files are written to a new location for each run. One execution cannot affect another, which eliminates entire classes of concurrency and consistency issues.<br>
--> There are also no cross-run dependencies. The tool does not assume that a previous analysis has occurred, and it does not build incrementally on past results. -> This makes scaling across users and repositories straightforward.<br>
--> Finally, input and output are file-based. The tool reads files from disk and writes files to disk. There is no network communication, no database to manage, and no service to deploy. This keeps execution predictable and easy to reason about.<br>
--> This design may appear simple, but that simplicity is intentional. Fewer moving parts mean fewer failure modes under load.<br>
-Handling Large or Complex Repositories:-<br>
--> When CODE-Sherpa is applied to large or complex repositories, it relies on explicit boundaries.<br>
-->The system defines limits such as maximum file counts, maximum traversal depth in the call graph, and maximum analysis time. These limits exist to prevent unbounded execution on extreme inputs.<br>
-->When a limit is reached, the system does not fail silently. It records what happened, stops further analysis, and produces output for everything processed up to that point. The output includes clear information about why analysis stopped.<br>
--> Partial results are considered acceptable. If half of a repository is analyzed correctly before hitting a limit, that information is still valuable. The system never claims to have analyzed parts of the codebase that it did not actually process.<br>
--> Stopping early is therefore a deliberate and honest behavior. The system avoids approximations or guesses and reports only verified results.<br>
--> The analysis is also not aggressively optimized for speed. Parallelism, caching, and advanced optimizations are intentionally avoided to preserve clarity and determinism. While this may make the tool slower than theoretically possible, it also makes its behavior easier to understand and trust.<br>
+This document is part of **Round-2**, whose purpose is to clearly explain and justify how the current system behaves under non-ideal conditions.
 
-Failure Modes and Reliability:-<br>
-: Static analysis inevitably encounters failure cases, and CODE-Sherpa handles them explicitly.<br>
-1. If a file contains syntax errors, the AST parser cannot process it. In this case, the system logs the error and continues analyzing other files. The output reflects that the file was skipped.<br>
-2. If the code uses language constructs that cannot be resolved statically, such as dynamic imports or runtime-generated behavior, the system extracts only what is explicitly visible. It does not attempt to infer or simulate behavior.<br>
-3. In extremely large repositories, analysis may reach resource or time limits. When this happens, the system stops and returns the results gathered so far, along with a clear explanation of why analysis ended.<br>
-4. If analysis is interrupted due to timeouts or resource exhaustion, the output remains valid for the portion that was analyzed. Partial output is clearly labeled as such.<br>
-5. For circular dependencies or recursive call patterns, traversal depth is limited to prevent infinite loops. Cycles are detected and handled without crashing the analysis.<br>
-6. If files are missing or inaccessible, the system reports the issue and continues. Unresolved imports remain visible in the output, which can itself be useful information.<br>
-In all cases, failures are visible. The system does not hide errors, fabricate data, or present incomplete analysis as complete.<br>
+Explanatory or descriptive documents do not override the core system design.
 
-Explicit Limits and Non-Goals:-<br>
-CODE-Sherpa intentionally avoids certain behaviors.<br>
-1. It does not execute code, which means it cannot report actual runtime behavior. It reports only static structure.<br>
-2. It does not infer or guess. If information is not present in the AST, it is not included.<br>
-3. It does not guarantee full coverage. Large repositories or dynamic patterns may result in partial analysis.<br>
-4. It does not prioritize speed over correctness.<br>
-5. It does not attempt to support every Python feature. Only statically analyzable constructs are handled.<br>
-6. These boundaries are not weaknesses. They are design choices that protect correctness and trust.<br>
-Future Considerations (Not Implemented)<br>
-There are possible future improvements, such as better observability, incremental analysis, smarter resource limits, or support for additional languages. These ideas are mentioned only to acknowledge that the system could evolve.<br>
-None of them are implemented in Round-2, and none of them change current guarantees.<br>
+---
+
+## 1. Purpose & Scope
+
+### 1.1 Purpose of This Document
+
+This document explains how CODE-Sherpa behaves when:
+
+* Repository size increases
+* Static analysis encounters complex or difficult patterns
+* System-defined limits are reached
+
+The goal is **not** to propose optimizations or future improvements.
+Instead, this document provides an **honest explanation of current, implemented behavior**.
+
+If the reader is looking to understand **system structure or data flow**, they should refer to `system_design.md`, which defines component boundaries and interactions.
+
+This document focuses on a different question:
+
+> **How does the existing system behave under stress?**
+
+---
+
+### 1.2 Why This Matters
+
+A system that behaves **predictably under pressure** is easier to trust than one that only works well in ideal conditions.
+
+This document exists to:
+
+* Make system boundaries explicit
+* Clarify what happens when limits are reached
+* Prevent incorrect assumptions about scalability or performance
+
+---
+
+## 2. Design Philosophy for Scaling
+
+### 2.1 Predictable Scaling Over Infinite Scaling
+
+CODE-Sherpa is **not designed to scale infinitely**.
+
+Instead, it is designed to scale **predictably**, which is more appropriate for a static analysis tool where correctness and transparency matter more than raw throughput.
+
+---
+
+### 2.2 Core Philosophy
+
+Rather than adding complexity to chase performance or coverage, CODE-Sherpa prioritizes:
+
+* Correctness
+* Determinism
+* Transparency
+* Simplicity
+
+Scaling is achieved by **discipline**, not by infrastructure.
+
+---
+
+### 2.3 Guiding Principles
+
+The following principles guide CODE-Sherpa’s approach to scaling:
+
+* **Predictability over performance**
+  Running the tool multiple times on the same repository should always produce the same output.
+
+* **Simplicity over complexity**
+  The system avoids distributed components, shared services, and background infrastructure.
+
+* **Determinism over optimization**
+  No caching, heuristics, or shortcuts are used that could introduce inconsistent results.
+
+* **Explicit limits over unbounded execution**
+  Boundaries exist for file count, traversal depth, and analysis time.
+
+* **Transparency over silent failure**
+  When analysis cannot complete fully, that fact is reported clearly.
+
+This approach is intentional and ensures that output reflects **only what was actually analyzed**.
+
+---
+
+## 3. What “Growth” Means in Practice
+
+Scaling in CODE-Sherpa appears in several practical forms.
+
+---
+
+### 3.1 Growth in Number of Users
+
+Multiple developers may run CODE-Sherpa:
+
+* On different repositories
+* On the same repository
+* At the same time
+
+Because the system has **no shared state** and no central coordination, concurrent usage does not affect correctness or behavior.
+
+Each execution is independent.
+
+---
+
+### 3.2 Growth in Repository Size
+
+Repositories vary widely in size:
+
+* Small projects may contain dozens of files
+* Large projects may contain thousands
+
+As repository size increases:
+
+* More files must be parsed
+* More structural data must be recorded
+* Analysis time and output size increase
+
+However, **the execution model does not change**.
+
+---
+
+### 3.3 Growth in Call Graph Complexity
+
+Some repositories have:
+
+* Simple, shallow call relationships
+
+Others include:
+
+* Deep call chains
+* Circular dependencies
+* Layered abstractions
+
+As call graph complexity increases, traversal becomes more expensive, but the same deterministic analysis process is applied.
+
+---
+
+### 3.4 Growth in Code Dynamism
+
+Python allows:
+
+* Dynamic imports
+* Metaprogramming
+* Decorators
+* Runtime-generated behavior
+
+As repositories rely more heavily on these patterns, static analysis reaches its natural limits.
+
+In such cases, the system reports only what can be determined statically.
+
+---
+
+## 4. Why the Existing Design Scales Naturally
+
+CODE-Sherpa scales reasonably well primarily because of what it **avoids doing**.
+
+---
+
+### 4.1 Stateless Execution
+
+Each execution:
+
+* Starts fresh
+* Does not rely on previous runs
+* Does not reuse cached results
+
+There is no historical context or accumulated state.
+
+---
+
+### 4.2 Execution Isolation
+
+Each run is fully isolated:
+
+* No shared memory
+* No shared database
+* No coordination between runs
+
+Multiple executions cannot interfere with one another.
+
+---
+
+### 4.3 No Shared Mutable State
+
+* Source files are read, never modified
+* Output files are written independently per run
+
+This eliminates entire classes of concurrency and consistency issues.
+
+---
+
+### 4.4 File-Based Input and Output
+
+The system:
+
+* Reads files from disk
+* Writes output files to disk
+
+There is:
+
+* No network communication
+* No database
+* No background services
+
+This keeps execution simple and predictable.
+
+---
+
+## 5. Handling Large or Complex Repositories
+
+### 5.1 Explicit System Limits
+
+CODE-Sherpa defines clear limits, including:
+
+* Maximum file counts
+* Maximum call graph traversal depth
+* Maximum analysis time
+
+These limits prevent unbounded execution on extreme inputs.
+
+---
+
+### 5.2 Behavior When Limits Are Reached
+
+When a limit is reached:
+
+* Analysis stops in a controlled manner
+* Results collected so far are preserved
+* The output clearly explains why analysis stopped
+
+Partial results are considered **acceptable and valuable**.
+
+The system never claims to have analyzed code it did not process.
+
+---
+
+### 5.3 No Aggressive Optimization
+
+The system intentionally avoids:
+
+* Parallelism
+* Caching
+* Advanced optimizations
+
+This may reduce raw performance but preserves determinism and clarity.
+
+---
+
+## 6. Failure Modes & Reliability
+
+Static analysis inevitably encounters failure cases. CODE-Sherpa handles them explicitly.
+
+---
+
+### 6.1 Syntax Errors
+
+* Files with syntax errors cannot be parsed
+* Errors are logged
+* Analysis continues for other files
+* Skipped files are clearly reported
+
+---
+
+### 6.2 Dynamic or Unresolvable Constructs
+
+* Only statically visible structure is extracted
+* No attempt is made to simulate runtime behavior
+* Missing information is left unresolved, not guessed
+
+---
+
+### 6.3 Resource Limits and Timeouts
+
+* Analysis may stop due to time or resource constraints
+* Partial results are returned
+* Output clearly indicates incomplete analysis
+
+---
+
+### 6.4 Circular Dependencies
+
+* Cycles are detected
+* Traversal depth is limited
+* Infinite loops are avoided without crashing
+
+---
+
+### 6.5 Missing or Inaccessible Files
+
+* Issues are reported
+* Analysis continues where possible
+* Unresolved imports remain visible in output
+
+In all cases, failures are **visible and explicit**.
+
+---
+
+## 7. Explicit Limits & Non-Goals
+
+CODE-Sherpa intentionally does **not**:
+
+* Execute code
+* Infer runtime behavior
+* Guess missing logic
+* Guarantee full coverage
+* Prioritize speed over correctness
+* Support every Python feature
+
+These are deliberate design choices that protect trust and correctness.
+
+---
+
+## 8. Future Considerations (Not Implemented)
+
+Possible future ideas include:
+
+* Better observability
+* Incremental analysis
+* Smarter resource limits
+* Additional language support
+
+These ideas are **not implemented in Round-2** and do not affect current guarantees.
+
+---
+
+### Final Note
+
+CODE-Sherpa’s scalability strategy favors **honesty, determinism, and predictability** over raw performance.
+This makes the system reliable, understandable, and trustworthy — even under stress.
 

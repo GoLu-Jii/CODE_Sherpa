@@ -344,3 +344,22 @@ interfaces, guarantees, and non-goals, is defined in
 
 A high-level architectural view and execution flow are provided in
 [`round-2/diagrams/`](round2/diagrams/) to support quick visual orientation.
+
+
+
+## Round-2: System Design & Scalability
+
+In Round-2, CODE-Sherpa focuses on formal system design, scalability reasoning, and clear ownership
+without changing any implemented behavior from Round-1.
+This round documents how the existing analyzer, tour generator, flowchart generator,
+and CLI interact as a cohesive system, along with explicit boundaries and non-goals.
+
+The authoritative system architecture and component interfaces are defined in
+[`round2/system_design.md`](round2/system_design.md).
+Scalability considerations, limits, and failure modes are discussed in
+[`round2/scalability_strategy.md`](round2/scalability_strategy.md).
+High-level diagrams illustrating architecture and execution flow are available in
+[`round2/diagrams/`](round2/diagrams/).
+
+Round-2 adds clarity and credibility to the system while preserving deterministic,
+static analysis as the core principle.
