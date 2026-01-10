@@ -10,6 +10,8 @@ No member claims ownership outside the files listed below.
 
 ## Member 1 — Static Code Analyzer Engineer
  
+**GitHub:** @Golu-Jii
+
 ## Name - Gaurav Joshi
 ## GitHub: @Golu-Jii
 
@@ -40,6 +42,8 @@ and any form of AI inference.
 
 ## Member 2 — Guided Tour & Explanation Engineer
 
+**GitHub:** @Parth-Jos-hi
+
 ## Name - Parth Joshi
 ## GitHub: @Parth-Jos-hi
 
@@ -67,6 +71,8 @@ flowchart generation, or system orchestration.
 ---
 
 ## Member 3 — Flowchart & Visualization Engineer
+
+**GitHub:** @Prateekbanoula
 
 ## Name - Prateek Banoula
 ## GitHub: @Prateekbanoula
@@ -96,6 +102,8 @@ or manage execution flow.
 ---
 
 ## Member 4 — CLI , Integration and Quality Controller
+
+**GitHub:** @Raj-pratap07
 
 ## Name - Raj Pratap
 ## GitHub: @Raj-pratap07
