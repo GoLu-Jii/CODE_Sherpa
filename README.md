@@ -340,10 +340,10 @@ guided explanations and repository-level flowcharts.
 
 The authoritative system design, including component boundaries,
 interfaces, guarantees, and non-goals, is defined in
-[`round-2/system_design.md`](round2/system_design.md).
+[`round-2/system_design.md`](round-2/system_design.md).
 
 A high-level architectural view and execution flow are provided in
-[`round-2/diagrams/`](round2/diagrams/) to support quick visual orientation.
+[`round-2/diagrams/`](round-2/diagrams/) to support quick visual orientation.
 
 
 
@@ -355,11 +355,11 @@ This round documents how the existing analyzer, tour generator, flowchart genera
 and CLI interact as a cohesive system, along with explicit boundaries and non-goals.
 
 The authoritative system architecture and component interfaces are defined in
-[`round2/system_design.md`](round2/system_design.md).
+[`round2/system_design.md`](round-2/system_design.md).
 Scalability considerations, limits, and failure modes are discussed in
-[`round2/scalability_strategy.md`](round2/scalability_strategy.md).
+[`round2/scalability_strategy.md`](round-2/scalability_strategy.md).
 High-level diagrams illustrating architecture and execution flow are available in
-[`round2/diagrams/`](round2/diagrams/).
+[`round2/diagrams/`](round-2/diagrams/).
 
 Round-2 adds clarity and credibility to the system while preserving deterministic,
 static analysis as the core principle.
