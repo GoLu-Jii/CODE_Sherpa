@@ -7,6 +7,7 @@ import subprocess
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from analyzer.analyzer import build_unified_model
+from enrich.enrich import enrich_file
 
 
 def main():
@@ -50,11 +51,26 @@ def main():
         traceback.print_exc()
         return
 
-    # Step G: Run tour generator
+    # Step G: Run semantic enrichment (optional)
+    enriched_file = os.path.join(demo_dir, "enriched_analysis.json")
+    print("\nRunning semantic enrichment...")
+    try:
+        # Check if GROQ_API_KEY is set to decide if we use LLM
+        use_llm = bool(os.getenv("GROQ_API_KEY"))
+        enrich_file(analysis_file, enriched_file, use_llm=use_llm)
+        print("Enrichment completed")
+        # Use enriched file for downstream steps if it exists
+        input_for_downstream = enriched_file if os.path.exists(enriched_file) else analysis_file
+    except Exception as e:
+        print(f"Enrichment failed (using fallback): {e}")
+        # Continue with unenriched analysis if enrichment fails
+        input_for_downstream = analysis_file
+
+    # Step H: Run tour generator
     print("\nGenerating guided tour...")
     try:
         result = subprocess.run(
-            [sys.executable, "tour/tour_builder.py", analysis_file],
+            [sys.executable, "tour/tour_builder.py", input_for_downstream],
             check=True,
             capture_output=True,
             text=True
@@ -69,12 +85,12 @@ def main():
         print(f"Error output: {e.stderr}")
         return
 
-    # Step H: Run flowchart generator
-    print("\nGenerating repository flowchart...")
+    # Step I: Run flowchart generator
+    print("\nGenerating flowchart...")
     try:
         flowchart_file = os.path.join(demo_dir, "flowchart.md")
         subprocess.run(
-            [sys.executable, "flowchart/flow_builder.py", analysis_file, "--output", flowchart_file],
+            [sys.executable, "flowchart/flow_builder.py", input_for_downstream, "--output", flowchart_file],
             check=True
         )
         if os.path.exists(flowchart_file):
@@ -86,7 +102,7 @@ def main():
         return
 
     # Final success message
-    print("\nCODE_Sherpa pipeline completed successfully")
+    print("\nPipeline completed successfully")
 
 
 if __name__ == "__main__":

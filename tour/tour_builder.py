@@ -39,24 +39,61 @@ def build_learning_order(analyzer_data: Dict[str, Any]) -> Dict[str, Any]:
         else:
             return []
     
+    # Extract function info with explanations if present
+    def get_function_info(functions_dict: Dict, file_data: Dict) -> List[Dict]:
+        """Extract function info with explanations if present."""
+        function_list = []
+        if isinstance(functions_dict, dict):
+            for func_name, func_data in functions_dict.items():
+                func_info = {"name": func_name}
+                # Include explanation if present (from enrichment)
+                explanation = func_data.get("explanation") if isinstance(func_data, dict) else None
+                if explanation:
+                    func_info["explanation"] = explanation
+                function_list.append(func_info)
+        elif isinstance(functions_dict, list):
+            # Legacy format: just function names
+            for func_name in functions_dict:
+                # Try to find explanation from file_data
+                file_functions = file_data.get("functions", {})
+                if isinstance(file_functions, dict) and func_name in file_functions:
+                    func_data = file_functions[func_name]
+                    if isinstance(func_data, dict):
+                        explanation = func_data.get("explanation")
+                        if explanation:
+                            function_list.append({"name": func_name, "explanation": explanation})
+                            continue
+                function_list.append({"name": func_name})
+        return function_list
+    
     # Add entry point first if it exists
     if entry_point and entry_point in files:
         file_data = files[entry_point]
-        learning_order.append({
+        file_info = {
             "file": entry_point,
-            "functions": get_function_names(file_data.get("functions", {})),
+            "functions": get_function_info(file_data.get("functions", {}), file_data),
             "is_entry": True
-        })
+        }
+        # Include explanation if present (from enrichment)
+        explanation = file_data.get("explanation")
+        if explanation:
+            file_info["explanation"] = explanation
+        learning_order.append(file_info)
     
     # Add other files
     for file_name, file_data in files.items():
         if file_name == entry_point:
             continue
-        learning_order.append({
+        file_info = {
             "file": file_name,
-            "functions": get_function_names(file_data.get("functions", {})),
+            "functions": get_function_info(file_data.get("functions", {}), file_data),
             "is_entry": False
-        })
+        }
+        # Include explanation if present (from enrichment)
+        explanation = file_data.get("explanation")
+        if explanation:
+            file_info["explanation"] = explanation
+        learning_order.append(file_info)
     
     return {
         "learning_order": learning_order,

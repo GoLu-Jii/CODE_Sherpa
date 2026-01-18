@@ -1,35 +1,2691 @@
 {
   "learning_order": [
     {
-      "file": "app.py",
-      "functions": [
-        "main"
-      ],
-      "is_entry": true
+      "file": "src/requests/certs.py",
+      "functions": [],
+      "is_entry": true,
+      "explanation": "This file defines logic in `src/requests/certs.py`."
     },
     {
-      "file": "routes.py",
-      "functions": [
-        "register_routes"
-      ],
-      "is_entry": false
+      "file": "docs/_themes/flask_theme_support.py",
+      "functions": [],
+      "is_entry": false,
+      "explanation": "This file defines logic in `docs/_themes/flask_theme_support.py`."
     },
     {
-      "file": "service.py",
-      "functions": [
-        "process_request"
-      ],
-      "is_entry": false
+      "file": "docs/conf.py",
+      "functions": [],
+      "is_entry": false,
+      "explanation": "This file defines logic in `docs/conf.py`."
     },
     {
-      "file": "utils/helper.py",
+      "file": "setup.py",
+      "functions": [],
+      "is_entry": false,
+      "explanation": "This file defines logic in `setup.py`."
+    },
+    {
+      "file": "src/requests/__init__.py",
       "functions": [
-        "format_response"
+        {
+          "name": "_check_cryptography",
+          "explanation": "`_check_cryptography` coordinates calls to format, list, map, split, warn."
+        },
+        {
+          "name": "check_compatibility",
+          "explanation": "`check_compatibility` coordinates calls to append, int, len, split, warn."
+        }
       ],
-      "is_entry": false
+      "is_entry": false,
+      "explanation": "This file defines logic in `src/requests/__init__.py`."
+    },
+    {
+      "file": "src/requests/__version__.py",
+      "functions": [],
+      "is_entry": false,
+      "explanation": "This file defines logic in `src/requests/__version__.py`."
+    },
+    {
+      "file": "src/requests/_internal_utils.py",
+      "functions": [
+        {
+          "name": "to_native_string",
+          "explanation": "`to_native_string` coordinates calls to decode, isinstance."
+        },
+        {
+          "name": "unicode_is_ascii",
+          "explanation": "`unicode_is_ascii` coordinates calls to encode, isinstance."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `src/requests/_internal_utils.py`."
+    },
+    {
+      "file": "src/requests/adapters.py",
+      "functions": [
+        {
+          "name": "SOCKSProxyManager",
+          "explanation": "`SOCKSProxyManager` coordinates calls to InvalidSchema."
+        },
+        {
+          "name": "__getstate__",
+          "explanation": "`__getstate__` coordinates calls to getattr."
+        },
+        {
+          "name": "__init__",
+          "explanation": "`__init__` coordinates calls to Retry, __init__, from_int, init_poolmanager, super."
+        },
+        {
+          "name": "__setstate__",
+          "explanation": "`__setstate__` coordinates calls to init_poolmanager, items, setattr."
+        },
+        {
+          "name": "_urllib3_request_context",
+          "explanation": "`_urllib3_request_context` coordinates calls to isdir, isinstance, len, lower, urlparse."
+        },
+        {
+          "name": "add_headers",
+          "explanation": "`add_headers` performs a self-contained operation."
+        },
+        {
+          "name": "build_connection_pool_key_attributes",
+          "explanation": "`build_connection_pool_key_attributes` coordinates calls to _urllib3_request_context."
+        },
+        {
+          "name": "build_response",
+          "explanation": "`build_response` coordinates calls to CaseInsensitiveDict, Response, decode, extract_cookies_to_jar, get_encoding_from_headers, getattr, isinstance."
+        },
+        {
+          "name": "cert_verify",
+          "explanation": "`cert_verify` coordinates calls to OSError, exists, extract_zipped_paths, isdir, isinstance, lower, startswith."
+        },
+        {
+          "name": "close",
+          "explanation": "`close` coordinates calls to clear, values."
+        },
+        {
+          "name": "get_connection",
+          "explanation": "`get_connection` coordinates calls to InvalidProxyURL, connection_from_url, geturl, parse_url, prepend_scheme_if_needed, proxy_manager_for, select_proxy, urlparse, warn."
+        },
+        {
+          "name": "get_connection_with_tls_context",
+          "explanation": "`get_connection_with_tls_context` coordinates calls to InvalidProxyURL, InvalidURL, build_connection_pool_key_attributes, connection_from_host, parse_url, prepend_scheme_if_needed, proxy_manager_for, select_proxy."
+        },
+        {
+          "name": "init_poolmanager",
+          "explanation": "`init_poolmanager` coordinates calls to PoolManager."
+        },
+        {
+          "name": "proxy_headers",
+          "explanation": "`proxy_headers` coordinates calls to _basic_auth_str, get_auth_from_url."
+        },
+        {
+          "name": "proxy_manager_for",
+          "explanation": "`proxy_manager_for` coordinates calls to SOCKSProxyManager, get_auth_from_url, lower, proxy_from_url, proxy_headers, startswith."
+        },
+        {
+          "name": "request_url",
+          "explanation": "`request_url` coordinates calls to lower, lstrip, select_proxy, startswith, urldefragauth, urlparse."
+        },
+        {
+          "name": "send",
+          "explanation": "`send` coordinates calls to ConnectTimeout, ConnectionError, InvalidHeader, InvalidURL, ProxyError, ReadTimeout, RetryError, SSLError, TimeoutSauce, ValueError, add_headers, build_response, cert_verify, get_connection_with_tls_context, isinstance, request_url, urlopen."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `src/requests/adapters.py`."
+    },
+    {
+      "file": "src/requests/api.py",
+      "functions": [
+        {
+          "name": "delete",
+          "explanation": "`delete` coordinates calls to request."
+        },
+        {
+          "name": "get",
+          "explanation": "`get` coordinates calls to request."
+        },
+        {
+          "name": "head",
+          "explanation": "`head` coordinates calls to request, setdefault."
+        },
+        {
+          "name": "options",
+          "explanation": "`options` coordinates calls to request."
+        },
+        {
+          "name": "patch",
+          "explanation": "`patch` coordinates calls to request."
+        },
+        {
+          "name": "post",
+          "explanation": "`post` coordinates calls to request."
+        },
+        {
+          "name": "put",
+          "explanation": "`put` coordinates calls to request."
+        },
+        {
+          "name": "request",
+          "explanation": "`request` coordinates calls to Session, request."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `src/requests/api.py`."
+    },
+    {
+      "file": "src/requests/auth.py",
+      "functions": [
+        {
+          "name": "__call__",
+          "explanation": "`__call__` coordinates calls to build_digest_header, init_per_thread_state, register_hook, tell."
+        },
+        {
+          "name": "__eq__",
+          "explanation": "`__eq__` coordinates calls to all, getattr."
+        },
+        {
+          "name": "__init__",
+          "explanation": "`__init__` coordinates calls to local."
+        },
+        {
+          "name": "__ne__",
+          "explanation": "`__ne__` performs a self-contained operation."
+        },
+        {
+          "name": "_basic_auth_str",
+          "explanation": "`_basic_auth_str` coordinates calls to b64encode, encode, format, isinstance, join, str, strip, to_native_string, type, warn."
+        },
+        {
+          "name": "build_digest_header",
+          "explanation": "`build_digest_header` coordinates calls to KD, ctime, encode, get, hash_utf8, hexdigest, sha1, split, str, upper, urandom, urlparse."
+        },
+        {
+          "name": "handle_401",
+          "explanation": "`handle_401` coordinates calls to append, build_digest_header, close, compile, copy, extract_cookies_to_jar, get, lower, parse_dict_header, prepare_cookies, seek, send, sub."
+        },
+        {
+          "name": "handle_redirect",
+          "explanation": "`handle_redirect` performs a self-contained operation."
+        },
+        {
+          "name": "init_per_thread_state",
+          "explanation": "`init_per_thread_state` coordinates calls to hasattr."
+        },
+        {
+          "name": "md5_utf8",
+          "explanation": "`md5_utf8` coordinates calls to encode, hexdigest, isinstance, md5."
+        },
+        {
+          "name": "sha256_utf8",
+          "explanation": "`sha256_utf8` coordinates calls to encode, hexdigest, isinstance, sha256."
+        },
+        {
+          "name": "sha512_utf8",
+          "explanation": "`sha512_utf8` coordinates calls to encode, hexdigest, isinstance, sha512."
+        },
+        {
+          "name": "sha_utf8",
+          "explanation": "`sha_utf8` coordinates calls to encode, hexdigest, isinstance, sha1."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `src/requests/auth.py`."
+    },
+    {
+      "file": "src/requests/compat.py",
+      "functions": [
+        {
+          "name": "_resolve_char_detection",
+          "explanation": "`_resolve_char_detection` coordinates calls to import_module."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `src/requests/compat.py`."
+    },
+    {
+      "file": "src/requests/cookies.py",
+      "functions": [
+        {
+          "name": "__contains__",
+          "explanation": "`__contains__` coordinates calls to __contains__, super."
+        },
+        {
+          "name": "__delitem__",
+          "explanation": "`__delitem__` coordinates calls to remove_cookie_by_name."
+        },
+        {
+          "name": "__getitem__",
+          "explanation": "`__getitem__` coordinates calls to _find_no_duplicates."
+        },
+        {
+          "name": "__getstate__",
+          "explanation": "`__getstate__` coordinates calls to copy, pop."
+        },
+        {
+          "name": "__init__",
+          "explanation": "`__init__` performs a self-contained operation."
+        },
+        {
+          "name": "__setitem__",
+          "explanation": "`__setitem__` coordinates calls to set."
+        },
+        {
+          "name": "__setstate__",
+          "explanation": "`__setstate__` coordinates calls to RLock, update."
+        },
+        {
+          "name": "_copy_cookie_jar",
+          "explanation": "`_copy_cookie_jar` coordinates calls to clear, copy, hasattr, set_cookie."
+        },
+        {
+          "name": "_find",
+          "explanation": "`_find` coordinates calls to KeyError, iter."
+        },
+        {
+          "name": "_find_no_duplicates",
+          "explanation": "`_find_no_duplicates` coordinates calls to CookieConflictError, KeyError, iter."
+        },
+        {
+          "name": "add_header",
+          "explanation": "`add_header` coordinates calls to NotImplementedError."
+        },
+        {
+          "name": "add_unredirected_header",
+          "explanation": "`add_unredirected_header` performs a self-contained operation."
+        },
+        {
+          "name": "cookiejar_from_dict",
+          "explanation": "`cookiejar_from_dict` coordinates calls to RequestsCookieJar, create_cookie, set_cookie."
+        },
+        {
+          "name": "copy",
+          "explanation": "`copy` coordinates calls to RequestsCookieJar, get_policy, set_policy, update."
+        },
+        {
+          "name": "create_cookie",
+          "explanation": "`create_cookie` coordinates calls to Cookie, TypeError, bool, list, set, startswith, update."
+        },
+        {
+          "name": "extract_cookies_to_jar",
+          "explanation": "`extract_cookies_to_jar` coordinates calls to MockRequest, MockResponse, extract_cookies, hasattr."
+        },
+        {
+          "name": "get",
+          "explanation": "`get` coordinates calls to _find_no_duplicates."
+        },
+        {
+          "name": "get_cookie_header",
+          "explanation": "`get_cookie_header` coordinates calls to MockRequest, add_cookie_header, get, get_new_headers."
+        },
+        {
+          "name": "get_dict",
+          "explanation": "`get_dict` coordinates calls to iter."
+        },
+        {
+          "name": "get_full_url",
+          "explanation": "`get_full_url` coordinates calls to get, to_native_string, urlparse, urlunparse."
+        },
+        {
+          "name": "get_header",
+          "explanation": "`get_header` coordinates calls to get."
+        },
+        {
+          "name": "get_host",
+          "explanation": "`get_host` coordinates calls to urlparse."
+        },
+        {
+          "name": "get_new_headers",
+          "explanation": "`get_new_headers` performs a self-contained operation."
+        },
+        {
+          "name": "get_origin_req_host",
+          "explanation": "`get_origin_req_host` coordinates calls to get_host."
+        },
+        {
+          "name": "get_policy",
+          "explanation": "`get_policy` performs a self-contained operation."
+        },
+        {
+          "name": "get_type",
+          "explanation": "`get_type` performs a self-contained operation."
+        },
+        {
+          "name": "getheaders",
+          "explanation": "`getheaders` coordinates calls to getheaders."
+        },
+        {
+          "name": "has_header",
+          "explanation": "`has_header` performs a self-contained operation."
+        },
+        {
+          "name": "host",
+          "explanation": "`host` coordinates calls to get_host."
+        },
+        {
+          "name": "info",
+          "explanation": "`info` performs a self-contained operation."
+        },
+        {
+          "name": "is_unverifiable",
+          "explanation": "`is_unverifiable` performs a self-contained operation."
+        },
+        {
+          "name": "items",
+          "explanation": "`items` coordinates calls to iteritems, list."
+        },
+        {
+          "name": "iteritems",
+          "explanation": "`iteritems` coordinates calls to iter."
+        },
+        {
+          "name": "iterkeys",
+          "explanation": "`iterkeys` coordinates calls to iter."
+        },
+        {
+          "name": "itervalues",
+          "explanation": "`itervalues` coordinates calls to iter."
+        },
+        {
+          "name": "keys",
+          "explanation": "`keys` coordinates calls to iterkeys, list."
+        },
+        {
+          "name": "list_domains",
+          "explanation": "`list_domains` coordinates calls to append, iter."
+        },
+        {
+          "name": "list_paths",
+          "explanation": "`list_paths` coordinates calls to append, iter."
+        },
+        {
+          "name": "merge_cookies",
+          "explanation": "`merge_cookies` coordinates calls to ValueError, cookiejar_from_dict, isinstance, set_cookie, update."
+        },
+        {
+          "name": "morsel_to_cookie",
+          "explanation": "`morsel_to_cookie` coordinates calls to TypeError, bool, create_cookie, int, strptime, time, timegm."
+        },
+        {
+          "name": "multiple_domains",
+          "explanation": "`multiple_domains` coordinates calls to append, iter."
+        },
+        {
+          "name": "origin_req_host",
+          "explanation": "`origin_req_host` coordinates calls to get_origin_req_host."
+        },
+        {
+          "name": "remove_cookie_by_name",
+          "explanation": "`remove_cookie_by_name` coordinates calls to append, clear."
+        },
+        {
+          "name": "set",
+          "explanation": "`set` coordinates calls to create_cookie, get, isinstance, morsel_to_cookie, remove_cookie_by_name, set_cookie."
+        },
+        {
+          "name": "set_cookie",
+          "explanation": "`set_cookie` coordinates calls to endswith, hasattr, replace, set_cookie, startswith, super."
+        },
+        {
+          "name": "unverifiable",
+          "explanation": "`unverifiable` coordinates calls to is_unverifiable."
+        },
+        {
+          "name": "update",
+          "explanation": "`update` coordinates calls to copy, isinstance, set_cookie, super, update."
+        },
+        {
+          "name": "values",
+          "explanation": "`values` coordinates calls to itervalues, list."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `src/requests/cookies.py`."
+    },
+    {
+      "file": "src/requests/exceptions.py",
+      "functions": [
+        {
+          "name": "__init__",
+          "explanation": "`__init__` coordinates calls to __init__."
+        },
+        {
+          "name": "__reduce__",
+          "explanation": "`__reduce__` coordinates calls to __reduce__."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `src/requests/exceptions.py`."
+    },
+    {
+      "file": "src/requests/help.py",
+      "functions": [
+        {
+          "name": "_implementation",
+          "explanation": "`_implementation` coordinates calls to format, join, python_implementation, python_version."
+        },
+        {
+          "name": "info",
+          "explanation": "`info` coordinates calls to _implementation, getattr, release, system."
+        },
+        {
+          "name": "main",
+          "explanation": "`main` coordinates calls to dumps, info, print."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `src/requests/help.py`."
+    },
+    {
+      "file": "src/requests/hooks.py",
+      "functions": [
+        {
+          "name": "default_hooks",
+          "explanation": "`default_hooks` performs a self-contained operation."
+        },
+        {
+          "name": "dispatch_hook",
+          "explanation": "`dispatch_hook` coordinates calls to get, hasattr, hook."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `src/requests/hooks.py`."
+    },
+    {
+      "file": "src/requests/models.py",
+      "functions": [
+        {
+          "name": "__bool__",
+          "explanation": "`__bool__` performs a self-contained operation."
+        },
+        {
+          "name": "__enter__",
+          "explanation": "`__enter__` performs a self-contained operation."
+        },
+        {
+          "name": "__exit__",
+          "explanation": "`__exit__` coordinates calls to close."
+        },
+        {
+          "name": "__getstate__",
+          "explanation": "`__getstate__` coordinates calls to getattr."
+        },
+        {
+          "name": "__init__",
+          "explanation": "`__init__` coordinates calls to CaseInsensitiveDict, cookiejar_from_dict, timedelta."
+        },
+        {
+          "name": "__iter__",
+          "explanation": "`__iter__` coordinates calls to iter_content."
+        },
+        {
+          "name": "__nonzero__",
+          "explanation": "`__nonzero__` performs a self-contained operation."
+        },
+        {
+          "name": "__repr__",
+          "explanation": "`__repr__` performs a self-contained operation."
+        },
+        {
+          "name": "__setstate__",
+          "explanation": "`__setstate__` coordinates calls to items, setattr."
+        },
+        {
+          "name": "_encode_files",
+          "explanation": "`_encode_files` coordinates calls to RequestField, ValueError, append, decode, encode, encode_multipart_formdata, guess_filename, hasattr, isinstance, len, make_multipart, read, str, to_key_val_list."
+        },
+        {
+          "name": "_encode_params",
+          "explanation": "`_encode_params` coordinates calls to append, encode, hasattr, isinstance, to_key_val_list, urlencode."
+        },
+        {
+          "name": "_get_idna_encoded_host",
+          "explanation": "`_get_idna_encoded_host` coordinates calls to decode, encode."
+        },
+        {
+          "name": "apparent_encoding",
+          "explanation": "`apparent_encoding` coordinates calls to detect."
+        },
+        {
+          "name": "close",
+          "explanation": "`close` coordinates calls to close, getattr, release_conn."
+        },
+        {
+          "name": "content",
+          "explanation": "`content` coordinates calls to RuntimeError, iter_content, join."
+        },
+        {
+          "name": "copy",
+          "explanation": "`copy` coordinates calls to PreparedRequest, _copy_cookie_jar, copy."
+        },
+        {
+          "name": "deregister_hook",
+          "explanation": "`deregister_hook` coordinates calls to remove."
+        },
+        {
+          "name": "generate",
+          "explanation": "`generate` coordinates calls to ChunkedEncodingError, ConnectionError, ContentDecodingError, RequestsSSLError, hasattr, read, stream."
+        },
+        {
+          "name": "is_permanent_redirect",
+          "explanation": "`is_permanent_redirect` performs a self-contained operation."
+        },
+        {
+          "name": "is_redirect",
+          "explanation": "`is_redirect` performs a self-contained operation."
+        },
+        {
+          "name": "iter_content",
+          "explanation": "`iter_content` coordinates calls to StreamConsumedError, TypeError, generate, isinstance, iter_slices, stream_decode_response_unicode, type."
+        },
+        {
+          "name": "iter_lines",
+          "explanation": "`iter_lines` coordinates calls to iter_content, pop, split, splitlines."
+        },
+        {
+          "name": "json",
+          "explanation": "`json` coordinates calls to RequestsJSONDecodeError, decode, guess_json_utf, len, loads."
+        },
+        {
+          "name": "links",
+          "explanation": "`links` coordinates calls to get, parse_header_links."
+        },
+        {
+          "name": "next",
+          "explanation": "`next` performs a self-contained operation."
+        },
+        {
+          "name": "ok",
+          "explanation": "`ok` coordinates calls to raise_for_status."
+        },
+        {
+          "name": "path_url",
+          "explanation": "`path_url` coordinates calls to append, join, urlsplit."
+        },
+        {
+          "name": "prepare",
+          "explanation": "`prepare` coordinates calls to prepare_auth, prepare_body, prepare_cookies, prepare_headers, prepare_hooks, prepare_method, prepare_url."
+        },
+        {
+          "name": "prepare_auth",
+          "explanation": "`prepare_auth` coordinates calls to HTTPBasicAuth, any, auth, get_auth_from_url, isinstance, len, prepare_content_length, update."
+        },
+        {
+          "name": "prepare_body",
+          "explanation": "`prepare_body` coordinates calls to InvalidJSONError, NotImplementedError, _encode_files, _encode_params, all, builtin_str, dumps, encode, getattr, hasattr, isinstance, object, prepare_content_length, super_len, tell."
+        },
+        {
+          "name": "prepare_content_length",
+          "explanation": "`prepare_content_length` coordinates calls to builtin_str, get, super_len."
+        },
+        {
+          "name": "prepare_cookies",
+          "explanation": "`prepare_cookies` coordinates calls to cookiejar_from_dict, get_cookie_header, isinstance."
+        },
+        {
+          "name": "prepare_headers",
+          "explanation": "`prepare_headers` coordinates calls to CaseInsensitiveDict, check_header_validity, items, to_native_string."
+        },
+        {
+          "name": "prepare_hooks",
+          "explanation": "`prepare_hooks` coordinates calls to register_hook."
+        },
+        {
+          "name": "prepare_method",
+          "explanation": "`prepare_method` coordinates calls to to_native_string, upper."
+        },
+        {
+          "name": "prepare_url",
+          "explanation": "`prepare_url` coordinates calls to InvalidURL, MissingSchema, _encode_params, _get_idna_encoded_host, decode, isinstance, lower, lstrip, parse_url, requote_uri, startswith, str, to_native_string, unicode_is_ascii, urlunparse."
+        },
+        {
+          "name": "raise_for_status",
+          "explanation": "`raise_for_status` coordinates calls to HTTPError, decode, isinstance."
+        },
+        {
+          "name": "register_hook",
+          "explanation": "`register_hook` coordinates calls to ValueError, append, extend, hasattr, isinstance."
+        },
+        {
+          "name": "text",
+          "explanation": "`text` coordinates calls to str."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `src/requests/models.py`."
+    },
+    {
+      "file": "src/requests/packages.py",
+      "functions": [],
+      "is_entry": false,
+      "explanation": "This file defines logic in `src/requests/packages.py`."
+    },
+    {
+      "file": "src/requests/sessions.py",
+      "functions": [
+        {
+          "name": "__enter__",
+          "explanation": "`__enter__` performs a self-contained operation."
+        },
+        {
+          "name": "__exit__",
+          "explanation": "`__exit__` coordinates calls to close."
+        },
+        {
+          "name": "__getstate__",
+          "explanation": "`__getstate__` coordinates calls to getattr."
+        },
+        {
+          "name": "__init__",
+          "explanation": "`__init__` coordinates calls to HTTPAdapter, OrderedDict, cookiejar_from_dict, default_headers, default_hooks, mount."
+        },
+        {
+          "name": "__setstate__",
+          "explanation": "`__setstate__` coordinates calls to items, setattr."
+        },
+        {
+          "name": "close",
+          "explanation": "`close` coordinates calls to close, values."
+        },
+        {
+          "name": "delete",
+          "explanation": "`delete` coordinates calls to request."
+        },
+        {
+          "name": "get",
+          "explanation": "`get` coordinates calls to request, setdefault."
+        },
+        {
+          "name": "get_adapter",
+          "explanation": "`get_adapter` coordinates calls to InvalidSchema, items, lower, startswith."
+        },
+        {
+          "name": "get_redirect_target",
+          "explanation": "`get_redirect_target` coordinates calls to encode, to_native_string."
+        },
+        {
+          "name": "head",
+          "explanation": "`head` coordinates calls to request, setdefault."
+        },
+        {
+          "name": "merge_environment_settings",
+          "explanation": "`merge_environment_settings` coordinates calls to get, get_environ_proxies, items, merge_setting, setdefault."
+        },
+        {
+          "name": "merge_hooks",
+          "explanation": "`merge_hooks` coordinates calls to get, merge_setting."
+        },
+        {
+          "name": "merge_setting",
+          "explanation": "`merge_setting` coordinates calls to dict_class, isinstance, items, to_key_val_list, update."
+        },
+        {
+          "name": "mount",
+          "explanation": "`mount` coordinates calls to len, pop."
+        },
+        {
+          "name": "options",
+          "explanation": "`options` coordinates calls to request, setdefault."
+        },
+        {
+          "name": "patch",
+          "explanation": "`patch` coordinates calls to request."
+        },
+        {
+          "name": "post",
+          "explanation": "`post` coordinates calls to request."
+        },
+        {
+          "name": "prepare_request",
+          "explanation": "`prepare_request` coordinates calls to PreparedRequest, RequestsCookieJar, cookiejar_from_dict, get_netrc_auth, isinstance, merge_cookies, merge_hooks, merge_setting, prepare, upper."
+        },
+        {
+          "name": "put",
+          "explanation": "`put` coordinates calls to request."
+        },
+        {
+          "name": "rebuild_auth",
+          "explanation": "`rebuild_auth` coordinates calls to get_netrc_auth, prepare_auth, should_strip_auth."
+        },
+        {
+          "name": "rebuild_method",
+          "explanation": "`rebuild_method` performs a self-contained operation."
+        },
+        {
+          "name": "rebuild_proxies",
+          "explanation": "`rebuild_proxies` coordinates calls to _basic_auth_str, get_auth_from_url, resolve_proxies, startswith, urlparse."
+        },
+        {
+          "name": "request",
+          "explanation": "`request` coordinates calls to Request, merge_environment_settings, prepare_request, send, update, upper."
+        },
+        {
+          "name": "resolve_redirects",
+          "explanation": "`resolve_redirects` coordinates calls to TooManyRedirects, _replace, append, close, copy, extract_cookies_to_jar, get_redirect_target, geturl, join, len, merge_cookies, pop, prepare_cookies, read, rebuild_auth, rebuild_method, rebuild_proxies, requote_uri, rewind_body, send, startswith, to_native_string, urljoin, urlparse."
+        },
+        {
+          "name": "send",
+          "explanation": "`send` coordinates calls to ValueError, dispatch_hook, extract_cookies_to_jar, get, get_adapter, insert, isinstance, next, pop, preferred_clock, resolve_proxies, resolve_redirects, send, setdefault, timedelta."
+        },
+        {
+          "name": "session",
+          "explanation": "`session` coordinates calls to Session."
+        },
+        {
+          "name": "should_strip_auth",
+          "explanation": "`should_strip_auth` coordinates calls to get, urlparse."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `src/requests/sessions.py`."
+    },
+    {
+      "file": "src/requests/status_codes.py",
+      "functions": [
+        {
+          "name": "_init",
+          "explanation": "`_init` coordinates calls to doc, items, join, setattr, sorted, startswith, upper."
+        },
+        {
+          "name": "doc",
+          "explanation": "`doc` coordinates calls to join."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `src/requests/status_codes.py`."
+    },
+    {
+      "file": "src/requests/structures.py",
+      "functions": [
+        {
+          "name": "__delitem__",
+          "explanation": "`__delitem__` coordinates calls to lower."
+        },
+        {
+          "name": "__eq__",
+          "explanation": "`__eq__` coordinates calls to CaseInsensitiveDict, dict, isinstance, lower_items."
+        },
+        {
+          "name": "__getitem__",
+          "explanation": "`__getitem__` coordinates calls to get."
+        },
+        {
+          "name": "__init__",
+          "explanation": "`__init__` coordinates calls to __init__, super."
+        },
+        {
+          "name": "__iter__",
+          "explanation": "`__iter__` coordinates calls to values."
+        },
+        {
+          "name": "__len__",
+          "explanation": "`__len__` coordinates calls to len."
+        },
+        {
+          "name": "__repr__",
+          "explanation": "`__repr__` performs a self-contained operation."
+        },
+        {
+          "name": "__setitem__",
+          "explanation": "`__setitem__` coordinates calls to lower."
+        },
+        {
+          "name": "copy",
+          "explanation": "`copy` coordinates calls to CaseInsensitiveDict, values."
+        },
+        {
+          "name": "get",
+          "explanation": "`get` coordinates calls to get."
+        },
+        {
+          "name": "lower_items",
+          "explanation": "`lower_items` coordinates calls to items."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `src/requests/structures.py`."
+    },
+    {
+      "file": "src/requests/utils.py",
+      "functions": [
+        {
+          "name": "_parse_content_type_header",
+          "explanation": "`_parse_content_type_header` coordinates calls to find, lower, split, strip."
+        },
+        {
+          "name": "_validate_header_part",
+          "explanation": "`_validate_header_part` coordinates calls to InvalidHeader, isinstance, match, type."
+        },
+        {
+          "name": "add_dict_to_cookiejar",
+          "explanation": "`add_dict_to_cookiejar` coordinates calls to cookiejar_from_dict."
+        },
+        {
+          "name": "address_in_network",
+          "explanation": "`address_in_network` coordinates calls to dotted_netmask, inet_aton, int, split, unpack."
+        },
+        {
+          "name": "atomic_open",
+          "explanation": "`atomic_open` coordinates calls to dirname, fdopen, mkstemp, remove, replace."
+        },
+        {
+          "name": "check_header_validity",
+          "explanation": "`check_header_validity` coordinates calls to _validate_header_part."
+        },
+        {
+          "name": "default_headers",
+          "explanation": "`default_headers` coordinates calls to CaseInsensitiveDict, default_user_agent."
+        },
+        {
+          "name": "default_user_agent",
+          "explanation": "`default_user_agent` performs a self-contained operation."
+        },
+        {
+          "name": "dict_from_cookiejar",
+          "explanation": "`dict_from_cookiejar` performs a self-contained operation."
+        },
+        {
+          "name": "dict_to_sequence",
+          "explanation": "`dict_to_sequence` coordinates calls to hasattr, items."
+        },
+        {
+          "name": "dotted_netmask",
+          "explanation": "`dotted_netmask` coordinates calls to inet_ntoa, pack."
+        },
+        {
+          "name": "extract_zipped_paths",
+          "explanation": "`extract_zipped_paths` coordinates calls to ZipFile, atomic_open, exists, gettempdir, is_zipfile, join, namelist, read, split, write."
+        },
+        {
+          "name": "from_key_val_list",
+          "explanation": "`from_key_val_list` coordinates calls to OrderedDict, ValueError, isinstance."
+        },
+        {
+          "name": "get_auth_from_url",
+          "explanation": "`get_auth_from_url` coordinates calls to unquote, urlparse."
+        },
+        {
+          "name": "get_encoding_from_headers",
+          "explanation": "`get_encoding_from_headers` coordinates calls to _parse_content_type_header, get, strip."
+        },
+        {
+          "name": "get_encodings_from_content",
+          "explanation": "`get_encodings_from_content` coordinates calls to compile, findall, warn."
+        },
+        {
+          "name": "get_environ_proxies",
+          "explanation": "`get_environ_proxies` coordinates calls to getproxies, should_bypass_proxies."
+        },
+        {
+          "name": "get_netrc_auth",
+          "explanation": "`get_netrc_auth` coordinates calls to authenticators, exists, expanduser, get, netrc, urlparse."
+        },
+        {
+          "name": "get_proxy",
+          "explanation": "`get_proxy` coordinates calls to get, upper."
+        },
+        {
+          "name": "get_unicode_from_response",
+          "explanation": "`get_unicode_from_response` coordinates calls to append, get_encoding_from_headers, str, warn."
+        },
+        {
+          "name": "guess_filename",
+          "explanation": "`guess_filename` coordinates calls to basename, getattr, isinstance."
+        },
+        {
+          "name": "guess_json_utf",
+          "explanation": "`guess_json_utf` coordinates calls to count."
+        },
+        {
+          "name": "is_ipv4_address",
+          "explanation": "`is_ipv4_address` coordinates calls to inet_aton."
+        },
+        {
+          "name": "is_valid_cidr",
+          "explanation": "`is_valid_cidr` coordinates calls to count, inet_aton, int, split."
+        },
+        {
+          "name": "iter_slices",
+          "explanation": "`iter_slices` coordinates calls to len."
+        },
+        {
+          "name": "parse_dict_header",
+          "explanation": "`parse_dict_header` coordinates calls to _parse_list_header, split, unquote_header_value."
+        },
+        {
+          "name": "parse_header_links",
+          "explanation": "`parse_header_links` coordinates calls to append, split, strip."
+        },
+        {
+          "name": "parse_list_header",
+          "explanation": "`parse_list_header` coordinates calls to _parse_list_header, append, unquote_header_value."
+        },
+        {
+          "name": "prepend_scheme_if_needed",
+          "explanation": "`prepend_scheme_if_needed` coordinates calls to join, parse_url, urlunparse."
+        },
+        {
+          "name": "proxy_bypass",
+          "explanation": "`proxy_bypass` coordinates calls to getproxies_environment, proxy_bypass_environment, proxy_bypass_registry."
+        },
+        {
+          "name": "proxy_bypass_registry",
+          "explanation": "`proxy_bypass_registry` coordinates calls to OpenKey, QueryValueEx, filter, int, match, replace, split."
+        },
+        {
+          "name": "requote_uri",
+          "explanation": "`requote_uri` coordinates calls to quote, unquote_unreserved."
+        },
+        {
+          "name": "resolve_proxies",
+          "explanation": "`resolve_proxies` coordinates calls to copy, get, get_environ_proxies, setdefault, should_bypass_proxies, urlparse."
+        },
+        {
+          "name": "rewind_body",
+          "explanation": "`rewind_body` coordinates calls to UnrewindableBodyError, body_seek, getattr, isinstance."
+        },
+        {
+          "name": "select_proxy",
+          "explanation": "`select_proxy` coordinates calls to get, urlparse."
+        },
+        {
+          "name": "set_environ",
+          "explanation": "`set_environ` coordinates calls to get."
+        },
+        {
+          "name": "should_bypass_proxies",
+          "explanation": "`should_bypass_proxies` coordinates calls to address_in_network, endswith, get_proxy, is_ipv4_address, is_valid_cidr, proxy_bypass, replace, set_environ, split, urlparse."
+        },
+        {
+          "name": "stream_decode_response_unicode",
+          "explanation": "`stream_decode_response_unicode` coordinates calls to decode, getincrementaldecoder."
+        },
+        {
+          "name": "super_len",
+          "explanation": "`super_len` coordinates calls to encode, fileno, fstat, hasattr, isinstance, len, max, seek, tell, warn."
+        },
+        {
+          "name": "to_key_val_list",
+          "explanation": "`to_key_val_list` coordinates calls to ValueError, isinstance, items, list."
+        },
+        {
+          "name": "unquote_header_value",
+          "explanation": "`unquote_header_value` coordinates calls to replace."
+        },
+        {
+          "name": "unquote_unreserved",
+          "explanation": "`unquote_unreserved` coordinates calls to InvalidURL, chr, int, isalnum, join, len, range, split."
+        },
+        {
+          "name": "urldefragauth",
+          "explanation": "`urldefragauth` coordinates calls to rsplit, urlparse, urlunparse."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `src/requests/utils.py`."
+    },
+    {
+      "file": "tests/__init__.py",
+      "functions": [],
+      "is_entry": false,
+      "explanation": "This file defines logic in `tests/__init__.py`."
+    },
+    {
+      "file": "tests/compat.py",
+      "functions": [
+        {
+          "name": "u",
+          "explanation": "`u` coordinates calls to warn."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `tests/compat.py`."
+    },
+    {
+      "file": "tests/conftest.py",
+      "functions": [
+        {
+          "name": "httpbin",
+          "explanation": "`httpbin` coordinates calls to prepare_url."
+        },
+        {
+          "name": "httpbin_secure",
+          "explanation": "`httpbin_secure` coordinates calls to prepare_url."
+        },
+        {
+          "name": "inner",
+          "explanation": "`inner` coordinates calls to join, urljoin."
+        },
+        {
+          "name": "nosan_server",
+          "explanation": "`nosan_server` coordinates calls to CA, HTTPServer, Thread, configure_cert, create_default_context, issue_cert, join, mktemp, shutdown, start, str, wrap_socket, write_to_path."
+        },
+        {
+          "name": "prepare_url",
+          "explanation": "`prepare_url` coordinates calls to rstrip."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `tests/conftest.py`."
+    },
+    {
+      "file": "tests/test_adapters.py",
+      "functions": [
+        {
+          "name": "test_request_url_trims_leading_path_separators",
+          "explanation": "`test_request_url_trims_leading_path_separators` coordinates calls to HTTPAdapter, Request, prepare, request_url."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `tests/test_adapters.py`."
+    },
+    {
+      "file": "tests/test_help.py",
+      "functions": [
+        {
+          "name": "__init__",
+          "explanation": "`__init__` performs a self-contained operation."
+        },
+        {
+          "name": "test_idna_with_version_attribute",
+          "explanation": "`test_idna_with_version_attribute` coordinates calls to VersionedPackage, info, patch."
+        },
+        {
+          "name": "test_idna_without_version_attribute",
+          "explanation": "`test_idna_without_version_attribute` coordinates calls to info, patch."
+        },
+        {
+          "name": "test_system_ssl",
+          "explanation": "`test_system_ssl` coordinates calls to info."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `tests/test_help.py`."
+    },
+    {
+      "file": "tests/test_hooks.py",
+      "functions": [
+        {
+          "name": "hook",
+          "explanation": "`hook` performs a self-contained operation."
+        },
+        {
+          "name": "test_default_hooks",
+          "explanation": "`test_default_hooks` coordinates calls to default_hooks."
+        },
+        {
+          "name": "test_hooks",
+          "explanation": "`test_hooks` coordinates calls to dispatch_hook, parametrize."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `tests/test_hooks.py`."
+    },
+    {
+      "file": "tests/test_lowlevel.py",
+      "functions": [
+        {
+          "name": "digest_failed_response_handler",
+          "explanation": "`digest_failed_response_handler` coordinates calls to consume_socket_content, send, startswith."
+        },
+        {
+          "name": "digest_response_handler",
+          "explanation": "`digest_response_handler` coordinates calls to consume_socket_content, send, startswith."
+        },
+        {
+          "name": "echo_response_handler",
+          "explanation": "`echo_response_handler` coordinates calls to consume_socket_content, len, send."
+        },
+        {
+          "name": "incomplete_chunked_response_handler",
+          "explanation": "`incomplete_chunked_response_handler` coordinates calls to consume_socket_content, send."
+        },
+        {
+          "name": "multiple_content_length_response_handler",
+          "explanation": "`multiple_content_length_response_handler` coordinates calls to consume_socket_content, send."
+        },
+        {
+          "name": "redirect_resp_handler",
+          "explanation": "`redirect_resp_handler` coordinates calls to append, consume_socket_content, encode, send."
+        },
+        {
+          "name": "response_handler",
+          "explanation": "`response_handler` coordinates calls to consume_socket_content, send."
+        },
+        {
+          "name": "test_chunked_encoding_error",
+          "explanation": "`test_chunked_encoding_error` coordinates calls to Event, Server, get, raises, set."
+        },
+        {
+          "name": "test_chunked_upload",
+          "explanation": "`test_chunked_upload` coordinates calls to Event, basic_response_server, iter, post, set."
+        },
+        {
+          "name": "test_chunked_upload_doesnt_skip_host_header",
+          "explanation": "`test_chunked_upload_doesnt_skip_host_header` coordinates calls to Event, Server, count, encode, iter, post, set."
+        },
+        {
+          "name": "test_chunked_upload_uses_only_specified_host_header",
+          "explanation": "`test_chunked_upload_uses_only_specified_host_header` coordinates calls to Event, Server, count, encode, iter, post, set."
+        },
+        {
+          "name": "test_conflicting_content_lengths",
+          "explanation": "`test_conflicting_content_lengths` coordinates calls to Event, Server, get, raises, set."
+        },
+        {
+          "name": "test_digestauth_401_count_reset_on_redirect",
+          "explanation": "`test_digestauth_401_count_reset_on_redirect` coordinates calls to Event, HTTPDigestAuth, Server, get, set, startswith."
+        },
+        {
+          "name": "test_digestauth_401_only_sent_once",
+          "explanation": "`test_digestauth_401_only_sent_once` coordinates calls to Event, HTTPDigestAuth, Server, get, set."
+        },
+        {
+          "name": "test_digestauth_only_on_4xx",
+          "explanation": "`test_digestauth_only_on_4xx` coordinates calls to Event, HTTPDigestAuth, Server, get, len, set."
+        },
+        {
+          "name": "test_fragment_not_sent_with_request",
+          "explanation": "`test_fragment_not_sent_with_request` coordinates calls to Event, Server, get, set, split."
+        },
+        {
+          "name": "test_fragment_update_on_redirect",
+          "explanation": "`test_fragment_update_on_redirect` coordinates calls to Event, Server, get, len, set."
+        },
+        {
+          "name": "test_json_decode_compatibility_for_alt_utf_encodings",
+          "explanation": "`test_json_decode_compatibility_for_alt_utf_encodings` coordinates calls to Event, Server, get, isinstance, json, raises, str."
+        },
+        {
+          "name": "test_redirect_rfc1808_to_non_ascii_location",
+          "explanation": "`test_redirect_rfc1808_to_non_ascii_location` coordinates calls to Event, Server, decode, format, get, len, set, startswith."
+        },
+        {
+          "name": "test_use_proxy_from_environment",
+          "explanation": "`test_use_proxy_from_environment` coordinates calls to Server, get, len, override_environ, parametrize, raises."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `tests/test_lowlevel.py`."
+    },
+    {
+      "file": "tests/test_packages.py",
+      "functions": [
+        {
+          "name": "test_can_access_chardet_attribute",
+          "explanation": "`test_can_access_chardet_attribute` performs a self-contained operation."
+        },
+        {
+          "name": "test_can_access_idna_attribute",
+          "explanation": "`test_can_access_idna_attribute` performs a self-contained operation."
+        },
+        {
+          "name": "test_can_access_urllib3_attribute",
+          "explanation": "`test_can_access_urllib3_attribute` performs a self-contained operation."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `tests/test_packages.py`."
+    },
+    {
+      "file": "tests/test_requests.py",
+      "functions": [
+        {
+          "name": "__call__",
+          "explanation": "`__call__` performs a self-contained operation."
+        },
+        {
+          "name": "__delitem__",
+          "explanation": "`__delitem__` performs a self-contained operation."
+        },
+        {
+          "name": "__getitem__",
+          "explanation": "`__getitem__` performs a self-contained operation."
+        },
+        {
+          "name": "__init__",
+          "explanation": "`__init__` performs a self-contained operation."
+        },
+        {
+          "name": "__iter__",
+          "explanation": "`__iter__` performs a self-contained operation."
+        },
+        {
+          "name": "__len__",
+          "explanation": "`__len__` coordinates calls to len."
+        },
+        {
+          "name": "__setitem__",
+          "explanation": "`__setitem__` performs a self-contained operation."
+        },
+        {
+          "name": "_build_raw",
+          "explanation": "`_build_raw` coordinates calls to StringIO, setattr."
+        },
+        {
+          "name": "_patch_adapter_gzipped_redirect",
+          "explanation": "`_patch_adapter_gzipped_redirect` coordinates calls to get_adapter."
+        },
+        {
+          "name": "build_response",
+          "explanation": "`build_response` coordinates calls to CaseInsensitiveDict, Response, _build_raw, int, pop."
+        },
+        {
+          "name": "get_netrc_auth_mock",
+          "explanation": "`get_netrc_auth_mock` performs a self-contained operation."
+        },
+        {
+          "name": "get_redirect_target",
+          "explanation": "`get_redirect_target` coordinates calls to get."
+        },
+        {
+          "name": "hook",
+          "explanation": "`hook` performs a self-contained operation."
+        },
+        {
+          "name": "hook1",
+          "explanation": "`hook1` performs a self-contained operation."
+        },
+        {
+          "name": "hook2",
+          "explanation": "`hook2` performs a self-contained operation."
+        },
+        {
+          "name": "normalize_percent_encode",
+          "explanation": "`normalize_percent_encode` coordinates calls to findall, replace, upper."
+        },
+        {
+          "name": "read",
+          "explanation": "`read` performs a self-contained operation."
+        },
+        {
+          "name": "read_mock",
+          "explanation": "`read_mock` coordinates calls to read_."
+        },
+        {
+          "name": "response_handler",
+          "explanation": "`response_handler` coordinates calls to consume_socket_content, getpeercert, send."
+        },
+        {
+          "name": "seek",
+          "explanation": "`seek` coordinates calls to OSError."
+        },
+        {
+          "name": "send",
+          "explanation": "`send` coordinates calls to SendCall, append, build_response."
+        },
+        {
+          "name": "tell",
+          "explanation": "`tell` coordinates calls to OSError."
+        },
+        {
+          "name": "test_BASICAUTH_TUPLE_HTTP_200_OK_GET",
+          "explanation": "`test_BASICAUTH_TUPLE_HTTP_200_OK_GET` coordinates calls to get, httpbin, session."
+        },
+        {
+          "name": "test_DIGESTAUTH_QUOTES_QOP_VALUE",
+          "explanation": "`test_DIGESTAUTH_QUOTES_QOP_VALUE` coordinates calls to HTTPDigestAuth, get, httpbin."
+        },
+        {
+          "name": "test_DIGESTAUTH_WRONG_HTTP_401_GET",
+          "explanation": "`test_DIGESTAUTH_WRONG_HTTP_401_GET` coordinates calls to HTTPDigestAuth, get, httpbin, session."
+        },
+        {
+          "name": "test_DIGEST_AUTH_RETURNS_COOKIE",
+          "explanation": "`test_DIGEST_AUTH_RETURNS_COOKIE` coordinates calls to HTTPDigestAuth, get, httpbin."
+        },
+        {
+          "name": "test_DIGEST_AUTH_SETS_SESSION_COOKIES",
+          "explanation": "`test_DIGEST_AUTH_SETS_SESSION_COOKIES` coordinates calls to HTTPDigestAuth, Session, get, httpbin."
+        },
+        {
+          "name": "test_DIGEST_HTTP_200_OK_GET",
+          "explanation": "`test_DIGEST_HTTP_200_OK_GET` coordinates calls to HTTPDigestAuth, get, httpbin, print, session."
+        },
+        {
+          "name": "test_DIGEST_STREAM",
+          "explanation": "`test_DIGEST_STREAM` coordinates calls to HTTPDigestAuth, get, httpbin, read."
+        },
+        {
+          "name": "test_HTTP_200_OK_GET_ALTERNATIVE",
+          "explanation": "`test_HTTP_200_OK_GET_ALTERNATIVE` coordinates calls to Request, Session, getproxies, httpbin, prepare, send."
+        },
+        {
+          "name": "test_HTTP_200_OK_GET_WITH_MIXED_PARAMS",
+          "explanation": "`test_HTTP_200_OK_GET_WITH_MIXED_PARAMS` coordinates calls to get, httpbin."
+        },
+        {
+          "name": "test_HTTP_200_OK_GET_WITH_PARAMS",
+          "explanation": "`test_HTTP_200_OK_GET_WITH_PARAMS` coordinates calls to get, httpbin."
+        },
+        {
+          "name": "test_HTTP_200_OK_HEAD",
+          "explanation": "`test_HTTP_200_OK_HEAD` coordinates calls to head, httpbin."
+        },
+        {
+          "name": "test_HTTP_200_OK_PUT",
+          "explanation": "`test_HTTP_200_OK_PUT` coordinates calls to httpbin, put."
+        },
+        {
+          "name": "test_HTTP_302_ALLOW_REDIRECT_GET",
+          "explanation": "`test_HTTP_302_ALLOW_REDIRECT_GET` coordinates calls to get, httpbin."
+        },
+        {
+          "name": "test_HTTP_302_TOO_MANY_REDIRECTS",
+          "explanation": "`test_HTTP_302_TOO_MANY_REDIRECTS` coordinates calls to fail, get, httpbin, len."
+        },
+        {
+          "name": "test_HTTP_302_TOO_MANY_REDIRECTS_WITH_PARAMS",
+          "explanation": "`test_HTTP_302_TOO_MANY_REDIRECTS_WITH_PARAMS` coordinates calls to fail, get, httpbin, len, session."
+        },
+        {
+          "name": "test_HTTP_307_ALLOW_REDIRECT_POST",
+          "explanation": "`test_HTTP_307_ALLOW_REDIRECT_POST` coordinates calls to httpbin, json, post."
+        },
+        {
+          "name": "test_HTTP_307_ALLOW_REDIRECT_POST_WITH_SEEKABLE",
+          "explanation": "`test_HTTP_307_ALLOW_REDIRECT_POST_WITH_SEEKABLE` coordinates calls to BytesIO, decode, httpbin, json, post."
+        },
+        {
+          "name": "test_POSTBIN_GET_POST_FILES",
+          "explanation": "`test_POSTBIN_GET_POST_FILES` coordinates calls to httpbin, open, post, raise_for_status, raises."
+        },
+        {
+          "name": "test_POSTBIN_GET_POST_FILES_WITH_DATA",
+          "explanation": "`test_POSTBIN_GET_POST_FILES_WITH_DATA` coordinates calls to httpbin, open, post, raise_for_status, raises."
+        },
+        {
+          "name": "test_POSTBIN_SEEKED_OBJECT_WITH_NO_ITER",
+          "explanation": "`test_POSTBIN_SEEKED_OBJECT_WITH_NO_ITER` coordinates calls to TestStream, httpbin, json, post, seek."
+        },
+        {
+          "name": "test_auth_is_retained_for_redirect_on_host",
+          "explanation": "`test_auth_is_retained_for_redirect_on_host` coordinates calls to get, httpbin."
+        },
+        {
+          "name": "test_auth_is_stripped_on_http_downgrade",
+          "explanation": "`test_auth_is_stripped_on_http_downgrade` coordinates calls to get, httpbin, httpbin_secure."
+        },
+        {
+          "name": "test_autoset_header_values_are_native",
+          "explanation": "`test_autoset_header_values_are_native` coordinates calls to Request, httpbin, prepare."
+        },
+        {
+          "name": "test_basic_auth_str_is_always_native",
+          "explanation": "`test_basic_auth_str_is_always_native` coordinates calls to _basic_auth_str, encode, isinstance, parametrize."
+        },
+        {
+          "name": "test_basic_building",
+          "explanation": "`test_basic_building` coordinates calls to Request, prepare."
+        },
+        {
+          "name": "test_basicauth_encodes_byte_strings",
+          "explanation": "`test_basicauth_encodes_byte_strings` coordinates calls to Request, prepare."
+        },
+        {
+          "name": "test_basicauth_with_netrc",
+          "explanation": "`test_basicauth_with_netrc` coordinates calls to get, httpbin, session."
+        },
+        {
+          "name": "test_basicauth_with_netrc_leak",
+          "explanation": "`test_basicauth_with_netrc_leak` coordinates calls to NamedTemporaryFile, close, get, httpbin, len, split, unlink, write."
+        },
+        {
+          "name": "test_binary_put",
+          "explanation": "`test_binary_put` coordinates calls to Request, encode, isinstance, prepare."
+        },
+        {
+          "name": "test_can_send_file_object_with_non_string_filename",
+          "explanation": "`test_can_send_file_object_with_non_string_filename` coordinates calls to BytesIO, Request, httpbin, prepare."
+        },
+        {
+          "name": "test_can_send_objects_with_files",
+          "explanation": "`test_can_send_objects_with_files` coordinates calls to Request, bytearray, httpbin, parametrize, prepare."
+        },
+        {
+          "name": "test_cannot_send_unprepared_requests",
+          "explanation": "`test_cannot_send_unprepared_requests` coordinates calls to Request, Session, httpbin, raises, send."
+        },
+        {
+          "name": "test_certificate_failure",
+          "explanation": "`test_certificate_failure` coordinates calls to get, httpbin_secure, raises."
+        },
+        {
+          "name": "test_chunked_upload_does_not_set_content_length_header",
+          "explanation": "`test_chunked_upload_does_not_set_content_length_header` coordinates calls to Request, httpbin, prepare."
+        },
+        {
+          "name": "test_conflicting_post_params",
+          "explanation": "`test_conflicting_post_params` coordinates calls to httpbin, open, post, raises."
+        },
+        {
+          "name": "test_connect_timeout",
+          "explanation": "`test_connect_timeout` coordinates calls to Urllib3Timeout, fail, get, isinstance, parametrize."
+        },
+        {
+          "name": "test_contains",
+          "explanation": "`test_contains` coordinates calls to CaseInsensitiveDict."
+        },
+        {
+          "name": "test_content_length_for_bytes_data",
+          "explanation": "`test_content_length_for_bytes_data` coordinates calls to Request, encode, httpbin, len, prepare, str."
+        },
+        {
+          "name": "test_content_length_for_string_data_counts_bytes",
+          "explanation": "`test_content_length_for_string_data_counts_bytes` coordinates calls to Request, encode, httpbin, len, prepare, skipif, str."
+        },
+        {
+          "name": "test_cookie_as_dict_items",
+          "explanation": "`test_cookie_as_dict_items` coordinates calls to RequestsCookieJar, items, list, set."
+        },
+        {
+          "name": "test_cookie_as_dict_keeps_items",
+          "explanation": "`test_cookie_as_dict_keeps_items` coordinates calls to RequestsCookieJar, dict, items, iteritems, set."
+        },
+        {
+          "name": "test_cookie_as_dict_keeps_len",
+          "explanation": "`test_cookie_as_dict_keeps_len` coordinates calls to RequestsCookieJar, dict, items, iteritems, len, set."
+        },
+        {
+          "name": "test_cookie_as_dict_keys",
+          "explanation": "`test_cookie_as_dict_keys` coordinates calls to RequestsCookieJar, keys, list, set."
+        },
+        {
+          "name": "test_cookie_as_dict_values",
+          "explanation": "`test_cookie_as_dict_values` coordinates calls to RequestsCookieJar, list, set, values."
+        },
+        {
+          "name": "test_cookie_duplicate_names_different_domains",
+          "explanation": "`test_cookie_duplicate_names_different_domains` coordinates calls to RequestsCookieJar, get, items, len, raises, set."
+        },
+        {
+          "name": "test_cookie_duplicate_names_raises_cookie_conflict_error",
+          "explanation": "`test_cookie_duplicate_names_raises_cookie_conflict_error` coordinates calls to RequestsCookieJar, get, raises, set."
+        },
+        {
+          "name": "test_cookie_parameters",
+          "explanation": "`test_cookie_parameters` coordinates calls to RequestsCookieJar, len, list, set."
+        },
+        {
+          "name": "test_cookie_persists_via_api",
+          "explanation": "`test_cookie_persists_via_api` coordinates calls to get, httpbin, session."
+        },
+        {
+          "name": "test_cookie_policy_copy",
+          "explanation": "`test_cookie_policy_copy` coordinates calls to MyCookiePolicy, RequestsCookieJar, copy, get_policy, isinstance, set_policy."
+        },
+        {
+          "name": "test_cookie_quote_wrapped",
+          "explanation": "`test_cookie_quote_wrapped` coordinates calls to get, httpbin, session."
+        },
+        {
+          "name": "test_cookie_removed_on_expire",
+          "explanation": "`test_cookie_removed_on_expire` coordinates calls to get, httpbin, session."
+        },
+        {
+          "name": "test_cookie_sent_on_redirect",
+          "explanation": "`test_cookie_sent_on_redirect` coordinates calls to get, httpbin, json, session."
+        },
+        {
+          "name": "test_cookielib_cookiejar_on_redirect",
+          "explanation": "`test_cookielib_cookiejar_on_redirect` coordinates calls to CookieJar, Request, Session, cookiejar_from_dict, httpbin, isinstance, next, prepare, resolve_redirects, send."
+        },
+        {
+          "name": "test_copy",
+          "explanation": "`test_copy` coordinates calls to CaseInsensitiveDict, copy."
+        },
+        {
+          "name": "test_custom_content_type",
+          "explanation": "`test_custom_content_type` coordinates calls to dumps, httpbin, open, post."
+        },
+        {
+          "name": "test_custom_redirect_mixin",
+          "explanation": "`test_custom_redirect_mixin` coordinates calls to CustomRedirectSession, get, httpbin, len, urlencode."
+        },
+        {
+          "name": "test_data_argument_accepts_tuples",
+          "explanation": "`test_data_argument_accepts_tuples` coordinates calls to PreparedRequest, default_hooks, parametrize, prepare, urlencode."
+        },
+        {
+          "name": "test_decompress_gzip",
+          "explanation": "`test_decompress_gzip` coordinates calls to decode, get, httpbin."
+        },
+        {
+          "name": "test_delitem",
+          "explanation": "`test_delitem` coordinates calls to CaseInsensitiveDict, len."
+        },
+        {
+          "name": "test_different_connection_pool_for_mtls_settings",
+          "explanation": "`test_different_connection_pool_for_mtls_settings` coordinates calls to Event, Session, TLSServer, get, raises, set."
+        },
+        {
+          "name": "test_different_connection_pool_for_tls_settings_verify_True",
+          "explanation": "`test_different_connection_pool_for_tls_settings_verify_True` coordinates calls to Event, Session, TLSServer, get, len, raises, set."
+        },
+        {
+          "name": "test_different_connection_pool_for_tls_settings_verify_bundle_expired_cert",
+          "explanation": "`test_different_connection_pool_for_tls_settings_verify_bundle_expired_cert` coordinates calls to Event, Session, TLSServer, get, len, raises, set."
+        },
+        {
+          "name": "test_different_connection_pool_for_tls_settings_verify_bundle_unexpired_cert",
+          "explanation": "`test_different_connection_pool_for_tls_settings_verify_bundle_unexpired_cert` coordinates calls to Event, Session, TLSServer, get, len, set."
+        },
+        {
+          "name": "test_different_encodings_dont_break_post",
+          "explanation": "`test_different_encodings_dont_break_post` coordinates calls to dumps, httpbin, open, post."
+        },
+        {
+          "name": "test_docstring_example",
+          "explanation": "`test_docstring_example` coordinates calls to CaseInsensitiveDict, list."
+        },
+        {
+          "name": "test_empty_content_length",
+          "explanation": "`test_empty_content_length` coordinates calls to Request, httpbin, lower, parametrize, prepare."
+        },
+        {
+          "name": "test_empty_response_has_content_none",
+          "explanation": "`test_empty_response_has_content_none` coordinates calls to Response."
+        },
+        {
+          "name": "test_empty_stream_with_auth_does_not_set_content_length_header",
+          "explanation": "`test_empty_stream_with_auth_does_not_set_content_length_header` coordinates calls to BytesIO, Request, httpbin, prepare."
+        },
+        {
+          "name": "test_encoded_methods",
+          "explanation": "`test_encoded_methods` coordinates calls to httpbin, request."
+        },
+        {
+          "name": "test_entry_points",
+          "explanation": "`test_entry_points` coordinates calls to session."
+        },
+        {
+          "name": "test_env_cert_bundles",
+          "explanation": "`test_env_cert_bundles` coordinates calls to Session, httpbin, merge_environment_settings, parametrize, patch."
+        },
+        {
+          "name": "test_equality",
+          "explanation": "`test_equality` coordinates calls to CaseInsensitiveDict, object."
+        },
+        {
+          "name": "test_errors",
+          "explanation": "`test_errors` coordinates calls to get, parametrize, raises."
+        },
+        {
+          "name": "test_expires_invalid_int",
+          "explanation": "`test_expires_invalid_int` coordinates calls to Morsel, morsel_to_cookie, parametrize, raises."
+        },
+        {
+          "name": "test_expires_none",
+          "explanation": "`test_expires_none` coordinates calls to Morsel, morsel_to_cookie."
+        },
+        {
+          "name": "test_expires_valid_str",
+          "explanation": "`test_expires_valid_str` coordinates calls to Morsel, morsel_to_cookie."
+        },
+        {
+          "name": "test_fixes_1329",
+          "explanation": "`test_fixes_1329` coordinates calls to Session, get, httpbin, update."
+        },
+        {
+          "name": "test_fixes_649",
+          "explanation": "`test_fixes_649` coordinates calls to CaseInsensitiveDict, keys, list."
+        },
+        {
+          "name": "test_form_encoded_post_query_multivalued_element",
+          "explanation": "`test_form_encoded_post_query_multivalued_element` coordinates calls to Request, dict, httpbin, prepare."
+        },
+        {
+          "name": "test_fragment_maintained_on_redirect",
+          "explanation": "`test_fragment_maintained_on_redirect` coordinates calls to get, httpbin, len."
+        },
+        {
+          "name": "test_generic_cookiejar_works",
+          "explanation": "`test_generic_cookiejar_works` coordinates calls to CookieJar, cookiejar_from_dict, get, httpbin, json, session."
+        },
+        {
+          "name": "test_get",
+          "explanation": "`test_get` coordinates calls to CaseInsensitiveDict, get."
+        },
+        {
+          "name": "test_getitem",
+          "explanation": "`test_getitem` coordinates calls to CaseInsensitiveDict."
+        },
+        {
+          "name": "test_header_and_body_removal_on_redirect",
+          "explanation": "`test_header_and_body_removal_on_redirect` coordinates calls to Request, Session, httpbin, next, prepare_request, resolve_redirects, send."
+        },
+        {
+          "name": "test_header_keys_are_native",
+          "explanation": "`test_header_keys_are_native` coordinates calls to Request, httpbin, keys, prepare."
+        },
+        {
+          "name": "test_header_no_leading_space",
+          "explanation": "`test_header_no_leading_space` coordinates calls to get, httpbin, parametrize, raises."
+        },
+        {
+          "name": "test_header_no_return_chars",
+          "explanation": "`test_header_no_return_chars` coordinates calls to get, httpbin, parametrize, raises."
+        },
+        {
+          "name": "test_header_remove_is_case_insensitive",
+          "explanation": "`test_header_remove_is_case_insensitive` coordinates calls to Session, get, httpbin."
+        },
+        {
+          "name": "test_header_validation",
+          "explanation": "`test_header_validation` coordinates calls to get, httpbin, keys."
+        },
+        {
+          "name": "test_header_value_not_str",
+          "explanation": "`test_header_value_not_str` coordinates calls to get, httpbin, parametrize, raises, str."
+        },
+        {
+          "name": "test_header_with_subclass_types",
+          "explanation": "`test_header_with_subclass_types` coordinates calls to MyBytes, MyString, get, httpbin."
+        },
+        {
+          "name": "test_headers_on_session_with_None_are_not_sent",
+          "explanation": "`test_headers_on_session_with_None_are_not_sent` coordinates calls to Request, Session, httpbin, prepare_request."
+        },
+        {
+          "name": "test_headers_preserve_order",
+          "explanation": "`test_headers_preserve_order` coordinates calls to OrderedDict, Request, Session, httpbin, items, list, prepare_request."
+        },
+        {
+          "name": "test_history_is_always_a_list",
+          "explanation": "`test_history_is_always_a_list` coordinates calls to get, httpbin, isinstance."
+        },
+        {
+          "name": "test_hook_receives_request_arguments",
+          "explanation": "`test_hook_receives_request_arguments` coordinates calls to Request, Session, httpbin, prepare_request, send."
+        },
+        {
+          "name": "test_http_301_changes_post_to_get",
+          "explanation": "`test_http_301_changes_post_to_get` coordinates calls to httpbin, post."
+        },
+        {
+          "name": "test_http_301_doesnt_change_head_to_get",
+          "explanation": "`test_http_301_doesnt_change_head_to_get` coordinates calls to head, httpbin, print."
+        },
+        {
+          "name": "test_http_302_changes_post_to_get",
+          "explanation": "`test_http_302_changes_post_to_get` coordinates calls to httpbin, post."
+        },
+        {
+          "name": "test_http_302_doesnt_change_head_to_get",
+          "explanation": "`test_http_302_doesnt_change_head_to_get` coordinates calls to head, httpbin."
+        },
+        {
+          "name": "test_http_303_changes_post_to_get",
+          "explanation": "`test_http_303_changes_post_to_get` coordinates calls to httpbin, post."
+        },
+        {
+          "name": "test_http_303_doesnt_change_head_to_get",
+          "explanation": "`test_http_303_doesnt_change_head_to_get` coordinates calls to head, httpbin."
+        },
+        {
+          "name": "test_http_error",
+          "explanation": "`test_http_error` coordinates calls to HTTPError, Response, str."
+        },
+        {
+          "name": "test_http_with_certificate",
+          "explanation": "`test_http_with_certificate` coordinates calls to get, httpbin."
+        },
+        {
+          "name": "test_https_warnings",
+          "explanation": "`test_https_warnings` coordinates calls to get, simplefilter, skipif, tuple, warns."
+        },
+        {
+          "name": "test_init",
+          "explanation": "`test_init` coordinates calls to CaseInsensitiveDict, len, parametrize."
+        },
+        {
+          "name": "test_invalid_ca_certificate_path",
+          "explanation": "`test_invalid_ca_certificate_path` coordinates calls to format, get, httpbin_secure, raises, str."
+        },
+        {
+          "name": "test_invalid_files_input",
+          "explanation": "`test_invalid_files_input` coordinates calls to httpbin, post."
+        },
+        {
+          "name": "test_invalid_ssl_certificate_files",
+          "explanation": "`test_invalid_ssl_certificate_files` coordinates calls to format, get, httpbin_secure, raises, str."
+        },
+        {
+          "name": "test_invalid_timeout",
+          "explanation": "`test_invalid_timeout` coordinates calls to get, httpbin, parametrize, raises, str."
+        },
+        {
+          "name": "test_invalid_url",
+          "explanation": "`test_invalid_url` coordinates calls to get, parametrize, raises."
+        },
+        {
+          "name": "test_iter",
+          "explanation": "`test_iter` coordinates calls to CaseInsensitiveDict, frozenset, iter."
+        },
+        {
+          "name": "test_iter_content_wraps_exceptions",
+          "explanation": "`test_iter_content_wraps_exceptions` coordinates calls to Mock, Response, exception, iter_content, next, parametrize, raises, tuple."
+        },
+        {
+          "name": "test_json_decode_compatibility",
+          "explanation": "`test_json_decode_compatibility` coordinates calls to get, httpbin, isinstance, json, raises, str."
+        },
+        {
+          "name": "test_json_decode_errors_are_serializable_deserializable",
+          "explanation": "`test_json_decode_errors_are_serializable_deserializable` coordinates calls to JSONDecodeError, dumps, loads, repr."
+        },
+        {
+          "name": "test_json_decode_persists_doc_attr",
+          "explanation": "`test_json_decode_persists_doc_attr` coordinates calls to get, httpbin, json, raises."
+        },
+        {
+          "name": "test_json_encodes_as_bytes",
+          "explanation": "`test_json_encodes_as_bytes` coordinates calls to PreparedRequest, isinstance, prepare."
+        },
+        {
+          "name": "test_json_param_post_content_type_works",
+          "explanation": "`test_json_param_post_content_type_works` coordinates calls to httpbin, json, post."
+        },
+        {
+          "name": "test_json_param_post_should_not_override_data_param",
+          "explanation": "`test_json_param_post_should_not_override_data_param` coordinates calls to Request, httpbin, prepare."
+        },
+        {
+          "name": "test_len",
+          "explanation": "`test_len` coordinates calls to CaseInsensitiveDict, len."
+        },
+        {
+          "name": "test_links",
+          "explanation": "`test_links` coordinates calls to Response."
+        },
+        {
+          "name": "test_long_authinfo_in_url",
+          "explanation": "`test_long_authinfo_in_url` coordinates calls to Request, format, prepare."
+        },
+        {
+          "name": "test_lower_items",
+          "explanation": "`test_lower_items` coordinates calls to CaseInsensitiveDict, frozenset, lower_items."
+        },
+        {
+          "name": "test_manual_redirect_with_partial_body_read",
+          "explanation": "`test_manual_redirect_with_partial_body_read` coordinates calls to Session, get, httpbin, iter_content, next, resolve_redirects."
+        },
+        {
+          "name": "test_max_age_invalid_str",
+          "explanation": "`test_max_age_invalid_str` coordinates calls to Morsel, morsel_to_cookie, raises."
+        },
+        {
+          "name": "test_max_age_valid_int",
+          "explanation": "`test_max_age_valid_int` coordinates calls to Morsel, isinstance, morsel_to_cookie."
+        },
+        {
+          "name": "test_mixed_case_scheme_acceptable",
+          "explanation": "`test_mixed_case_scheme_acceptable` coordinates calls to Request, Session, getproxies, httpbin, parametrize, prepare, send, urlparse."
+        },
+        {
+          "name": "test_no_body_content_length",
+          "explanation": "`test_no_body_content_length` coordinates calls to Request, httpbin, lower, parametrize, prepare."
+        },
+        {
+          "name": "test_no_content_length",
+          "explanation": "`test_no_content_length` coordinates calls to Request, httpbin, lower, parametrize, prepare."
+        },
+        {
+          "name": "test_non_prepared_request_error",
+          "explanation": "`test_non_prepared_request_error` coordinates calls to Request, Session, raises, send, str."
+        },
+        {
+          "name": "test_none_timeout",
+          "explanation": "`test_none_timeout` coordinates calls to Urllib3Timeout, get, httpbin, parametrize."
+        },
+        {
+          "name": "test_nonhttp_schemes_dont_check_URLs",
+          "explanation": "`test_nonhttp_schemes_dont_check_URLs` coordinates calls to Request, prepare."
+        },
+        {
+          "name": "test_override_content_length",
+          "explanation": "`test_override_content_length` coordinates calls to Request, httpbin, prepare."
+        },
+        {
+          "name": "test_param_cookiejar_works",
+          "explanation": "`test_param_cookiejar_works` coordinates calls to CookieJar, cookiejar_from_dict, get, httpbin, json, session."
+        },
+        {
+          "name": "test_parameters_for_nonstandard_schemes",
+          "explanation": "`test_parameters_for_nonstandard_schemes` coordinates calls to Request, parametrize, prepare."
+        },
+        {
+          "name": "test_params_are_added_before_fragment",
+          "explanation": "`test_params_are_added_before_fragment` coordinates calls to Request, parametrize, prepare."
+        },
+        {
+          "name": "test_params_are_merged_case_sensitive",
+          "explanation": "`test_params_are_merged_case_sensitive` coordinates calls to Session, get, httpbin, json."
+        },
+        {
+          "name": "test_params_bytes_are_encoded",
+          "explanation": "`test_params_bytes_are_encoded` coordinates calls to Request, prepare."
+        },
+        {
+          "name": "test_params_original_order_is_preserved_by_default",
+          "explanation": "`test_params_original_order_is_preserved_by_default` coordinates calls to OrderedDict, Request, Session, prepare_request."
+        },
+        {
+          "name": "test_path_is_not_double_encoded",
+          "explanation": "`test_path_is_not_double_encoded` coordinates calls to Request, prepare."
+        },
+        {
+          "name": "test_post_json_nan",
+          "explanation": "`test_post_json_nan` coordinates calls to float, httpbin, post, raises."
+        },
+        {
+          "name": "test_post_with_custom_mapping",
+          "explanation": "`test_post_with_custom_mapping` coordinates calls to CustomMapping, get, httpbin, json, post."
+        },
+        {
+          "name": "test_prepare_body_position_non_stream",
+          "explanation": "`test_prepare_body_position_non_stream` coordinates calls to Request, prepare."
+        },
+        {
+          "name": "test_prepare_request_with_bytestring_url",
+          "explanation": "`test_prepare_request_with_bytestring_url` coordinates calls to Request, Session, prepare_request."
+        },
+        {
+          "name": "test_prepared_copy",
+          "explanation": "`test_prepared_copy` coordinates calls to PreparedRequest, copy, default_hooks, getattr, parametrize, prepare."
+        },
+        {
+          "name": "test_prepared_from_session",
+          "explanation": "`test_prepared_from_session` coordinates calls to DummyAuth, Request, Session, httpbin, json, prepare_request, send."
+        },
+        {
+          "name": "test_prepared_request_hook",
+          "explanation": "`test_prepared_request_hook` coordinates calls to Request, Session, getproxies, hasattr, httpbin, prepare, send."
+        },
+        {
+          "name": "test_prepared_request_is_pickleable",
+          "explanation": "`test_prepared_request_is_pickleable` coordinates calls to Request, Session, dumps, httpbin, loads, prepare, send."
+        },
+        {
+          "name": "test_prepared_request_with_file_is_pickleable",
+          "explanation": "`test_prepared_request_with_file_is_pickleable` coordinates calls to Request, Session, dumps, httpbin, loads, open, prepare, send."
+        },
+        {
+          "name": "test_prepared_request_with_hook_is_pickleable",
+          "explanation": "`test_prepared_request_with_hook_is_pickleable` coordinates calls to Request, Session, default_hooks, dumps, httpbin, loads, prepare, send."
+        },
+        {
+          "name": "test_preparing_bad_url",
+          "explanation": "`test_preparing_bad_url` coordinates calls to Request, parametrize, prepare, raises."
+        },
+        {
+          "name": "test_preparing_url",
+          "explanation": "`test_preparing_url` coordinates calls to Request, encode, normalize_percent_encode, parametrize, prepare."
+        },
+        {
+          "name": "test_preserve_key_case",
+          "explanation": "`test_preserve_key_case` coordinates calls to CaseInsensitiveDict, frozenset, items, keys."
+        },
+        {
+          "name": "test_preserve_last_key_case",
+          "explanation": "`test_preserve_last_key_case` coordinates calls to CaseInsensitiveDict, frozenset, items, keys, update."
+        },
+        {
+          "name": "test_proxy_auth",
+          "explanation": "`test_proxy_auth` coordinates calls to HTTPAdapter, proxy_headers."
+        },
+        {
+          "name": "test_proxy_auth_empty_pass",
+          "explanation": "`test_proxy_auth_empty_pass` coordinates calls to HTTPAdapter, proxy_headers."
+        },
+        {
+          "name": "test_proxy_authorization_not_appended_to_https_request",
+          "explanation": "`test_proxy_authorization_not_appended_to_https_request` coordinates calls to Request, Session, parametrize, prepare, rebuild_proxies."
+        },
+        {
+          "name": "test_proxy_authorization_preserved_on_request",
+          "explanation": "`test_proxy_authorization_preserved_on_request` coordinates calls to Session, get, httpbin, json, request, update."
+        },
+        {
+          "name": "test_proxy_env_vars_override_default",
+          "explanation": "`test_proxy_env_vars_override_default` coordinates calls to PreparedRequest, Session, override_environ, parametrize, prepare, rebuild_proxies, urlparse."
+        },
+        {
+          "name": "test_proxy_error",
+          "explanation": "`test_proxy_error` coordinates calls to get, raises."
+        },
+        {
+          "name": "test_proxy_error_on_bad_url",
+          "explanation": "`test_proxy_error_on_bad_url` coordinates calls to get, httpbin, httpbin_secure, raises."
+        },
+        {
+          "name": "test_pyopenssl_redirect",
+          "explanation": "`test_pyopenssl_redirect` coordinates calls to get, httpbin_secure."
+        },
+        {
+          "name": "test_read_timeout",
+          "explanation": "`test_read_timeout` coordinates calls to Urllib3Timeout, fail, get, httpbin, parametrize."
+        },
+        {
+          "name": "test_redirect_with_wrong_gzipped_header",
+          "explanation": "`test_redirect_with_wrong_gzipped_header` coordinates calls to Session, _patch_adapter_gzipped_redirect, get, httpbin."
+        },
+        {
+          "name": "test_redirecting_to_bad_url",
+          "explanation": "`test_redirecting_to_bad_url` coordinates calls to get, httpbin, parametrize, raises."
+        },
+        {
+          "name": "test_request_and_response_are_pickleable",
+          "explanation": "`test_request_and_response_are_pickleable` coordinates calls to dumps, get, httpbin, loads."
+        },
+        {
+          "name": "test_request_cookie_overrides_session_cookie",
+          "explanation": "`test_request_cookie_overrides_session_cookie` coordinates calls to get, httpbin, json, session."
+        },
+        {
+          "name": "test_request_cookies_not_persisted",
+          "explanation": "`test_request_cookies_not_persisted` coordinates calls to get, httpbin, session."
+        },
+        {
+          "name": "test_request_ok_set",
+          "explanation": "`test_request_ok_set` coordinates calls to get, httpbin."
+        },
+        {
+          "name": "test_request_with_bytestring_host",
+          "explanation": "`test_request_with_bytestring_host` coordinates calls to Session, get, httpbin, request."
+        },
+        {
+          "name": "test_requests_are_updated_each_time",
+          "explanation": "`test_requests_are_updated_each_time` coordinates calls to RedirectSession, Request, SendCall, httpbin, prepare, resolve_redirects, send."
+        },
+        {
+          "name": "test_requests_history_is_saved",
+          "explanation": "`test_requests_history_is_saved` coordinates calls to get, httpbin."
+        },
+        {
+          "name": "test_requests_in_history_are_not_overridden",
+          "explanation": "`test_requests_in_history_are_not_overridden` coordinates calls to get, httpbin."
+        },
+        {
+          "name": "test_respect_proxy_env_on_get",
+          "explanation": "`test_respect_proxy_env_on_get` coordinates calls to Session, get, httpbin, override_environ, raises."
+        },
+        {
+          "name": "test_respect_proxy_env_on_request",
+          "explanation": "`test_respect_proxy_env_on_request` coordinates calls to Session, httpbin, override_environ, raises, request."
+        },
+        {
+          "name": "test_respect_proxy_env_on_send_self_prepared_request",
+          "explanation": "`test_respect_proxy_env_on_send_self_prepared_request` coordinates calls to Request, Session, httpbin, override_environ, prepare, raises, send."
+        },
+        {
+          "name": "test_respect_proxy_env_on_send_session_prepared_request",
+          "explanation": "`test_respect_proxy_env_on_send_session_prepared_request` coordinates calls to Request, Session, httpbin, override_environ, prepare_request, raises, send."
+        },
+        {
+          "name": "test_respect_proxy_env_on_send_with_redirects",
+          "explanation": "`test_respect_proxy_env_on_send_with_redirects` coordinates calls to Request, Session, httpbin, override_environ, prepare, print, raises, send."
+        },
+        {
+          "name": "test_response_chunk_size_type",
+          "explanation": "`test_response_chunk_size_type` coordinates calls to BytesIO, Response, all, iter_content, len, list, raises."
+        },
+        {
+          "name": "test_response_context_manager",
+          "explanation": "`test_response_context_manager` coordinates calls to get, httpbin, isinstance."
+        },
+        {
+          "name": "test_response_decode_unicode",
+          "explanation": "`test_response_decode_unicode` coordinates calls to BytesIO, Response, all, isinstance, iter_content."
+        },
+        {
+          "name": "test_response_is_iterable",
+          "explanation": "`test_response_is_iterable` coordinates calls to Response, StringIO, close, iter, next, setattr."
+        },
+        {
+          "name": "test_response_iter_lines",
+          "explanation": "`test_response_iter_lines` coordinates calls to get, httpbin, iter_lines, len, list, next."
+        },
+        {
+          "name": "test_response_iter_lines_reentrant",
+          "explanation": "`test_response_iter_lines_reentrant` coordinates calls to get, httpbin, iter_lines, len, list, next."
+        },
+        {
+          "name": "test_response_json_when_content_is_None",
+          "explanation": "`test_response_json_when_content_is_None` coordinates calls to get, httpbin, json, raises."
+        },
+        {
+          "name": "test_response_reason_unicode",
+          "explanation": "`test_response_reason_unicode` coordinates calls to Response, encode."
+        },
+        {
+          "name": "test_response_reason_unicode_fallback",
+          "explanation": "`test_response_reason_unicode_fallback` coordinates calls to Response, encode, raise_for_status, raises."
+        },
+        {
+          "name": "test_response_without_release_conn",
+          "explanation": "`test_response_without_release_conn` coordinates calls to Response, StringIO, close."
+        },
+        {
+          "name": "test_rewind_body",
+          "explanation": "`test_rewind_body` coordinates calls to BytesIO, Request, prepare, read, rewind_body."
+        },
+        {
+          "name": "test_rewind_body_failed_seek",
+          "explanation": "`test_rewind_body_failed_seek` coordinates calls to BadFileObj, Request, prepare, raises, rewind_body, str."
+        },
+        {
+          "name": "test_rewind_body_failed_tell",
+          "explanation": "`test_rewind_body_failed_tell` coordinates calls to BadFileObj, Request, prepare, raises, rewind_body, str."
+        },
+        {
+          "name": "test_rewind_body_no_seek",
+          "explanation": "`test_rewind_body_no_seek` coordinates calls to BadFileObj, Request, prepare, raises, rewind_body, str."
+        },
+        {
+          "name": "test_rewind_partially_read_body",
+          "explanation": "`test_rewind_partially_read_body` coordinates calls to BytesIO, Request, prepare, read, rewind_body."
+        },
+        {
+          "name": "test_session_close_proxy_clear",
+          "explanation": "`test_session_close_proxy_clear` coordinates calls to Mock, Session, assert_called_once_with, close, dict."
+        },
+        {
+          "name": "test_session_get_adapter_prefix_matching",
+          "explanation": "`test_session_get_adapter_prefix_matching` coordinates calls to HTTPAdapter, Session, get_adapter, mount."
+        },
+        {
+          "name": "test_session_get_adapter_prefix_matching_is_case_insensitive",
+          "explanation": "`test_session_get_adapter_prefix_matching_is_case_insensitive` coordinates calls to HTTPAdapter, Session, get_adapter, mount."
+        },
+        {
+          "name": "test_session_get_adapter_prefix_matching_mixed_case",
+          "explanation": "`test_session_get_adapter_prefix_matching_mixed_case` coordinates calls to HTTPAdapter, Session, get_adapter, mount."
+        },
+        {
+          "name": "test_session_get_adapter_prefix_with_trailing_slash",
+          "explanation": "`test_session_get_adapter_prefix_with_trailing_slash` coordinates calls to HTTPAdapter, Session, get_adapter, mount."
+        },
+        {
+          "name": "test_session_get_adapter_prefix_without_trailing_slash",
+          "explanation": "`test_session_get_adapter_prefix_without_trailing_slash` coordinates calls to HTTPAdapter, Session, get_adapter, mount."
+        },
+        {
+          "name": "test_session_hooks_are_overridden_by_request_hooks",
+          "explanation": "`test_session_hooks_are_overridden_by_request_hooks` coordinates calls to Request, Session, append, httpbin, prepare_request."
+        },
+        {
+          "name": "test_session_hooks_are_used_with_no_request_hooks",
+          "explanation": "`test_session_hooks_are_used_with_no_request_hooks` coordinates calls to Request, Session, append, httpbin, prepare_request."
+        },
+        {
+          "name": "test_session_pickling",
+          "explanation": "`test_session_pickling` coordinates calls to Request, Session, dumps, getproxies, httpbin, loads, prepare, send."
+        },
+        {
+          "name": "test_set_basicauth",
+          "explanation": "`test_set_basicauth` coordinates calls to Request, _basic_auth_str, encode, httpbin, parametrize, prepare."
+        },
+        {
+          "name": "test_set_cookie_on_301",
+          "explanation": "`test_set_cookie_on_301` coordinates calls to get, httpbin, session."
+        },
+        {
+          "name": "test_setdefault",
+          "explanation": "`test_setdefault` coordinates calls to CaseInsensitiveDict, setdefault."
+        },
+        {
+          "name": "test_should_strip_auth_default_port",
+          "explanation": "`test_should_strip_auth_default_port` coordinates calls to Session, parametrize, should_strip_auth."
+        },
+        {
+          "name": "test_should_strip_auth_host_change",
+          "explanation": "`test_should_strip_auth_host_change` coordinates calls to Session, should_strip_auth."
+        },
+        {
+          "name": "test_should_strip_auth_http_downgrade",
+          "explanation": "`test_should_strip_auth_http_downgrade` coordinates calls to Session, should_strip_auth."
+        },
+        {
+          "name": "test_should_strip_auth_https_upgrade",
+          "explanation": "`test_should_strip_auth_https_upgrade` coordinates calls to Session, should_strip_auth."
+        },
+        {
+          "name": "test_should_strip_auth_port_change",
+          "explanation": "`test_should_strip_auth_port_change` coordinates calls to Session, should_strip_auth."
+        },
+        {
+          "name": "test_status_code_425",
+          "explanation": "`test_status_code_425` coordinates calls to get."
+        },
+        {
+          "name": "test_status_raising",
+          "explanation": "`test_status_raising` coordinates calls to get, httpbin, raise_for_status, raises."
+        },
+        {
+          "name": "test_stream_timeout",
+          "explanation": "`test_stream_timeout` coordinates calls to get, httpbin."
+        },
+        {
+          "name": "test_stream_with_auth_does_not_set_transfer_encoding_header",
+          "explanation": "`test_stream_with_auth_does_not_set_transfer_encoding_header` coordinates calls to BytesIO, Request, httpbin, prepare."
+        },
+        {
+          "name": "test_time_elapsed_blank",
+          "explanation": "`test_time_elapsed_blank` coordinates calls to get, httpbin."
+        },
+        {
+          "name": "test_total_timeout_connect",
+          "explanation": "`test_total_timeout_connect` coordinates calls to Urllib3Timeout, fail, get, parametrize."
+        },
+        {
+          "name": "test_transfer_enc_removal_on_redirect",
+          "explanation": "`test_transfer_enc_removal_on_redirect` coordinates calls to BytesIO, Request, Response, Session, httpbin, next, prepare_request, range, resolve_redirects, setattr."
+        },
+        {
+          "name": "test_transport_adapter_ordering",
+          "explanation": "`test_transport_adapter_ordering` coordinates calls to HTTPAdapter, Session, list, mount."
+        },
+        {
+          "name": "test_unconsumed_session_response_closes_connection",
+          "explanation": "`test_unconsumed_session_response_closes_connection` coordinates calls to closing, get, httpbin, session."
+        },
+        {
+          "name": "test_unicode_get",
+          "explanation": "`test_unicode_get` coordinates calls to get, httpbin, parametrize."
+        },
+        {
+          "name": "test_unicode_header_name",
+          "explanation": "`test_unicode_header_name` coordinates calls to httpbin, put."
+        },
+        {
+          "name": "test_unicode_method_name",
+          "explanation": "`test_unicode_method_name` coordinates calls to httpbin, open, request."
+        },
+        {
+          "name": "test_unicode_method_name_with_request_object",
+          "explanation": "`test_unicode_method_name_with_request_object` coordinates calls to Request, Session, httpbin, isinstance, open, prepare_request, send."
+        },
+        {
+          "name": "test_unicode_multipart_post",
+          "explanation": "`test_unicode_multipart_post` coordinates calls to encode, httpbin, open, parametrize, post."
+        },
+        {
+          "name": "test_unicode_multipart_post_fieldnames",
+          "explanation": "`test_unicode_multipart_post_fieldnames` coordinates calls to Request, httpbin, open, prepare, splitext."
+        },
+        {
+          "name": "test_update",
+          "explanation": "`test_update` coordinates calls to CaseInsensitiveDict, len, update."
+        },
+        {
+          "name": "test_update_retains_unchanged",
+          "explanation": "`test_update_retains_unchanged` coordinates calls to CaseInsensitiveDict, update."
+        },
+        {
+          "name": "test_uppercase_scheme_redirect",
+          "explanation": "`test_uppercase_scheme_redirect` coordinates calls to get, httpbin, lower, urlparse."
+        },
+        {
+          "name": "test_url_mutation",
+          "explanation": "`test_url_mutation` coordinates calls to Request, parametrize, prepare."
+        },
+        {
+          "name": "test_urlencoded_get_query_multivalued_param",
+          "explanation": "`test_urlencoded_get_query_multivalued_param` coordinates calls to get, httpbin."
+        },
+        {
+          "name": "test_urllib3_pool_connection_closed",
+          "explanation": "`test_urllib3_pool_connection_closed` coordinates calls to HTTPAdapter, Session, get, httpbin, mount, str."
+        },
+        {
+          "name": "test_urllib3_retries",
+          "explanation": "`test_urllib3_retries` coordinates calls to HTTPAdapter, Retry, Session, get, httpbin, mount, raises."
+        },
+        {
+          "name": "test_user_agent_transfers",
+          "explanation": "`test_user_agent_transfers` coordinates calls to get, httpbin, parametrize."
+        },
+        {
+          "name": "test_whitespaces_are_removed_from_url",
+          "explanation": "`test_whitespaces_are_removed_from_url` coordinates calls to Request, prepare."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `tests/test_requests.py`."
+    },
+    {
+      "file": "tests/test_structures.py",
+      "functions": [
+        {
+          "name": "setup",
+          "explanation": "`setup` coordinates calls to LookupDict, fixture."
+        },
+        {
+          "name": "test_copy",
+          "explanation": "`test_copy` coordinates calls to copy."
+        },
+        {
+          "name": "test_delitem",
+          "explanation": "`test_delitem` performs a self-contained operation."
+        },
+        {
+          "name": "test_get",
+          "explanation": "`test_get` coordinates calls to get."
+        },
+        {
+          "name": "test_getitem",
+          "explanation": "`test_getitem` performs a self-contained operation."
+        },
+        {
+          "name": "test_instance_equality",
+          "explanation": "`test_instance_equality` coordinates calls to parametrize."
+        },
+        {
+          "name": "test_list",
+          "explanation": "`test_list` coordinates calls to list."
+        },
+        {
+          "name": "test_lower_items",
+          "explanation": "`test_lower_items` coordinates calls to list, lower_items."
+        },
+        {
+          "name": "test_repr",
+          "explanation": "`test_repr` coordinates calls to repr."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `tests/test_structures.py`."
+    },
+    {
+      "file": "tests/test_testserver.py",
+      "functions": [
+        {
+          "name": "handler",
+          "explanation": "`handler` coordinates calls to recv, sendall."
+        },
+        {
+          "name": "test_basic",
+          "explanation": "`test_basic` coordinates calls to Server, close, connect, recv, sendall, socket."
+        },
+        {
+          "name": "test_basic_response",
+          "explanation": "`test_basic_response` coordinates calls to basic_response_server, get."
+        },
+        {
+          "name": "test_basic_waiting_server",
+          "explanation": "`test_basic_waiting_server` coordinates calls to Event, basic_response_server, connect, sendall, set, sleep, socket."
+        },
+        {
+          "name": "test_multiple_requests",
+          "explanation": "`test_multiple_requests` coordinates calls to basic_response_server, get, raises, range."
+        },
+        {
+          "name": "test_request_recovery",
+          "explanation": "`test_request_recovery` coordinates calls to basic_response_server, close, connect, sendall, skip, socket."
+        },
+        {
+          "name": "test_request_recovery_with_bigger_timeout",
+          "explanation": "`test_request_recovery_with_bigger_timeout` coordinates calls to basic_response_server, close, connect, sendall, sleep, socket."
+        },
+        {
+          "name": "test_requests_after_timeout_are_not_received",
+          "explanation": "`test_requests_after_timeout_are_not_received` coordinates calls to basic_response_server, close, connect, sendall, sleep, socket."
+        },
+        {
+          "name": "test_server_closes",
+          "explanation": "`test_server_closes` coordinates calls to basic_response_server, close, connect, raises, socket."
+        },
+        {
+          "name": "test_server_finishes_on_error",
+          "explanation": "`test_server_finishes_on_error` coordinates calls to Exception, basic_response_server, len, raises."
+        },
+        {
+          "name": "test_server_finishes_when_no_connections",
+          "explanation": "`test_server_finishes_when_no_connections` coordinates calls to basic_response_server, len."
+        },
+        {
+          "name": "test_text_response",
+          "explanation": "`test_text_response` coordinates calls to get, text_response_server."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `tests/test_testserver.py`."
+    },
+    {
+      "file": "tests/test_utils.py",
+      "functions": [
+        {
+          "name": "Close",
+          "explanation": "`Close` performs a self-contained operation."
+        },
+        {
+          "name": "OpenKey",
+          "explanation": "`OpenKey` performs a self-contained operation."
+        },
+        {
+          "name": "QueryValueEx",
+          "explanation": "`QueryValueEx` performs a self-contained operation."
+        },
+        {
+          "name": "__init__",
+          "explanation": "`__init__` performs a self-contained operation."
+        },
+        {
+          "name": "__len__",
+          "explanation": "`__len__` performs a self-contained operation."
+        },
+        {
+          "name": "no_proxy",
+          "explanation": "`no_proxy` coordinates calls to fixture, setenv."
+        },
+        {
+          "name": "seek",
+          "explanation": "`seek` performs a self-contained operation."
+        },
+        {
+          "name": "tell",
+          "explanation": "`tell` coordinates calls to error."
+        },
+        {
+          "name": "test__parse_content_type_header",
+          "explanation": "`test__parse_content_type_header` coordinates calls to _parse_content_type_header, parametrize."
+        },
+        {
+          "name": "test_add_dict_to_cookiejar",
+          "explanation": "`test_add_dict_to_cookiejar` coordinates calls to CookieJar, RequestsCookieJar, add_dict_to_cookiejar, parametrize."
+        },
+        {
+          "name": "test_bad_utf_like_encoding",
+          "explanation": "`test_bad_utf_like_encoding` coordinates calls to guess_json_utf."
+        },
+        {
+          "name": "test_bypass",
+          "explanation": "`test_bypass` coordinates calls to get_environ_proxies, parametrize."
+        },
+        {
+          "name": "test_bypass_no_proxy_keyword",
+          "explanation": "`test_bypass_no_proxy_keyword` coordinates calls to get_environ_proxies, parametrize."
+        },
+        {
+          "name": "test_dotted_netmask",
+          "explanation": "`test_dotted_netmask` coordinates calls to dotted_netmask, parametrize."
+        },
+        {
+          "name": "test_encoded",
+          "explanation": "`test_encoded` coordinates calls to encode, guess_json_utf, parametrize."
+        },
+        {
+          "name": "test_file",
+          "explanation": "`test_file` coordinates calls to join, len, open, parametrize, super_len, write."
+        },
+        {
+          "name": "test_get_auth_from_url",
+          "explanation": "`test_get_auth_from_url` coordinates calls to get_auth_from_url, parametrize."
+        },
+        {
+          "name": "test_get_encoding_from_headers",
+          "explanation": "`test_get_encoding_from_headers` coordinates calls to CaseInsensitiveDict, get_encoding_from_headers, parametrize."
+        },
+        {
+          "name": "test_guess_by_bom",
+          "explanation": "`test_guess_by_bom` coordinates calls to encode, guess_json_utf, parametrize."
+        },
+        {
+          "name": "test_guess_filename_invalid",
+          "explanation": "`test_guess_filename_invalid` coordinates calls to guess_filename, parametrize, type."
+        },
+        {
+          "name": "test_guess_filename_valid",
+          "explanation": "`test_guess_filename_valid` coordinates calls to decode, guess_filename, isinstance, parametrize, type."
+        },
+        {
+          "name": "test_invalid",
+          "explanation": "`test_invalid` coordinates calls to address_in_network."
+        },
+        {
+          "name": "test_invalid_unc_path",
+          "explanation": "`test_invalid_unc_path` coordinates calls to extract_zipped_paths."
+        },
+        {
+          "name": "test_io_streams",
+          "explanation": "`test_io_streams` coordinates calls to param, parametrize, skipif, stream, super_len."
+        },
+        {
+          "name": "test_is_filename",
+          "explanation": "`test_is_filename` coordinates calls to unquote_header_value."
+        },
+        {
+          "name": "test_iter_slices",
+          "explanation": "`test_iter_slices` coordinates calls to iter_slices, len, list, parametrize."
+        },
+        {
+          "name": "test_none",
+          "explanation": "`test_none` coordinates calls to get_encodings_from_content, len."
+        },
+        {
+          "name": "test_not_bypass",
+          "explanation": "`test_not_bypass` coordinates calls to get_environ_proxies, parametrize."
+        },
+        {
+          "name": "test_not_bypass_no_proxy_keyword",
+          "explanation": "`test_not_bypass_no_proxy_keyword` coordinates calls to get_environ_proxies, parametrize, setenv."
+        },
+        {
+          "name": "test_not_vulnerable_to_bad_url_parsing",
+          "explanation": "`test_not_vulnerable_to_bad_url_parsing` coordinates calls to get_netrc_auth, open, setenv, str, write."
+        },
+        {
+          "name": "test_parse_dict_header",
+          "explanation": "`test_parse_dict_header` coordinates calls to parametrize, parse_dict_header."
+        },
+        {
+          "name": "test_parse_header_links",
+          "explanation": "`test_parse_header_links` coordinates calls to parametrize, parse_header_links."
+        },
+        {
+          "name": "test_pragmas",
+          "explanation": "`test_pragmas` coordinates calls to get_encodings_from_content, len, parametrize."
+        },
+        {
+          "name": "test_precedence",
+          "explanation": "`test_precedence` coordinates calls to get_encodings_from_content, strip."
+        },
+        {
+          "name": "test_prepend_scheme_if_needed",
+          "explanation": "`test_prepend_scheme_if_needed` coordinates calls to parametrize, prepend_scheme_if_needed."
+        },
+        {
+          "name": "test_requote_uri_with_unquoted_percents",
+          "explanation": "`test_requote_uri_with_unquoted_percents` coordinates calls to parametrize, requote_uri."
+        },
+        {
+          "name": "test_select_proxies",
+          "explanation": "`test_select_proxies` coordinates calls to parametrize, select_proxy."
+        },
+        {
+          "name": "test_set_environ",
+          "explanation": "`test_set_environ` coordinates calls to deepcopy, get, parametrize, set_environ."
+        },
+        {
+          "name": "test_set_environ_raises_exception",
+          "explanation": "`test_set_environ_raises_exception` coordinates calls to Exception, raises, set_environ, str."
+        },
+        {
+          "name": "test_should_bypass_proxies",
+          "explanation": "`test_should_bypass_proxies` coordinates calls to parametrize, setenv, should_bypass_proxies."
+        },
+        {
+          "name": "test_should_bypass_proxies_no_proxy",
+          "explanation": "`test_should_bypass_proxies_no_proxy` coordinates calls to parametrize, should_bypass_proxies."
+        },
+        {
+          "name": "test_should_bypass_proxies_pass_only_hostname",
+          "explanation": "`test_should_bypass_proxies_pass_only_hostname` coordinates calls to assert_called_once_with, parametrize, patch, should_bypass_proxies."
+        },
+        {
+          "name": "test_should_bypass_proxies_win_registry",
+          "explanation": "`test_should_bypass_proxies_win_registry` coordinates calls to RegHandle, deque, parametrize, setattr, setenv, should_bypass_proxies, skipif."
+        },
+        {
+          "name": "test_should_bypass_proxies_win_registry_ProxyOverride_value",
+          "explanation": "`test_should_bypass_proxies_win_registry_ProxyOverride_value` coordinates calls to RegHandle, setattr, setenv, should_bypass_proxies, skipif."
+        },
+        {
+          "name": "test_should_bypass_proxies_win_registry_bad_values",
+          "explanation": "`test_should_bypass_proxies_win_registry_bad_values` coordinates calls to RegHandle, setattr, setenv, should_bypass_proxies, skipif."
+        },
+        {
+          "name": "test_string",
+          "explanation": "`test_string` coordinates calls to super_len."
+        },
+        {
+          "name": "test_super_len_correctly_calculates_len_of_partially_read_file",
+          "explanation": "`test_super_len_correctly_calculates_len_of_partially_read_file` coordinates calls to StringIO, super_len, write."
+        },
+        {
+          "name": "test_super_len_handles_files_raising_weird_errors_in_tell",
+          "explanation": "`test_super_len_handles_files_raising_weird_errors_in_tell` coordinates calls to BoomFile, parametrize, super_len."
+        },
+        {
+          "name": "test_super_len_tell_ioerror",
+          "explanation": "`test_super_len_tell_ioerror` coordinates calls to NoLenBoomFile, parametrize, super_len."
+        },
+        {
+          "name": "test_super_len_with__len__",
+          "explanation": "`test_super_len_with__len__` coordinates calls to super_len."
+        },
+        {
+          "name": "test_super_len_with_fileno",
+          "explanation": "`test_super_len_with_fileno` coordinates calls to len, open, read, super_len."
+        },
+        {
+          "name": "test_super_len_with_no__len__",
+          "explanation": "`test_super_len_with_no__len__` coordinates calls to LenFile, super_len."
+        },
+        {
+          "name": "test_super_len_with_no_matches",
+          "explanation": "`test_super_len_with_no_matches` coordinates calls to object, super_len."
+        },
+        {
+          "name": "test_super_len_with_tell",
+          "explanation": "`test_super_len_with_tell` coordinates calls to StringIO, read, super_len."
+        },
+        {
+          "name": "test_tarfile_member",
+          "explanation": "`test_tarfile_member` coordinates calls to add, extractfile, join, open, str, super_len, write."
+        },
+        {
+          "name": "test_to_native_string",
+          "explanation": "`test_to_native_string` coordinates calls to parametrize, to_native_string."
+        },
+        {
+          "name": "test_unicode_is_ascii",
+          "explanation": "`test_unicode_is_ascii` coordinates calls to parametrize, unicode_is_ascii."
+        },
+        {
+          "name": "test_unquote_unreserved",
+          "explanation": "`test_unquote_unreserved` coordinates calls to parametrize, unquote_unreserved."
+        },
+        {
+          "name": "test_unzipped_paths_unchanged",
+          "explanation": "`test_unzipped_paths_unchanged` coordinates calls to extract_zipped_paths, parametrize."
+        },
+        {
+          "name": "test_urldefragauth",
+          "explanation": "`test_urldefragauth` coordinates calls to parametrize, urldefragauth."
+        },
+        {
+          "name": "test_valid",
+          "explanation": "`test_valid` coordinates calls to address_in_network."
+        },
+        {
+          "name": "test_works",
+          "explanation": "`test_works` coordinates calls to get_netrc_auth, open, setenv, str, write."
+        },
+        {
+          "name": "test_zipped_paths_extracted",
+          "explanation": "`test_zipped_paths_extracted` coordinates calls to ZipFile, cmp, exists, extract_zipped_paths, join, lstrip, splitdrive, write."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `tests/test_utils.py`."
+    },
+    {
+      "file": "tests/testserver/__init__.py",
+      "functions": [],
+      "is_entry": false,
+      "explanation": "This file defines logic in `tests/testserver/__init__.py`."
+    },
+    {
+      "file": "tests/testserver/server.py",
+      "functions": [
+        {
+          "name": "__enter__",
+          "explanation": "`__enter__` coordinates calls to RuntimeError, start, wait."
+        },
+        {
+          "name": "__exit__",
+          "explanation": "`__exit__` coordinates calls to _close_server_sock_ignore_errors, join, set, wait."
+        },
+        {
+          "name": "__init__",
+          "explanation": "`__init__` coordinates calls to SSLContext, __init__, load_cert_chain, load_verify_locations, super."
+        },
+        {
+          "name": "_accept_connection",
+          "explanation": "`_accept_connection` coordinates calls to accept, select."
+        },
+        {
+          "name": "_close_server_sock_ignore_errors",
+          "explanation": "`_close_server_sock_ignore_errors` coordinates calls to close."
+        },
+        {
+          "name": "_create_socket_and_bind",
+          "explanation": "`_create_socket_and_bind` coordinates calls to bind, listen, socket, wrap_socket."
+        },
+        {
+          "name": "_handle_requests",
+          "explanation": "`_handle_requests` coordinates calls to _accept_connection, append, close, handler, range."
+        },
+        {
+          "name": "basic_response_server",
+          "explanation": "`basic_response_server` coordinates calls to text_response_server."
+        },
+        {
+          "name": "consume_socket_content",
+          "explanation": "`consume_socket_content` coordinates calls to recv, select."
+        },
+        {
+          "name": "run",
+          "explanation": "`run` coordinates calls to _close_server_sock_ignore_errors, _create_socket_and_bind, _handle_requests, getsockname, set, wait."
+        },
+        {
+          "name": "text_response_handler",
+          "explanation": "`text_response_handler` coordinates calls to consume_socket_content, encode, send."
+        },
+        {
+          "name": "text_response_server",
+          "explanation": "`text_response_server` coordinates calls to Server."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `tests/testserver/server.py`."
+    },
+    {
+      "file": "tests/utils.py",
+      "functions": [
+        {
+          "name": "override_environ",
+          "explanation": "`override_environ` coordinates calls to clear, dict, items, update."
+        }
+      ],
+      "is_entry": false,
+      "explanation": "This file defines logic in `tests/utils.py`."
     }
   ],
   "metadata": {
-    "entry_point": "app.py"
+    "entry_point": "src/requests/certs.py"
   }
 }
