@@ -15,14 +15,9 @@
   - [Proposed Solution](#proposed-solution)
   - [Existing Approaches and Identified Gaps](#existing-approaches-and-identified-gaps)
   - [**Unlike IDE navigation tools that expose relationships, CODE Sherpa orders and teaches them as a structured learning path.**](#unlike-ide-navigation-tools-that-expose-relationships-code-sherpa-orders-and-teaches-them-as-a-structured-learning-path)
-  - [Prototype Overview](#prototype-overview)
+  - [Current Prototype Overview](#current-prototype-overview)
   - [Conceptual Workflow](#conceptual-workflow)
   - [System Overview](#system-overview)
-  - [Round-1 Implementation Summary](#round-1-implementation-summary)
-    - [Round-1 Capabilities](#round-1-capabilities)
-    - [Round-1 Outputs](#round-1-outputs)
-    - [Round-1 Technical Approach](#round-1-technical-approach)
-    - [Key Principle](#key-principle)
   - [How to Run the Prototype](#how-to-run-the-prototype)
     - [Prerequisites](#prerequisites)
     - [Quick Start](#quick-start)
@@ -104,7 +99,7 @@ Overall, existing approaches emphasize *access to information* rather than *lear
 **Unlike IDE navigation tools that expose relationships, CODE Sherpa orders and teaches them as a structured learning path.**
 ---
 
-## Prototype Overview
+## Current Prototype Overview
 
 The CODE Sherpa prototype demonstrates an **end-to-end workflow** for transforming an unfamiliar software repository into a structured, interactive learning experience.
 
@@ -146,43 +141,6 @@ The CODE Sherpa system operates as a **deterministic, reproducible pipeline**:
 
 This approach emphasizes **structured comprehension** over ad-hoc exploration or reactive assistance.
 
-
----
-
-## Round-1 Implementation Summary
-
-For the first round of the hackathon, we implemented a **fully working end-to-end prototype** that demonstrates how a codebase can be automatically analyzed and explained using deterministic static analysis.
-
-### Round-1 Capabilities
-
-In Round-1, CODE Sherpa can:
-- Analyze a real repository to extract verified structural facts
-- Identify important files, functions, and call relationships
-- Convert this structure into a step-by-step guided explanation
-- Generate a flowchart that visually represents overall code flow and dependencies
-
-### Round-1 Outputs
-
-When executed, Round-1 produces:
-1. **`demo/analysis.json`** - Complete code structure analysis
-2. **`demo/learning_order.json`** - Structured learning path
-3. **`demo/flowchart.md`** - Visual dependency graph (Mermaid format)
-
-### Round-1 Technical Approach
-
-The Round-1 implementation prioritizes **correctness, clarity, and reproducibility**:
-- Uses Python's AST module for deterministic code parsing
-- Template-based explanations ensure accuracy
-- No external dependencies (pure Python standard library)
-- Reproducible results
-
-This establishes a strong and defensible technical foundation for further enhancements in Round-2.
-
----
-
-### Key Principle
-
-**Intelligence is added only after correctness is guaranteed.** Round-1 validates the foundation; Round-2 enhances the experience.
 
 ---
 
@@ -322,8 +280,8 @@ python flowchart/flow_builder.py demo/analysis.json
 python tour/explainer.py demo/analysis.json demo/learning_order.json
 ```
 
-- [DFD and Flowcharts README](README_A.md) 
-- [Round-2 Improvements README](README_B.md)
+- [Execution Flow Diagram](Plannings/diagrams/execution_flow.png)
+- [Syatem Architecture Diagram](Plannings/diagrams/system_architecture.png)
 
 ---
 
@@ -337,29 +295,3 @@ The system is organized as a linear pipeline:
 source code is statically analyzed into a unified JSON knowledge model,
 which is then consumed by independent generators to produce
 guided explanations and repository-level flowcharts.
-
-The authoritative system design, including component boundaries,
-interfaces, guarantees, and non-goals, is defined in
-[`round-2/system_design.md`](round-2/system_design.md).
-
-A high-level architectural view and execution flow are provided in
-[`round-2/diagrams/`](round-2/diagrams/) to support quick visual orientation.
-
-
-
-## Round-2: System Design & Scalability
-
-In Round-2, CODE-Sherpa focuses on formal system design, scalability reasoning, and clear ownership
-without changing any implemented behavior from Round-1.
-This round documents how the existing analyzer, tour generator, flowchart generator,
-and CLI interact as a cohesive system, along with explicit boundaries and non-goals.
-
-The authoritative system architecture and component interfaces are defined in
-[`round2/system_design.md`](round-2/system_design.md).
-Scalability considerations, limits, and failure modes are discussed in
-[`round2/scalability_strategy.md`](round-2/scalability_strategy.md).
-High-level diagrams illustrating architecture and execution flow are available in
-[`round2/diagrams/`](round-2/diagrams/).
-
-Round-2 adds clarity and credibility to the system while preserving deterministic,
-static analysis as the core principle.

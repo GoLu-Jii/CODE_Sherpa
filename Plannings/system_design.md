@@ -25,41 +25,10 @@ The goal is to clearly define:
 - What guarantees the system will provide
 - What the system intentionally refuses to do
 
-**Important:** This document describes the **planned full solution**, not the current Round-1 implementation.
-The Round-1 foundation is documented separately (see `README_B.md` for Round-1 capabilities).
 
 ---
 
-### 1.2 Round-1 Foundation
-
-Before describing the planned full system architecture, we establish the foundation
-that exists in Round-1:
-
-**Round-1 Implementation (Current State):**
-- ✅ Deterministic AST-based static analyzer
-- ✅ Unified JSON knowledge model
-- ✅ Template-based tour generator
-- ✅ Flowchart generator (Mermaid output)
-- ✅ CLI-based execution
-- ✅ Python-only support
-- ✅ File-based artifact output
-
-**Round-1 Outputs:**
-- `analysis.json` - Complete code structure analysis
-- `learning_order.json` - Structured learning path
-- `flowchart.md` - Visual dependency graph
-
-The full system architecture described below builds upon this foundation, adding:
-- AI-assisted semantic enrichment (Sherpa Brain)
-- VS Code Extension integration
-- Interactive guided tours
-- Enhanced user experience
-
-See `README_B.md` for detailed Round-1 implementation summary.
-
----
-
-### 1.3 Explicit Non-Goals & Constraints CODE-Sherpa does not:
+### 1.2 Explicit Non-Goals & Constraints CODE-Sherpa does not:
 
 - Allow AI to hallucinate code structure (AI is constrained by AST facts).
 - Execute code at runtime.
@@ -260,7 +229,6 @@ Downstream components do not re-analyze source code.
 - Uses LLM API (planned integration)
 - Applies only after static analysis completes
 - Optional layer - system can operate without it (falls back to template-based explanations)
-- See `scalability_strategy.md` for caching and optimization strategies
 
 ---
 
