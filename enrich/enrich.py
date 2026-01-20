@@ -41,20 +41,18 @@ def enrich_analysis(analysis: Dict[str, Any], use_llm: bool = True) -> Dict[str,
     files = enriched.get("files", {})
 
     for file_path, file_node in files.items():
-        # Add path to file_node for explanation helpers
+        # Attach path for explanation helpers
         file_node.setdefault("path", file_path)
-        
+
         file_node.setdefault(
             "explanation",
             _explain_file(file_node, use_llm)
         )
 
-        # functions is a dict: {"func_name": {"calls": [...]}, ...}
         functions = file_node.get("functions", {})
         for func_name, func_node in functions.items():
-            # Add name to func_node for explanation helpers
             func_node.setdefault("name", func_name)
-            
+
             func_node.setdefault(
                 "explanation",
                 _explain_function(func_node, file_node, use_llm)
@@ -89,25 +87,36 @@ def _explain_file(file_node: Dict[str, Any], use_llm: bool) -> str:
     path = file_node.get("path", "this file")
 
     if not use_llm:
-        return f"This file contains core logic defined in `{path}`."
+        return (
+            "The role of this file cannot be determined from static structure alone."
+        )
 
-    # functions is a dict: {"func_name": {"calls": [...]}, ...}
     functions = file_node.get("functions", {})
     function_names = list(functions.keys()) if isinstance(functions, dict) else []
-    
+
     prompt = f"""
 You are given verified static analysis data.
 
 File path: {path}
 Defined functions: {function_names}
 
-Explain the purpose of this file using ONLY this information.
-Do not infer runtime behavior.
-Do not invent relationships.
-Keep it concise.
+Explain the role of this file in a codebase.
+
+Rules:
+- You may use common programming conventions and file naming patterns.
+- Do NOT invent runtime behavior or hidden relationships.
+- If the role cannot be determined with confidence, state uncertainty explicitly.
+- Prefer explaining relevance over listing contents.
+- Avoid tautologies such as "defines logic".
+
+Keep it concise (1–2 sentences).
 """
 
-    return _safe_llm_call(prompt, fallback=f"This file defines logic in `{path}`.")
+    fallback = (
+        "The role of this file cannot be determined from static structure alone."
+    )
+
+    return _safe_llm_call(prompt, fallback=fallback)
 
 
 def _explain_function(
@@ -124,9 +133,10 @@ def _explain_function(
     file_path = file_node.get("path", "unknown file")
 
     if not use_llm:
-        if calls:
-            return f"`{name}` coordinates calls to {', '.join(calls)}."
-        return f"`{name}` performs a self-contained operation."
+        return (
+            f"`{name}` performs an internal operation, "
+            "but its exact responsibility cannot be determined from static structure alone."
+        )
 
     prompt = f"""
 You are given verified static analysis data.
@@ -135,19 +145,44 @@ Function name: {name}
 Defined in file: {file_path}
 Calls: {calls}
 
-Explain the role of this function using ONLY this data.
-Do not guess runtime behavior.
-Do not invent relationships.
-Keep it concise and factual.
+Explain what this function appears to be responsible for.
+
+Rules:
+- You may interpret function names and standard library calls.
+- Do NOT invent runtime behavior or external interactions.
+- If responsibility cannot be inferred, state uncertainty explicitly.
+- Do NOT describe the function by listing its calls.
+- Focus on developer-relevant understanding.
+
+Keep it concise (1 sentence).
 """
 
     fallback = (
-        f"`{name}` coordinates calls to {', '.join(calls)}."
-        if calls else
-        f"`{name}` performs a self-contained operation."
+        f"`{name}` performs an internal operation, "
+        "but its exact responsibility cannot be determined from static structure alone."
     )
 
     return _safe_llm_call(prompt, fallback=fallback)
+
+
+# -------------------------
+# Explanation quality gate
+# -------------------------
+
+def _is_bad_explanation(text: str) -> bool:
+    """
+    Detect low-signal or tautological explanations.
+    """
+
+    banned_phrases = [
+        "defines logic",
+        "coordinates calls",
+        "handles various",
+        "responsible for various",
+    ]
+
+    lower = text.lower()
+    return any(phrase in lower for phrase in banned_phrases)
 
 
 # -------------------------
@@ -157,11 +192,15 @@ Keep it concise and factual.
 def _safe_llm_call(prompt: str, fallback: str) -> str:
     """
     Calls the LLM safely.
-    If anything fails, returns fallback explanation.
+    If anything fails or output violates quality rules,
+    returns the fallback explanation.
     """
 
     try:
-        return _call_llm(prompt)
+        result = _call_llm(prompt)
+        if _is_bad_explanation(result):
+            return fallback
+        return result
     except Exception:
         return fallback
 
@@ -188,9 +227,12 @@ def _call_llm(prompt: str) -> str:
                 {
                     "role": "system",
                     "content": (
-                        "You explain existing code structure. "
-                        "You are not allowed to infer behavior, "
-                        "invent relationships, or guess intent."
+                        "You explain code structure for developer understanding. "
+                        "You may rely on common programming conventions, "
+                        "standard library semantics, and identifier names. "
+                        "You MUST NOT invent relationships or runtime behavior. "
+                        "If intent or purpose cannot be proven from static structure, "
+                        "you MUST state uncertainty explicitly."
                     ),
                 },
                 {"role": "user", "content": prompt},
