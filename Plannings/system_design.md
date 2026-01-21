@@ -14,90 +14,65 @@
 
 ### 1.1 Purpose of This Document
 
-This document describes the **planned architecture** for the complete CODE-Sherpa system,
-building upon the Round-1 prototype foundation. It specifies how we plan to extend
-the deterministic static analysis core with AI-assisted explanations and IDE integration.
+This document describes the **target architecture** for the CODE-Sherpa Platform, moving beyond the Round-1 prototype.
 
 The goal is to clearly define:
 
-- How the full system will be structured
-- How components will interact
-- What guarantees the system will provide
-- What the system intentionally refuses to do
-
+-   The transition to a **Hosted, API-First Platform**.
+-   The role of the **Core Engine** vs. the **Web Interface**.
+-   How the system delivers **Grounded, Explainable Code Intelligence**.
 
 ---
 
 ### 1.2 Explicit Non-Goals & Constraints CODE-Sherpa does not:
 
-- Allow AI to hallucinate code structure (AI is constrained by AST facts).
-- Execute code at runtime.
-- Modify source code.
-- Crucially: We do not use AI as an Architect, only as an Explainer. The AST is the Judge; the AI is the Narrator.
+-   Allow AI to hallucinate code structure (AI is constrained by AST facts).
+-   Execute code at runtime.
+-   Modify source code (we are a read-only observability platform).
+-   **Crucially:** \We do not use AI as an Architect, only as an Explainer. The AST is the Judge; the AI is the Narrator.
+
 ---
 
 ## 2. Architectural Principles
 
 CODE-Sherpa follows a small set of strict principles.
 
-### 2.1 Deterministic Behavior
+### 2.1 API-First & Hosted
+The core intelligence lives in a hosted engine, accessible via API. The UI (Web, IDE) is just a consumer of this API. This enables a single source of truth across all tools.
 
-- Identical input repositories produce identical outputs
-- No probabilistic or heuristic behavior
-- No hidden state between runs
+### 2.2 Deterministic Behavior
+-   Identical input repositories produce identical outputs.
+-   No probabilistic or heuristic behavior in the structural layer.
 
----
+### 2.3 Static-Only Understanding
+-   All understanding comes from static source code inspection.
+-   No runtime execution or dynamic tracing.
 
-### 2.2 Static-Only Understanding
-
-- All understanding comes from static source code inspection
-- No runtime execution
-- No dynamic tracing or profiling
-
----
-
-### 2.3 Evidence-Driven Outputs
-
-- Every explanation and visual is derived from verified code structure
-- No guessing or hallucination
-- No interpretation beyond extracted facts
-
----
-
-### 2.4 Pipeline Isolation
-
-- Each component has a single responsibility
-- Components communicate only through structured outputs
-- No shared internal state
+### 2.4 Evidence-Driven Outputs
+-   Every explanation and visual is derived from verified code structure.
+-   No guessing or hallucination.
 
 ---
 
 ## 3. High-Level Architecture
 
-CODE-Sherpa is organized as a linear, deterministic pipeline with optional
-AI enrichment and IDE integration layers.
+CODE-Sherpa is a **Cloud-Native Code Intelligence Platform**.
 
-**Planned Full System Architecture:**
+**The Stack:**
 
-At a high level, the full system extends the Round-1 foundation:
-
-1. **User Interface Layer:** User invokes through VS Code Extension (or CLI for backward compatibility)
-2. **Analysis Layer:** Source code is statically analyzed (Round-1 foundation)
-3. **Knowledge Model:** Extracted facts stored in unified JSON model (Round-1 foundation)
-4. **Enrichment Layer (New):** AI-assisted semantic enrichment adds context (planned)
-5. **Generation Layer:** Multiple generators consume the enriched model
-6. **Presentation Layer:** Interactive tours in VS Code or artifacts on disk
-
-All downstream understanding is grounded in one verified source of truth (the AST-derived knowledge model).
+1.  **Platform Layer (The API):** Receives requests, manages jobs, serves the Knowledge Graph.
+2.  **Engine Layer (The Brain):** Stateless workers that clone repos, run AST analysis, and build the graph.
+3.  **Enrichment Layer:** Semantic processing (LLM) that annotates the graph.
+4.  **Interface Layer:**
+    *   **Web Platform (Primary):** Rich, interactive system maps and tours.
+    *   **IDE Extensions (Secondary):** Thin clients that pull data from the API.
 
 **Component Communication Flow:**
-- User → VS Code Extension → Analysis Pipeline
-- Analysis Pipeline → Unified JSON Model
-- Unified JSON Model → AI Enrichment (optional) → Enriched Model
-- Enriched Model → Tour Generator + Flowchart Generator
-- Generators → VS Code Extension (for interactive display) OR Disk (for file output)
+-   User (Web/IDE) -> **Sherpa API** -> Job Queue
+-   **Worker** -> Clones Repo -> Runs Analysis -> Saves **Canonical Knowledge Model**
+-   **Sherpa API** -> Serves Model to Web/IDE
 
-See: `diagrams/system_architecture.png`
+See: `diagrams/system_architecture.png` (needs update)
 
 ---
 
@@ -107,182 +82,61 @@ Each component below represents a stable architectural boundary.
 
 ---
 
-### 4.1 User Interface Layer
+### 4.1 Interface Layer
 
-**Responsibility**
+#### 4.1.1 Web Application (Primary Interface)
+**Responsibility:**
+-   The "Google Maps" for your codebase.
+-   Interactive, zoomable system diagrams.
+-   Team collaboration (sharing tours, annotations).
+-   Onboarding hubs ("Start here to learn Auth Service").
 
-- Accept user requests (repository path, commands)
-- Validate inputs
-- Orchestrate pipeline execution
-- Present results to user
+#### 4.1.2 VS Code Extension (Secondary Interface)
+**Responsibility:**
+-   A **thin client** that connects to the Sherpa API.
+-   Overlays the "Guided Tour" directly on the user's active editor.
+-   Does *no* heavy lifting locally.
+
+---
+
+### 4.2 The Hosted Engine (Core)
+
+**Responsibility:**
+-   Scalable, stateless job runner.
+-   Takes a Repo URL -> Returns a Knowledge Graph.
 
 **Components:**
-
-**4.1.1 VS Code Extension (Planned - Primary Interface)**
-- Provides interactive guided tours within the editor
-- Opens files and highlights code sections automatically
-- Displays explanations in webview panels
-- Enables step-by-step navigation through learning path
-- Supports comprehension checks and user interaction
-
-**4.1.2 CLI Interface (Round-1 Foundation - Backward Compatibility)**
-- Accept repository path and command
-- Validate inputs
-- Orchestrate pipeline execution
-- Output artifacts to disk
-
-**Notes**
-
-- Stateless execution
-- Contains no analysis logic
-- Does not modify data semantics
-- VS Code Extension is the planned primary interface; CLI remains for automation/backward compatibility
+1.  **Repo Cloner:** Ephemeral storage of source code.
+2.  **Static Analyzer:** Language-specific drivers (Python AST, Tree-sitter for others).
+3.  **Graph Builder:** Unifies analysis into the **Canonical Code Knowledge Model**.
 
 ---
 
-### 4.2 Static Analyzer
+### 4.3 Unified Code Knowledge Model (JSON/Graph)
 
-**Responsibility**
-
-- Traverse source files
-- Parse code using AST
-- Extract verified structural facts
-
-**Extracted Facts**
-
-- Files
-- Functions
-- Imports
-- Function calls
-- Entry points
-
-**Constraints**
-
-- Static inspection only
-- Language-specific parsing
-- No runtime interpretation
-
-The analyzer is the only component that reads raw source code.
+**Responsibility:**
+-   The "Database" of the code.
+-   Represents Files, Functions, Classes, and their exact relationships.
+-   **Single Source of Truth** for all interfaces.
 
 ---
 
-### 4.3 Unified Code Knowledge Model (JSON)
+### 4.4 Semantic Enrichment Layer (The "Sherpa Narrator")
 
-**Responsibility**
-
-- Represent extracted facts in a single structured format
-- Act as the system’s single source of truth
-
-**Characteristics**
-
-- Deterministic
-- Fully derived from analyzer output
-- Stable schema
-
-Downstream components do not re-analyze source code.
+**Responsibility:**
+-   Adds the "Why" to the "What".
+-   Consumes the Verified Graph components.
+-   Queries LLMs to explain *specific* nodes (e.g., "Explain the purpose of this auth logic").
+-   **Constraint:** Can never add nodes that don't exist in the AST.
 
 ---
 
-### 4.4 Tour Generator
+### 4.5 Generators (Tour & Flowchart)
 
-**Responsibility**
+**Responsibility:**
+-   **Tour Generator:** Algorithms to determine the "optimal learning path" (e.g., BFS from entry points, topological sort).
+-   **Flowchart Generator:** Renders the graph for visual consumption (Mermaid/ReactFlow).
 
-- Convert code structure into a guided learning order
-- Generate step-by-step explanation artifacts
-
-**Input**
-
-- Unified Code Knowledge Model (JSON)
-
-**Behavior**
-
-- Orders learning from entry points to core logic
-- Produces structured explanation steps
-
-**Constraints**
-
-- No inference beyond extracted facts
-- No architectural guessing
-
----
-
-### 4.4.5 Semantic Enrichment Layer (The "Sherpa Brain") - Planned
-
-**Responsibility**: Enriches the static AST model with semantic context and explanations.
-
-**Input:**
-- Verified AST Nodes from Unified Knowledge Model
-- Raw code snippets for context
-
-**Output:**
-- AI-generated annotations appended to the JSON model
-- Explanations of code purpose and design patterns
-- Context about why code exists (not just what it does)
-
-**Constraints:**
-- Constrained to explain only nodes provided by the Analyzer
-- Cannot invent new code structures
-- Must be grounded in verified AST facts
-- AI acts as Narrator, not Architect (AST is the source of truth)
-
-**Implementation Notes:**
-- Uses LLM API (planned integration)
-- Applies only after static analysis completes
-- Optional layer - system can operate without it (falls back to template-based explanations)
-
----
-
-### 4.5 Flowchart Generator
-
-**Responsibility**
-
-- Convert structural facts into a visual overview
-
-**Input**
-
-- Unified Code Knowledge Model (JSON)
-
-**Behavior**
-
-- Nodes represent files or functions
-- Edges represent calls or dependencies
-- Exports diagrams (e.g., Mermaid)
-
-All visuals are derived, never manually drawn.
-
----
-
-### 4.6 Presentation & Output Layer
-
-**Responsibility**
-
-- Present generated artifacts to users
-- Support interactive exploration (planned)
-- Persist artifacts to disk (when needed)
-
-**Components:**
-
-**4.6.1 VS Code Extension Presentation (Planned - Primary)**
-- Interactive guided tours within editor
-- Step-by-step navigation
-- Code highlighting and file opening
-- Comprehension checks and user interaction
-- Real-time display of explanations and flowcharts
-
-**4.6.2 File-Based Output (Round-1 Foundation)**
-- Persist artifacts to disk for offline viewing
-- Guided explanation steps (JSON format)
-- Flowchart diagrams (Mermaid format)
-- Supporting metadata
-
-**Artifacts Include**
-
-- Guided explanation steps
-- Flowchart diagrams
-- Supporting metadata
-- AI-generated annotations (when enrichment layer is active)
-
-Artifacts are reproducible and inspectable.
 
 ---
 

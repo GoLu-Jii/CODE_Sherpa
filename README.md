@@ -1,7 +1,7 @@
 # CODE Sherpa
 
 **Theme:** Open Innovation  
-**Project Nature:** *Deterministic Codebase Analysis & Guided Learning Tool*
+**Project Nature:** *Hosted, API-First Code Intelligence Platform*
 
 ---
 
@@ -9,16 +9,13 @@
 
 - [CODE Sherpa](#code-sherpa)
   - [📑 Table of Contents](#-table-of-contents)
+  - [Mission Statement](#mission-statement)
   - [Problem Statement](#problem-statement)
-  - [Background \& Motivation](#background--motivation)
-  - [Research \& Observations](#research--observations)
-  - [Proposed Solution](#proposed-solution)
-  - [Existing Approaches and Identified Gaps](#existing-approaches-and-identified-gaps)
-  - [**Unlike IDE navigation tools that expose relationships, CODE Sherpa orders and teaches them as a structured learning path.**](#unlike-ide-navigation-tools-that-expose-relationships-code-sherpa-orders-and-teaches-them-as-a-structured-learning-path)
-  - [Current Prototype Overview](#current-prototype-overview)
-  - [Conceptual Workflow](#conceptual-workflow)
+  - [The Solution: CODE-Sherpa Platform](#the-solution-code-sherpa-platform)
+  - [Our Core Philosophy](#our-core-philosophy)
   - [System Overview](#system-overview)
   - [How to Run the Prototype](#how-to-run-the-prototype)
+    - [Current Prototype Status](#current-prototype-status)
     - [Prerequisites](#prerequisites)
     - [Quick Start](#quick-start)
     - [Output Files](#output-files)
@@ -31,120 +28,90 @@
 
 ---
 
+## Mission Statement
+
+**To provide a deterministic, explainable, system-level understanding of software repositories.**
+
+We believe that chat bots and code summarizers are becoming commodities. The true unsolved problem is **grounded system understanding**—knowing not just what a line of code does, but how it fits into the entire machine, with a level of trust that allows for auditing and critical decision making.
+
+---
+
 ## Problem Statement
 
-Developers frequently struggle to understand large or unfamiliar codebases when joining new projects. Existing approaches rely on static documentation, informal knowledge transfer, or ad-hoc assistance, which fail to clearly explain **code flow**, **inter-file dependencies**, and **underlying design decisions**. As a result, onboarding time increases, errors become more frequent, and developers often hesitate to modify critical parts of the system.
+Developers, managers, and auditors struggle to grasp the "big picture" of complex or unfamiliar codebases.
+
+-   **Static Documentation** is dead on arrival.
+-   **IDE Navigation** requires you to already know what you are looking for.
+-   **AI Chat (RAG)** hallucinates structure and lacks a holistic view of system architecture.
+
+There is no "Google Maps for Code"—a trustworthy, explorable, and guided way to learn a system from the ground up.
 
 ---
 
-## Background & Motivation
+## The Solution: CODE-Sherpa Platform
 
-Modern software projects grow rapidly in size and complexity, while documentation often becomes outdated or incomplete.
+CODE-Sherpa is a **hosted, API-first code intelligence platform**. It produces a canonical code knowledge model that serves as the single source of truth for understanding a repository.
 
-New contributors spend a significant portion of their time navigating unfamiliar files, tracing execution paths, and understanding implicit dependencies across the codebase.
+### Core Engine (The Brain)
+*   **Stateless Analysis Jobs:** fast, deterministic static analysis (AST-based).
+*   **Structured Outputs:** a verified JSON graph of the entire system.
+*   **Explainability Layer:** AI used strictly as a **narrator**, never as a source of truth.
 
-Although tools exist for code navigation, search, and autocomplete, they primarily support **writing new code** rather than **learning an existing system**. This creates a gap where developers rely on trial-and-error and repeated context switching, slowing productivity and contributing to long-term technical debt.
+### Primary Interface: The Web Platform
+A collaborative, editor-agnostic space for team understanding.
+*   **Upload & Analyze:** Drop a GitHub URL, get a system map.
+*   **Interactive System Map:** Visual, zoomable architecture diagrams.
+*   **Guided Learning Paths:** "Zero-to-Hero" tours for onboarding new engineers.
+*   **Change-Impact Exploration:** Visually trace how a PR affects the wider system.
 
----
-
-## Research & Observations
-
-Research across academia, industry, and developer communities consistently indicates that **understanding existing codebases** is a major challenge in software engineering.
-
-**Key findings from prior work and observations include:**
-
-- **Program comprehension studies** show that developers spend a significant portion of their time reading and understanding existing code rather than writing new functionality, especially during maintenance and onboarding phases.  
-  *Program Comprehension – IEEE*  
-  https://ieeexplore.ieee.org/document/8468136
-
-- **Developer onboarding research** highlights that new contributors often struggle to build a *system-level mental model* due to implicit design decisions, missing architectural context, and reliance on informal knowledge transfer.  
-  *Developer Onboarding – ACM*  
-  https://dl.acm.org/doi/10.1145/3196398.3196400
-
-- **Industry productivity reports** frequently identify code comprehension, legacy systems, and onboarding as major bottlenecks, with a substantial share of engineering time spent navigating and tracing existing code rather than implementing new features.  
-  *Engineering Productivity – InfoQ*  
-  https://www.infoq.com/articles/developer-productivity/
-
-- **Community discussions** on platforms such as Reddit and X reinforce that this difficulty persists across experience levels. Developers often report being able to complete isolated tasks while lacking confidence to modify critical or interconnected parts of a system, even after extended exposure.
-
-Together, these observations suggest that the challenge of understanding codebases is **systemic rather than a skill deficiency**, and that existing tools do not adequately support **structured learning** of complex software systems.
+### Secondary Interfaces
+*   **VS Code Extension:** A thin client for developers in the flow.
+*   **CLI:** For CI/CD pipelines and power users.
+*   **API:** For internal tools and agents to access our canonical knowledge model.
 
 ---
 
-## Proposed Solution
+## Our Core Philosophy
 
-CODE Sherpa is designed as a **guided learning system** that helps developers understand unfamiliar codebases in a structured and progressive manner.
+We are building a platform where **trust is the feature**. Our design goals are:
 
-Instead of relying on static documentation or reactive question-answering, the system proactively walks a user through key parts of a project—explaining how components are organized, how control flows through the code, and why certain design decisions exist.
-
-The solution analyzes an existing repository to identify important files, modules, and relationships, and then generates an **interactive learning path** tailored to the codebase. Developers can follow this path step-by-step, receiving concise explanations and contextual guidance while navigating the actual source code.
-
-By focusing on **guided exploration** rather than isolated answers, CODE Sherpa aims to reduce onboarding time, lower cognitive load, and increase developer confidence when working with complex or legacy systems.
-
----
-
-## Existing Approaches and Identified Gaps
-
-Several tools exist to help developers work with unfamiliar codebases, but they address only isolated aspects of the problem and do not provide **structured understanding**.
-
-- **Static documentation (README files, wikis)** focuses on setup and surface-level usage. These documents quickly become outdated and rarely explain internal logic, design rationale, or runtime behavior.
-
-- **IDE navigation tools** (search, go-to-definition, call hierarchies) help locate code elements but require developers to manually explore and infer relationships. They support navigation, not guided comprehension.
-
-- **AI-assisted chat and coding tools** provide reactive explanations based on user queries. While helpful, they depend on the user already knowing what to ask and typically produce fragmented, context-limited insights rather than a holistic view of the system.
-
-Overall, existing approaches emphasize *access to information* rather than *learning the codebase*. This gap motivates the need for a **proactive, step-by-step mechanism** that helps developers form an accurate mental model of a software system.
-
----
-**Unlike IDE navigation tools that expose relationships, CODE Sherpa orders and teaches them as a structured learning path.**
----
-
-## Current Prototype Overview
-
-The CODE Sherpa prototype demonstrates an **end-to-end workflow** for transforming an unfamiliar software repository into a structured, interactive learning experience.
-
-At a high level, the prototype:
-- Analyzes a codebase to identify important code segments
-- Generates concise explanations and learning checkpoints for those segments
-- Presents them as a guided, step-by-step learning flow alongside the source code
-
-**Note:** The current prototype supports **Python repositories only**. It analyzes Python source files (`.py`) using Python's Abstract Syntax Tree (AST) module to extract imports, functions, dependencies, and entry points.
-
-The objective of the prototype is to show how code comprehension can move from an *ad-hoc, manual activity* to a *structured and repeatable learning process*.
-
----
-
-## Conceptual Workflow
-
-The prototype operates as a **three-stage pipeline**:
-
-1. **Code Analysis**  
-   The repository is scanned to identify key files, entry points, and logical code segments, along with their precise locations in the source code.
-
-2. **Guided Tour Generation**  
-   Identified code segments are processed to produce grounded explanations and lightweight comprehension checks, which are assembled into an ordered learning sequence.
-
-3. **Interactive Learning Experience**  
-   The learning sequence guides developers through the codebase step-by-step, opening relevant files, highlighting important sections, and presenting explanations as the user progresses.
+1.  **Deterministic Truth**: Unlike probabilistic models, we build on a rigid foundation of AST analysis and graph theory.
+2.  **Zero Structural Hallucinations**: We guarantee that every node and relationship in our graph exists in the codebase.
+3.  **System-Level Context**: We prioritize the holistic view—explaining the "forest" before the "trees"—moving beyond snippet-based understanding.
+4.  **The Narrator Pattern**: AI is used strictly to explain verified facts, never to architect or invent structure.
 
 ---
 
 ## System Overview
 
-The CODE Sherpa system operates as a **deterministic, reproducible pipeline**:
+The CODE Sherpa system operates as a **deterministic pipeline**:
 
-1. **Repository Analysis**: The codebase is analyzed using static analysis to extract verified structural facts such as files, functions, imports, and call relationships.
+1.  **Repository Analysis**: The codebase is analyzed using static analysis to extract verified structural facts.
+2.  **Canonical Modeling**: These facts form a graph database of the code—the "Canonical Code Knowledge Model."
+3.  **Enrichment & Presentation**: This model is enriched with semantic explanations and served via API to the Web Platform, IDEs, and other agents.
 
-2. **Learning Path Derivation**: Verified relationships are interpreted to derive an ordered learning path that introduces the codebase progressively and logically.
-
-3. **Structured Outputs**: The derived understanding is presented through structured artifacts, including guided walkthrough data and a visual flowchart representing overall code flow.
-
-This approach emphasizes **structured comprehension** over ad-hoc exploration or reactive assistance.
+This approach emphasizes **structured comprehension** over ad-hoc exploration.
 
 
 ---
 
 ## How to Run the Prototype
+
+### Current Prototype Status
+
+While our vision is a hosted platform, the **current implementation (Round-2)** is a functional **local CLI tool** serving as the foundational engine.
+
+**Capabilities:**
+*   **Language Support:** Python (`.py` files) via AST analysis.
+*   **Analysis:** Extracts files, functions, imports, and call graphs.
+*   **Enrichment:** Optional integration with Groq API for AI explanations.
+*   **Outputs:**
+    *   `analysis.json`: Raw structural data.
+    *   `learning_order.json`: A proposed guided tour path.
+    *   `flowchart.md`: Mermaid diagram of file dependencies.
+    *   `demo/`: All artifacts are generated into a local demo folder.
+
+This prototype validates the **Deterministic Engine** core of the architecture.
 
 ### Prerequisites
 
