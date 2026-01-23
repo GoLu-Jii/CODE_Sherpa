@@ -91,7 +91,7 @@ The CODE Sherpa system operates as a **deterministic pipeline** with an **option
 3.  **Parallel Generation**:
     *   **Learning Path**: A guided tour is generated directly from the verified model.
     *   **Visualization**: A flowchart is generated directly from the verified model.
-4.  **Semantic Enrichment (Optional)**: An AI layer runs *independently* to generate a sidecar file (`annotations.json`) providing natural language explanations.
+4.  **Semantic Enrichment (Optional/Frozen)**: An AI layer runs *independently* to generate a sidecar file (`annotations.json`) providing natural language explanations. *(Note: Currently frozen/disabled in the CLI).*
 
 This approach ensures the critical path is **fast, deterministic, and offline-capable**, while AI insights are treated as an additive layer context.
 
@@ -106,7 +106,7 @@ While our vision is a hosted platform, the **current implementation (Round-2)** 
 **Capabilities:**
 *   **Language Support:** Python (`.py` files) via AST analysis.
 *   **Analysis:** Extracts files, functions, imports, and call graphs.
-*   **Enrichment:** Optional integration with Groq API for AI explanations (sidecar mode).
+*   **Enrichment:** Optional integration with Groq API for AI explanations (sidecar mode). *(Currently disabled)*
 *   **Outputs:**
     *   `analysis.json`: Raw structural data.
     *   `learning_order.json`: A proposed guided tour path.
@@ -219,8 +219,7 @@ Tour generated
 Generating flowchart...
 Flowchart exported
 
-Running semantic enrichment...
-Enrichment completed (annotations.json created)
+Enrichment layer is currently frozen. Skipping.
 
 Pipeline completed successfully
 ```

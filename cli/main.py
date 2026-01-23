@@ -68,17 +68,21 @@ def run_flowchart(input_file: str, output_file: str) -> None:
 
 def run_enrich(input_file: str, output_file: str) -> None:
     """Pipeline step 4: Semantic enrichment (Optional/Last)."""
-    api_key = os.getenv("GROQ_API_KEY")
-    if not api_key:
-        print("Skipping enrichment: GROQ_API_KEY not set")
-        return
+    print("Enrichment layer is currently frozen. Skipping.")
+    return
 
-    print("Running semantic enrichment...")
-    try:
-        run_enrichment_generation(input_file, output_file, use_llm=True)
-        print("Enrichment completed (annotations.json created)")
-    except Exception as e:
-        print(f"Enrichment failed (non-critical): {e}")
+    # Original logic (Frozen)
+    # api_key = os.getenv("GROQ_API_KEY")
+    # if not api_key:
+    #     print("Skipping enrichment: GROQ_API_KEY not set")
+    #     return
+
+    # print("Running semantic enrichment...")
+    # try:
+    #     run_enrichment_generation(input_file, output_file, use_llm=True)
+    #     print("Enrichment completed (annotations.json created)")
+    # except Exception as e:
+    #     print(f"Enrichment failed (non-critical): {e}")
 
 
 # ============================================================
