@@ -1,7 +1,13 @@
 # CODE Sherpa
 
-**Theme:** Open Innovation  
-**Project Nature:** *Hosted, API-First Code Intelligence Platform*
+**Project Nature:** *Deterministic Code Intelligence Engine (CLI Prototype)*  
+**Long-Term Vision:** *Hosted, API-First Platform*
+
+### Project Status
+
+This repository currently implements the **deterministic core engine** of the CODE-Sherpa platform as a local CLI tool.
+
+The hosted web platform, API service, and editor integrations described below represent the **intended product direction** and are not yet implemented.
 
 ---
 
@@ -48,23 +54,26 @@ There is no "Google Maps for Code"—a trustworthy, explorable, and guided way t
 
 ---
 
-## The Solution: CODE-Sherpa Platform
+## The Vision: CODE-Sherpa Platform
 
-CODE-Sherpa is a **hosted, API-first code intelligence platform**. It produces a canonical code knowledge model that serves as the single source of truth for understanding a repository.
+CODE-Sherpa is designed to be a **hosted, API-first code intelligence platform**. It produces a canonical code knowledge model that serves as the single source of truth for understanding a repository.
 
-### Core Engine (The Brain)
+### Core Engine (The Brain) - *Implemented*
 *   **Stateless Analysis Jobs:** fast, deterministic static analysis (AST-based).
 *   **Structured Outputs:** a verified JSON graph of the entire system.
 *   **Explainability Layer:** AI used strictly as a **narrator**, never as a source of truth.
 
-### Primary Interface: The Web Platform
+### Future Roadmap
+The following components are part of the long-term vision but are **not yet implemented**:
+
+#### Primary Interface: The Web Platform
 A collaborative, editor-agnostic space for team understanding.
 *   **Upload & Analyze:** Drop a GitHub URL, get a system map.
 *   **Interactive System Map:** Visual, zoomable architecture diagrams.
 *   **Guided Learning Paths:** "Zero-to-Hero" tours for onboarding new engineers.
-*   **Change-Impact Exploration:** Visually trace how a PR affects the wider system.
+*   **Visual Dependency Exploration:** Visual discovery to reason about potential change impact.
 
-### Secondary Interfaces
+#### Secondary Interfaces
 *   **VS Code Extension:** A thin client for developers in the flow.
 *   **CLI:** For CI/CD pipelines and power users.
 *   **API:** For internal tools and agents to access our canonical knowledge model.
@@ -118,7 +127,10 @@ This prototype validates the **Deterministic Engine** core of the architecture.
 ### Prerequisites
 
 - **Python 3.7 or higher** (Python 3.12+ recommended)
-- **Install dependency:** `requests`
+- **Core Engine Dependencies:**
+  - None (Python standard library only)
+- **Optional (Semantic Enrichment – currently frozen):**
+  - `requests`
   ```bash
   pip install requests
   ```
