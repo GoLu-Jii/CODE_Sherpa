@@ -93,16 +93,13 @@ We are building a platform where **trust is the feature**. Our design goals are:
 
 ## System Overview
 
-The CODE Sherpa system operates as a **deterministic pipeline** with an **optional enrichment sidecar**:
+The CODE Sherpa system operates as a **deterministic pipeline** that analyzes code structure:
 
 1.  **Repository Analysis**: The codebase is analyzed using static analysis to extract verified structural facts (AST-based).
 2.  **Canonical Modeling**: These facts form the "Unified Model" (`analysis.json`), which serves as the single source of truth.
-3.  **Parallel Generation**:
-    *   **Learning Path**: A guided tour is generated directly from the verified model.
-    *   **Visualization**: A flowchart is generated directly from the verified model.
-4.  **Semantic Enrichment (Optional/Frozen)**: An AI layer runs *independently* to generate a sidecar file (`annotations.json`) providing natural language explanations. *(Note: Currently frozen/disabled in the CLI).*
+3.  **Visualization**: A flowchart is generated directly from the verified model.
 
-This approach ensures the critical path is **fast, deterministic, and offline-capable**, while AI insights are treated as an additive layer context.
+This approach ensures the pipeline is **fast, deterministic, and offline-capable**.
 
 ---
 
@@ -115,11 +112,9 @@ While our vision is a hosted platform, the **current implementation ** is a func
 **Capabilities:**
 *   **Language Support:** Python (`.py` files) via AST analysis.
 *   **Analysis:** Extracts files, functions, imports, file dependencies, and resolved inter-file call edges.
-*   **Enrichment:** Optional integration with Groq API for AI explanations (sidecar mode). *(Currently disabled)*
 *   **Outputs:**
     *   `analysis.json`: Raw structural data.
     *   `flowchart.md`: Mermaid diagram of file dependencies.
-    *   `annotations.json`: Sidecar file with AI explanations (if enabled).
 
 This prototype validates the **Deterministic Engine** core of the architecture.
 
@@ -128,11 +123,6 @@ This prototype validates the **Deterministic Engine** core of the architecture.
 - **Python 3.7 or higher** 
 - **Core Engine Dependencies:**
   - None (Python standard library only)
-- **Optional (Semantic Enrichment - currently frozen):**
-  - Requires `requests` and `GROQ_API_KEY` only when enrichment is manually enabled.
-- **Optional (for semantic enrichment):**
-  - Set `GROQ_API_KEY` in your environment (enables LLM-backed explanations)
-  - Internet access (enrichment calls the Groq API)
 - **Language Support:** The prototype currently supports **Python repositories only**. It analyzes `.py` files and uses Python's AST (Abstract Syntax Tree) for code analysis.
 
 Verify your Python version:
@@ -145,16 +135,6 @@ python --version
 1. **Navigate to the project directory:**
    ```bash
    cd CODE_Sherpa
-   ```
-
-2. **(Optional) Enable semantic enrichment via Groq:**
-   ```powershell
-   # Windows PowerShell
-   $env:GROQ_API_KEY="your_api_key_here"
-   ```
-   ```bash
-   # Linux / Mac
-   export GROQ_API_KEY="your_api_key_here"
    ```
 
 3. **Run the pipeline on a repository:**
@@ -176,10 +156,8 @@ python --version
 
 After running, the following files will be generated in the `demo/` folder:
 
-- **`demo/analysis.json`** â€” Complete code analysis including entry points, dependencies, raw calls, and resolved call edges (`metadata.resolved_call_edges`). **(Single Source of Truth)**
-
-- **`demo/flowchart.md`** â€” specific visual dependency graph in Mermaid format.
-- **`demo/annotations.json`** - Reserved for optional enrichment sidecar output when enabled.
+- **`demo/analysis.json`** – Complete code analysis including entry points, dependencies, raw calls, and resolved call edges (`metadata.resolved_call_edges`). **(Single Source of Truth)**
+- **`demo/flowchart.md`** – specific visual dependency graph in Mermaid format.
 
 ### Viewing Results
 
@@ -206,20 +184,11 @@ When you run the command, you should see:
 Running static analysis...
 Analysis completed
 
-Generating tour...
-Tour generated
-
 Generating flowchart...
 Flowchart exported
 
-Enrichment layer is currently frozen. Skipping.
-
 Pipeline completed successfully
 ```
-
-**Notes:**
-- **Performance**: Tour and Flowchart generation are now practically instant as they don't wait for the AI.
-- **Resilience**: If Enrichment fails or is skipped, the rest of the pipeline functions normally.
 
 ### Troubleshooting
 
@@ -238,7 +207,7 @@ python cli/main.py analyze sample_repo
 
 **Module not found errors:**
 - Ensure you're running from the project root directory
-- Verify all folders (`analyzer/`, `cli/`, `tour/`, `flowchart/`, `enrich/`) exist
+- Verify all folders (`analyzer/`, `cli/`, `flowchart/`) exist
 
 ### Testing Individual Components
 
@@ -264,10 +233,9 @@ CODE-Sherpa is designed as a **deterministic, static-analysisâ€“driven syst
 The system is organized as a decoupled pipeline:
 
 1.  **Core Analysis**: Source code -> `analysis.json` (Unified Model).
-2.  **Derived Views**: `analysis.json` -> Tour & Flowchart (Deterministic, Fast).
-3.  **Optional Context**: `analysis.json` + AI -> `annotations.json` (Semantic Sidecar).
+2.  **Derived Views**: `analysis.json` -> Flowchart (Deterministic, Fast).
 
-This architecture allows the system to provide immediate value (structure, maps, learning order) even without an internet connection or API keys, while "lighting up" with AI explanations when available.
+This architecture ensures the system provides immediate value (structure and dependency visualization) in a fast, deterministic, and offline-capable manner.
 
 
 

@@ -3,12 +3,9 @@ CLI orchestrator for CODE_Sherpa pipeline.
 
 Pipeline definition (execution order):
     1. analyze   → Static analysis (always runs)
-    2. enrich    → Semantic enrichment (optional, controlled by decision logic)
-    3. tour      → Guided tour generation
-    4. flowchart → Flowchart generation
+    2. flowchart → Flowchart generation
 
 Control flow:
-    - CLI explicitly decides: when enrichment runs, which file downstream consumes
     - Each step consumes a clearly chosen input file
     - Pipeline behavior is declared, not inferred
 """
@@ -41,32 +38,13 @@ def run_analyze(repo_path: str, output_file: str) -> None:
 
 
 def run_flowchart(input_file: str, output_file: str) -> None:
-    """Pipeline step 3: Flowchart generation."""
+    """Pipeline step 2: Flowchart generation."""
     print("Generating flowchart...")
     with open(input_file, "r", encoding="utf-8") as f:
         analyzer_data = json.load(f)
     graph = build_simple_file_graph(analyzer_data)
     export_mermaid(graph, output_file)
     print("Flowchart exported")
-
-
-def run_enrich(input_file: str, output_file: str) -> None:
-    """Pipeline step 4: Semantic enrichment (Optional/Last)."""
-    print("Enrichment layer is currently frozen. Skipping.")
-    return
-
-    # Original logic (Frozen)
-    # api_key = os.getenv("GROQ_API_KEY")
-    # if not api_key:
-    #     print("Skipping enrichment: GROQ_API_KEY not set")
-    #     return
-
-    # print("Running semantic enrichment...")
-    # try:
-    #     run_enrichment_generation(input_file, output_file, use_llm=True)
-    #     print("Enrichment completed (annotations.json created)")
-    # except Exception as e:
-    #     print(f"Enrichment failed (non-critical): {e}")
 
 
 # ============================================================
@@ -77,24 +55,19 @@ def run_pipeline(repo_path: str, output_dir: str) -> None:
     """
     Execute the CODE_Sherpa pipeline.
     
-    New Flow (Decoupled):
+    Flow:
         1. Analyze -> analysis.json
         2. Flowchart -> flowchart.md (uses analysis.json)
-        3. Enrich -> annotations.json (uses analysis.json, Optional)
     """
     # Define output files
     analysis_file = os.path.join(output_dir, "analysis.json")
     flowchart_file = os.path.join(output_dir, "flowchart.md")
-    annotations_file = os.path.join(output_dir, "annotations.json")
     
     # Step 1: Analyze
     run_analyze(repo_path, analysis_file)
     
-    # Step 2: Flowchart (Independent of enrichment)
+    # Step 2: Flowchart
     run_flowchart(analysis_file, flowchart_file)
-    
-    # Step 4: Enrich (Last & Optional sidecar)
-    run_enrich(analysis_file, annotations_file)
     
     print("\nPipeline completed successfully")
 
