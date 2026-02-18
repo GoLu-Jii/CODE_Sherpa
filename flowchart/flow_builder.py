@@ -14,6 +14,25 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from flowchart.exporter import export_mermaid
 
 
+def node_group(file_path: str) -> str:
+    if file_path.startswith("src/"):
+        return "source"
+    if file_path.startswith("tests/"):
+        return "tests"
+    if file_path.startswith("docs/"):
+        return "docs"
+    return "project"
+
+
+def node_id(file_path: str) -> str:
+    return (
+        file_path
+        .replace("/", "__")
+        .replace(".", "_")
+        .replace("-", "_")
+    )
+
+
 def build_graph_from_analysis(analysis_data: Dict[str, Any]) -> Dict[str, List]:
     """
     Build graph structure with edges from unified model.
@@ -34,15 +53,25 @@ def build_graph_from_analysis(analysis_data: Dict[str, Any]) -> Dict[str, List]:
         Dictionary with "edges" list: [("source", "target"), ...]
     """
     edges = []
+    nodes = {}
     files = analysis_data.get("files", {})
     
     # Build edges from file dependencies
     for file_path, file_data in files.items():
+        nodes[file_path] = {
+            "id": node_id(file_path),
+            "label": file_path,
+            "group": node_group(file_path)
+        }
         depends_on = file_data.get("depends_on", [])
         for dep_file in depends_on:
-            # Create edge: dependency -> file (reverse direction for flow)
-            # Actually, for flowchart we want: file -> dependency (shows what file uses)
-            edges.append((file_path, dep_file))
+            if dep_file not in files:
+                continue
+            edges.append({
+                "source": node_id(file_path),
+                "target": node_id(dep_file),
+                "type": "imports"
+            })
         
         # Also add function-level edges within files
         functions = file_data.get("functions", {})
@@ -55,10 +84,17 @@ def build_graph_from_analysis(analysis_data: Dict[str, Any]) -> Dict[str, List]:
                         other_functions = other_data.get("functions", {})
                         if called_func in other_functions:
                             # Function call across files
-                            edges.append((f"{file_path}::{func_name}", f"{other_file}::{called_func}"))
+                            edges.append({
+                                "source": node_id(file_path),
+                                "target": node_id(other_file),
+                                "type": "calls"
+                            })
                             break
-    
-    return {"edges": edges}
+
+    return {
+        "nodes": sorted(nodes.values(), key=lambda n: n["label"]),
+        "edges": edges
+    }
 
 
 def build_simple_file_graph(analysis_data: Dict[str, Any]) -> Dict[str, List]:
@@ -72,18 +108,30 @@ def build_simple_file_graph(analysis_data: Dict[str, Any]) -> Dict[str, List]:
         Dictionary with "edges" list for file dependencies only
     """
     edges = []
+    nodes = {}
     files = analysis_data.get("files", {})
     
     # Build edges from file dependencies
     for file_path, file_data in files.items():
+        nodes[file_path] = {
+            "id": node_id(file_path),
+            "label": file_path,
+            "group": node_group(file_path)
+        }
         depends_on = file_data.get("depends_on", [])
         for dep_file in depends_on:
-            # Normalize node names for Mermaid (replace special chars)
-            src = file_path.replace("/", "_").replace(".", "_").replace("-", "_")
-            dst = dep_file.replace("/", "_").replace(".", "_").replace("-", "_")
-            edges.append((src, dst))
-    
-    return {"edges": edges}
+            if dep_file not in files:
+                continue
+            edges.append({
+                "source": node_id(file_path),
+                "target": node_id(dep_file),
+                "type": "imports"
+            })
+
+    return {
+        "nodes": sorted(nodes.values(), key=lambda n: n["label"]),
+        "edges": edges
+    }
 
 
 def main():

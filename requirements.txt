@@ -1,14 +1,8 @@
 #
 # CODE_Sherpa Requirements
 #
-# Python Version: 3.7 or higher required
+# Deterministic core engine uses Python standard library only.
 #
-# External dependency:
-# - requests: used by enrich/enrich.py to call the Groq API when GROQ_API_KEY is set
-#
-# Install:
-#   pip install -r requirements.txt
-#
-requests
+# Optional enrichment layer is currently frozen/disabled.
 
 

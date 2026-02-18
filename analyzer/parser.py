@@ -26,6 +26,11 @@ class FileTraverser:
         '.tox',
         'build',
         'dist',
+        'docs',
+        'doc',
+        'tests',
+        'test',
+        '.idea',
         '*.egg-info',
     }
     
@@ -63,6 +68,9 @@ class FileTraverser:
         
         # Check if it starts with a dot (hidden directories)
         if dir_name.startswith('.'):
+            return True
+
+        if dir_name.endswith('.egg-info'):
             return True
         
         return False

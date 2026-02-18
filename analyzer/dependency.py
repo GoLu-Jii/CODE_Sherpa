@@ -1,131 +1,69 @@
 """
-dependency.py - Dependency Graph Construction
-Builds relationships between files based on imports.
+dependency.py - Deterministic dependency graph construction.
+Builds local file relationships from normalized import modules.
 """
 
-from typing import Dict, List, Set
+from pathlib import Path
+from typing import Dict, List, Set, DefaultDict
+from collections import defaultdict
 
 
-def get_available_modules(analysis_results: Dict[str, Dict]) -> Set[str]:
-    """
-    Extract all available module names from analyzed files.
-    
-    A file 'service.py' provides module 'service'.
-    A file 'utils/helper.py' provides module 'helper' and 'utils.helper'.
-    
-    Args:
-        analysis_results: Output from analyze_repo_files()
-    
-    Returns:
-        Set of available module names
-    
-    Examples:
-        >>> get_available_modules({'service.py': {...}, 'utils/helper.py': {...}})
-        {'service', 'helper', 'utils', 'utils.helper'}
-    """
-    available = set()
-    
-    for file_path in analysis_results.keys():
-        # Remove .py extension
-        if file_path.endswith('.py'):
-            module_path = file_path[:-3]
-        else:
-            module_path = file_path
-        
-        # Convert path separators to dots
-        module_path = module_path.replace('/', '.')
-        
-        # Add the full module path
-        available.add(module_path)
-        
-        # Add just the filename (last component)
-        module_name = module_path.split('.')[-1]
-        available.add(module_name)
-        
-        # Add parent package names (e.g., 'utils' from 'utils.helper')
-        parts = module_path.split('.')
-        for i in range(1, len(parts)):
-            available.add('.'.join(parts[:i]))
-    
-    return available
+def file_to_module(file_path: str) -> str:
+    module = file_path[:-3] if file_path.endswith(".py") else file_path
+    module = module.replace("/", ".")
+    if module.endswith(".__init__"):
+        module = module[:-9]
+    return module
 
 
-def is_local_module(import_name: str, available_modules: Set[str]) -> bool:
-    """
-    Check if an import refers to a local module in the repository.
-    
-    This is deterministic and repo-aware: if the import name (or its top-level
-    package) exists in our analyzed files, it's local. Otherwise it's external
-    (stdlib or third-party).
-    
-    Args:
-        import_name: The imported module name
-        available_modules: Set of available module names in the repo
-    
-    Returns:
-        True if module is local to this repo, False if external
-    
-    Examples:
-        >>> is_local_module('service', {'service', 'utils'})
-        True
-        >>> is_local_module('os', {'service', 'utils'})
-        False
-        >>> is_local_module('numpy', {'service', 'utils'})
-        False
-    """
-    # Check if the import or its top-level package is in our repo
-    top_level = import_name.split('.')[0]
-    return top_level in available_modules
+def aliases_for_file(file_path: str) -> Set[str]:
+    aliases = {file_to_module(file_path)}
+    if file_path.startswith("src/"):
+        aliases.add(file_to_module(file_path[4:]))
+    return {alias for alias in aliases if alias}
 
 
-def import_to_file(import_name: str, available_modules: Set[str], 
-                   all_files: Set[str]) -> str | None:
-    """
-    Convert an import name to a file path.
-    
-    Simple mapping rules:
-    - 'service' -> 'service.py' (if exists)
-    - 'utils.helper' -> 'utils/helper.py' (if exists)
-    - 'helper' -> could match 'helper.py' or 'utils/helper.py'
-    
-    Args:
-        import_name: The imported module name
-        available_modules: Set of available module names in the repo
-        all_files: Set of all file paths in the repo
-    
-    Returns:
-        File path if found, None otherwise
-    
-    Examples:
-        >>> import_to_file('service', {'service'}, {'service.py'})
-        'service.py'
-        >>> import_to_file('os', {'service'}, {'service.py'})
-        None
-    """
-    # First check if this import is available in our repo
-    if not is_local_module(import_name, available_modules):
-        return None
-    
-    # Try direct mapping: 'service' -> 'service.py'
-    direct_file = f"{import_name}.py"
-    if direct_file in all_files:
-        return direct_file
-    
-    # Try package mapping: 'utils.helper' -> 'utils/helper.py'
-    package_file = f"{import_name.replace('.', '/')}.py"
-    if package_file in all_files:
-        return package_file
-    
-    # Try to find matching file (handle 'helper' -> 'utils/helper.py')
-    simple_name = import_name.split('.')[-1]
-    for file_path in all_files:
-        # Get module name from file path
-        if file_path.endswith('.py'):
-            file_module = file_path[:-3].replace('/', '.')
-            # Check if it ends with our import name
-            if file_module.endswith(import_name) or file_module.endswith(simple_name):
-                return file_path
-    
+def build_module_index(analysis_results: Dict[str, Dict]) -> Dict[str, List[str]]:
+    module_index: DefaultDict[str, List[str]] = defaultdict(list)
+    for file_path in sorted(analysis_results.keys()):
+        for alias in aliases_for_file(file_path):
+            module_index[alias].append(file_path)
+    return dict(module_index)
+
+
+def rank_candidate_file(file_path: str) -> int:
+    score = 0
+    if file_path.startswith("src/"):
+        score += 30
+    if file_path.startswith("tests/"):
+        score -= 20
+    if file_path.startswith("docs/"):
+        score -= 25
+    score -= len(file_path)
+    return score
+
+
+def import_to_file(import_name: str, module_index: Dict[str, List[str]]) -> str | None:
+    if import_name in module_index:
+        candidates = sorted(
+            module_index[import_name],
+            key=lambda path: rank_candidate_file(path),
+            reverse=True
+        )
+        return candidates[0]
+
+    # Fallback for package imports: "pkg.sub.module.symbol"
+    parts = import_name.split(".")
+    while len(parts) > 1:
+        parts = parts[:-1]
+        module_candidate = ".".join(parts)
+        if module_candidate in module_index:
+            candidates = sorted(
+                module_index[module_candidate],
+                key=lambda path: rank_candidate_file(path),
+                reverse=True
+            )
+            return candidates[0]
     return None
 
 
@@ -154,9 +92,7 @@ def build_file_dependency_graph(analysis_results: Dict[str, Dict]) -> Dict[str, 
             'database.py': []
         }
     """
-    # Get available local modules
-    available_modules = get_available_modules(analysis_results)
-    all_files = set(analysis_results.keys())
+    module_index = build_module_index(analysis_results)
     
     # Build dependency graph
     dependency_graph = {}
@@ -168,12 +104,7 @@ def build_file_dependency_graph(analysis_results: Dict[str, Dict]) -> Dict[str, 
         imports = file_data.get('imports', [])
         
         for import_name in imports:
-            # Only process local modules (automatically filters out stdlib/third-party)
-            if not is_local_module(import_name, available_modules):
-                continue
-            
-            # Try to resolve to a file
-            target_file = import_to_file(import_name, available_modules, all_files)
+            target_file = import_to_file(import_name, module_index)
             
             if target_file and target_file != file_path:  # Don't self-reference
                 dependencies.append(target_file)
@@ -203,27 +134,34 @@ def identify_entry_point(analysis_results: Dict[str, Dict]) -> str | None:
         ... })
         'app.py'
     """
-    entry_points = [
+    entry_points = sorted([
         file_path
         for file_path, file_data in analysis_results.items()
         if file_data.get('entry', False)
-    ]
-    
-    # If exactly one entry point, return it
-    if len(entry_points) == 1:
-        return entry_points[0]
-    
-    # If multiple entry points, prioritize common names
-    priority_names = ['main.py', 'app.py', '__main__.py', 'run.py', 'start.py']
-    for priority_name in priority_names:
-        if priority_name in entry_points:
-            return priority_name
-    
-    # If still multiple, return the first one alphabetically
-    if entry_points:
-        return sorted(entry_points)[0]
-    
-    # No entry point found
+    ])
+
+    if not entry_points:
+        return None
+
+    def score_entry(path: str) -> int:
+        name = Path(path).name
+        score = 0
+        if name == "__main__.py":
+            score += 120
+        if name in {"main.py", "app.py", "run.py", "start.py", "manage.py"}:
+            score += 60
+        if path.startswith("cli/") or path.startswith("bin/") or path.startswith("scripts/"):
+            score += 40
+        if path.startswith("tests/") or path.startswith("docs/"):
+            score -= 40
+        if path.startswith("src/"):
+            score -= 20
+        return score
+
+    ranked = sorted(entry_points, key=score_entry, reverse=True)
+    if score_entry(ranked[0]) <= 0:
+        return None
+    return ranked[0]
     return None
 
 

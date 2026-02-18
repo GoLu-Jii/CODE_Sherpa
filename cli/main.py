@@ -15,14 +15,15 @@ Control flow:
 import sys
 import os
 import json
-import subprocess
-from typing import Tuple
+import argparse
 
 # Add project root to Python path
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from analyzer.analyzer import build_unified_model
-from enrich.enrich import run_enrichment_generation
+from tour.tour_builder import build_learning_order
+from flowchart.flow_builder import build_simple_file_graph
+from flowchart.exporter import export_mermaid
 
 
 # ============================================================
@@ -43,26 +44,21 @@ def run_analyze(repo_path: str, output_file: str) -> None:
 def run_tour(input_file: str, output_file: str) -> None:
     """Pipeline step 2: Guided tour generation."""
     print("Generating tour...")
-    result = subprocess.run(
-        [sys.executable, "tour/tour_builder.py", input_file],
-        check=True,
-        capture_output=True,
-        text=True
-    )
-    
+    with open(input_file, "r", encoding="utf-8") as f:
+        analyzer_data = json.load(f)
+    result = build_learning_order(analyzer_data)
     with open(output_file, "w", encoding="utf-8") as f:
-        f.write(result.stdout)
-    
+        json.dump(result, f, indent=2)
     print("Tour generated")
 
 
 def run_flowchart(input_file: str, output_file: str) -> None:
     """Pipeline step 3: Flowchart generation."""
     print("Generating flowchart...")
-    subprocess.run(
-        [sys.executable, "flowchart/flow_builder.py", input_file, "--output", output_file],
-        check=True
-    )
+    with open(input_file, "r", encoding="utf-8") as f:
+        analyzer_data = json.load(f)
+    graph = build_simple_file_graph(analyzer_data)
+    export_mermaid(graph, output_file)
     print("Flowchart exported")
 
 
@@ -125,23 +121,28 @@ def run_pipeline(repo_path: str, output_dir: str) -> None:
 
 def main():
     """CLI entry point. Validates input and delegates to pipeline."""
-    if len(sys.argv) < 3:
-        print("Usage: python cli/main.py analyze <repo_path>")
+    parser = argparse.ArgumentParser(description="CODE_Sherpa CLI")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    analyze_parser = subparsers.add_parser("analyze", help="Analyze a repository")
+    analyze_parser.add_argument("repo_path", help="Repository path")
+    analyze_parser.add_argument(
+        "--output-dir",
+        default="demo",
+        help="Output directory for generated artifacts (default: demo)"
+    )
+
+    args = parser.parse_args()
+    if args.command != "analyze":
+        print(f"Unknown command: {args.command}")
         sys.exit(1)
-    
-    command = sys.argv[1]
-    repo_path = sys.argv[2]
-    
-    if command != "analyze":
-        print(f"Unknown command: {command}")
-        sys.exit(1)
-    
+
+    repo_path = args.repo_path
     if not os.path.exists(repo_path):
         print(f"Error: Repository path not found: {repo_path}")
         sys.exit(1)
-    
-    # Create output directory
-    output_dir = "demo"
+
+    output_dir = args.output_dir
     os.makedirs(output_dir, exist_ok=True)
     
     # Execute pipeline

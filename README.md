@@ -1,4 +1,4 @@
-# CODE Sherpa
+﻿# CODE Sherpa
 
 **Project Nature:** *Deterministic Code Intelligence Engine (CLI Prototype)*  
 **Long-Term Vision:** *Hosted, API-First Platform*
@@ -11,10 +11,10 @@ The hosted web platform, API service, and editor integrations described below re
 
 ---
 
-## 📑 Table of Contents
+## ðŸ“‘ Table of Contents
 
 - [CODE Sherpa](#code-sherpa)
-  - [📑 Table of Contents](#-table-of-contents)
+  - [ðŸ“‘ Table of Contents](#-table-of-contents)
   - [Mission Statement](#mission-statement)
   - [Problem Statement](#problem-statement)
   - [The Solution: CODE-Sherpa Platform](#the-solution-code-sherpa-platform)
@@ -38,7 +38,7 @@ The hosted web platform, API service, and editor integrations described below re
 
 **To provide a deterministic, explainable, system-level understanding of software repositories.**
 
-We believe that chat bots and code summarizers are becoming commodities. The true unsolved problem is **grounded system understanding**—knowing not just what a line of code does, but how it fits into the entire machine, with a level of trust that allows for auditing and critical decision making.
+We believe that chat bots and code summarizers are becoming commodities. The true unsolved problem is **grounded system understanding**â€”knowing not just what a line of code does, but how it fits into the entire machine, with a level of trust that allows for auditing and critical decision making.
 
 ---
 
@@ -50,7 +50,7 @@ Developers, managers, and auditors struggle to grasp the "big picture" of comple
 -   **IDE Navigation** requires you to already know what you are looking for.
 -   **AI Chat (RAG)** hallucinates structure and lacks a holistic view of system architecture.
 
-There is no "Google Maps for Code"—a trustworthy, explorable, and guided way to learn a system from the ground up.
+There is no "Google Maps for Code"â€”a trustworthy, explorable, and guided way to learn a system from the ground up.
 
 ---
 
@@ -86,7 +86,7 @@ We are building a platform where **trust is the feature**. Our design goals are:
 
 1.  **Deterministic Truth**: Unlike probabilistic models, we build on a rigid foundation of AST analysis and graph theory.
 2.  **Zero Structural Hallucinations**: We guarantee that every node and relationship in our graph exists in the codebase.
-3.  **System-Level Context**: We prioritize the holistic view—explaining the "forest" before the "trees"—moving beyond snippet-based understanding.
+3.  **System-Level Context**: We prioritize the holistic viewâ€”explaining the "forest" before the "trees"â€”moving beyond snippet-based understanding.
 4.  **The Narrator Pattern**: AI is used strictly to explain verified facts, never to architect or invent structure.
 
 ---
@@ -126,14 +126,11 @@ This prototype validates the **Deterministic Engine** core of the architecture.
 
 ### Prerequisites
 
-- **Python 3.7 or higher** (Python 3.12+ recommended)
+- **Python 3.7 or higher** 
 - **Core Engine Dependencies:**
   - None (Python standard library only)
-- **Optional (Semantic Enrichment – currently frozen):**
-  - `requests`
-  ```bash
-  pip install requests
-  ```
+- **Optional (Semantic Enrichment - currently frozen):**
+  - Requires `requests` and `GROQ_API_KEY` only when enrichment is manually enabled.
 - **Optional (for semantic enrichment):**
   - Set `GROQ_API_KEY` in your environment (enables LLM-backed explanations)
   - Internet access (enrichment calls the Groq API)
@@ -148,15 +145,10 @@ python --version
 
 1. **Navigate to the project directory:**
    ```bash
-   cd CODE_Sherpa__HackTheWinter-SecondWave
+   cd CODE_Sherpa
    ```
 
-2. **Install `requests` (if not already installed):**
-   ```bash
-   pip install requests
-   ```
-
-3. **(Optional) Enable semantic enrichment via Groq:**
+2. **(Optional) Enable semantic enrichment via Groq:**
    ```powershell
    # Windows PowerShell
    $env:GROQ_API_KEY="your_api_key_here"
@@ -166,7 +158,7 @@ python --version
    export GROQ_API_KEY="your_api_key_here"
    ```
 
-4. **Run the pipeline on a repository:**
+3. **Run the pipeline on a repository:**
    ```bash
    python cli/main.py analyze <repository_path>
    ```
@@ -185,10 +177,10 @@ python --version
 
 After running, the following files will be generated in the `demo/` folder:
 
-- **`demo/analysis.json`** — Complete code analysis including entry points, dependencies, and call graphs. **(Single Source of Truth)**
-- **`demo/learning_order.json`** — Structured learning path generated from the analysis.
-- **`demo/flowchart.md`** — specific visual dependency graph in Mermaid format.
-- **`demo/annotations.json`** — **(Optional)** Sidecar file containing AI-generated explanations for files and functions. Only generated if `GROQ_API_KEY` is present.
+- **`demo/analysis.json`** â€” Complete code analysis including entry points, dependencies, and call graphs. **(Single Source of Truth)**
+- **`demo/learning_order.json`** â€” Structured learning path generated from the analysis.
+- **`demo/flowchart.md`** â€” specific visual dependency graph in Mermaid format.
+- **`demo/annotations.json`** - Reserved for optional enrichment sidecar output when enabled.
 
 ### Viewing Results
 
@@ -209,11 +201,6 @@ Get-Content demo/learning_order.json
 **View the flowchart:**
 ```bash
 Get-Content demo/flowchart.md
-```
-
-**View the AI annotations (if enabled):**
-```bash
-Get-Content demo/annotations.json
 ```
 
 The flowchart can be visualized using any Mermaid-compatible viewer (e.g., GitHub, VS Code with Mermaid extension, or online Mermaid editors).
@@ -255,12 +242,6 @@ python cli/main.py analyze sample_repo
 - Ensure the path exists and contains Python files (`.py` extension)
 - **Note:** Only Python repositories are currently supported
 
-**`ModuleNotFoundError: No module named 'requests'`:**
-- Install the dependency:
-  ```bash
-  pip install requests
-  ```
-
 **Module not found errors:**
 - Ensure you're running from the project root directory
 - Verify all folders (`analyzer/`, `cli/`, `tour/`, `flowchart/`, `enrich/`) exist
@@ -289,7 +270,7 @@ python flowchart/flow_builder.py demo/analysis.json
 
 ## System Architecture
 
-CODE-Sherpa is designed as a **deterministic, static-analysis–driven system** that prioritizes speed and structural truth.
+CODE-Sherpa is designed as a **deterministic, static-analysisâ€“driven system** that prioritizes speed and structural truth.
 
 The system is organized as a decoupled pipeline:
 
@@ -298,3 +279,6 @@ The system is organized as a decoupled pipeline:
 3.  **Optional Context**: `analysis.json` + AI -> `annotations.json` (Semantic Sidecar).
 
 This architecture allows the system to provide immediate value (structure, maps, learning order) even without an internet connection or API keys, while "lighting up" with AI explanations when available.
+
+
+

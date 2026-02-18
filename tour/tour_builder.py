@@ -2,6 +2,33 @@ import json
 import sys
 from typing import Dict, List, Any
 
+
+def file_group(file_name: str) -> str:
+    if file_name.startswith("src/"):
+        return "source"
+    if file_name.startswith("tests/"):
+        return "tests"
+    if file_name.startswith("docs/"):
+        return "docs"
+    return "project"
+
+
+def learning_rank(file_name: str, incoming: Dict[str, int], outgoing: Dict[str, int]) -> tuple:
+    group_priority = {
+        "source": 0,
+        "project": 1,
+        "tests": 2,
+        "docs": 3
+    }
+    group = file_group(file_name)
+    # Central files first inside each group.
+    return (
+        group_priority.get(group, 4),
+        -(incoming.get(file_name, 0) + outgoing.get(file_name, 0)),
+        file_name
+    )
+
+
 def build_learning_order(analyzer_data: Dict[str, Any]) -> Dict[str, Any]:
     """
     Build learning order from unified model format.
@@ -28,16 +55,13 @@ def build_learning_order(analyzer_data: Dict[str, Any]) -> Dict[str, Any]:
     files = analyzer_data.get("files", {})
     entry_point = analyzer_data.get("entry_point")
     learning_order = []
-    
-    # Extract function names from the functions dict
-    def get_function_names(functions_dict: Dict) -> List[str]:
-        """Extract function names from functions dict."""
-        if isinstance(functions_dict, dict):
-            return list(functions_dict.keys())
-        elif isinstance(functions_dict, list):
-            return functions_dict
-        else:
-            return []
+
+    incoming = {file_name: 0 for file_name in files.keys()}
+    outgoing = {file_name: len(file_data.get("depends_on", [])) for file_name, file_data in files.items()}
+    for file_name, file_data in files.items():
+        for dep in file_data.get("depends_on", []):
+            if dep in incoming:
+                incoming[dep] += 1
     
     # Extract function info with explanations if present
     def get_function_info(functions_dict: Dict, file_data: Dict) -> List[Dict]:
@@ -72,7 +96,8 @@ def build_learning_order(analyzer_data: Dict[str, Any]) -> Dict[str, Any]:
         file_info = {
             "file": entry_point,
             "functions": get_function_info(file_data.get("functions", {}), file_data),
-            "is_entry": True
+            "is_entry": True,
+            "group": file_group(entry_point)
         }
         # Include explanation if present (from enrichment)
         explanation = file_data.get("explanation")
@@ -80,14 +105,20 @@ def build_learning_order(analyzer_data: Dict[str, Any]) -> Dict[str, Any]:
             file_info["explanation"] = explanation
         learning_order.append(file_info)
     
-    # Add other files
-    for file_name, file_data in files.items():
+    ordered_files = sorted(
+        [name for name in files.keys() if name != entry_point],
+        key=lambda name: learning_rank(name, incoming, outgoing)
+    )
+
+    for file_name in ordered_files:
+        file_data = files[file_name]
         if file_name == entry_point:
             continue
         file_info = {
             "file": file_name,
             "functions": get_function_info(file_data.get("functions", {}), file_data),
-            "is_entry": False
+            "is_entry": False,
+            "group": file_group(file_name)
         }
         # Include explanation if present (from enrichment)
         explanation = file_data.get("explanation")
@@ -98,7 +129,11 @@ def build_learning_order(analyzer_data: Dict[str, Any]) -> Dict[str, Any]:
     return {
         "learning_order": learning_order,
         "metadata": {
-            "entry_point": entry_point
+            "entry_point": entry_point,
+            "file_count": len(files),
+            "source_count": sum(1 for f in files if file_group(f) == "source"),
+            "test_count": sum(1 for f in files if file_group(f) == "tests"),
+            "docs_count": sum(1 for f in files if file_group(f) == "docs")
         }
     }
 def main():

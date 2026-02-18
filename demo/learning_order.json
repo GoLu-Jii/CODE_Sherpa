@@ -1,24 +1,365 @@
 {
   "learning_order": [
     {
-      "file": "src/requests/certs.py",
-      "functions": [],
-      "is_entry": true
+      "file": "src/requests/sessions.py",
+      "functions": [
+        {
+          "name": "__enter__"
+        },
+        {
+          "name": "__exit__"
+        },
+        {
+          "name": "__getstate__"
+        },
+        {
+          "name": "__init__"
+        },
+        {
+          "name": "__setstate__"
+        },
+        {
+          "name": "close"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "get"
+        },
+        {
+          "name": "get_adapter"
+        },
+        {
+          "name": "get_redirect_target"
+        },
+        {
+          "name": "head"
+        },
+        {
+          "name": "merge_environment_settings"
+        },
+        {
+          "name": "merge_hooks"
+        },
+        {
+          "name": "merge_setting"
+        },
+        {
+          "name": "mount"
+        },
+        {
+          "name": "options"
+        },
+        {
+          "name": "patch"
+        },
+        {
+          "name": "post"
+        },
+        {
+          "name": "prepare_request"
+        },
+        {
+          "name": "put"
+        },
+        {
+          "name": "rebuild_auth"
+        },
+        {
+          "name": "rebuild_method"
+        },
+        {
+          "name": "rebuild_proxies"
+        },
+        {
+          "name": "request"
+        },
+        {
+          "name": "resolve_redirects"
+        },
+        {
+          "name": "send"
+        },
+        {
+          "name": "session"
+        },
+        {
+          "name": "should_strip_auth"
+        }
+      ],
+      "is_entry": false,
+      "group": "source"
     },
     {
-      "file": "docs/_themes/flask_theme_support.py",
-      "functions": [],
-      "is_entry": false
+      "file": "src/requests/models.py",
+      "functions": [
+        {
+          "name": "__bool__"
+        },
+        {
+          "name": "__enter__"
+        },
+        {
+          "name": "__exit__"
+        },
+        {
+          "name": "__getstate__"
+        },
+        {
+          "name": "__init__"
+        },
+        {
+          "name": "__iter__"
+        },
+        {
+          "name": "__nonzero__"
+        },
+        {
+          "name": "__repr__"
+        },
+        {
+          "name": "__setstate__"
+        },
+        {
+          "name": "_encode_files"
+        },
+        {
+          "name": "_encode_params"
+        },
+        {
+          "name": "_get_idna_encoded_host"
+        },
+        {
+          "name": "apparent_encoding"
+        },
+        {
+          "name": "close"
+        },
+        {
+          "name": "content"
+        },
+        {
+          "name": "copy"
+        },
+        {
+          "name": "deregister_hook"
+        },
+        {
+          "name": "generate"
+        },
+        {
+          "name": "is_permanent_redirect"
+        },
+        {
+          "name": "is_redirect"
+        },
+        {
+          "name": "iter_content"
+        },
+        {
+          "name": "iter_lines"
+        },
+        {
+          "name": "json"
+        },
+        {
+          "name": "links"
+        },
+        {
+          "name": "next"
+        },
+        {
+          "name": "ok"
+        },
+        {
+          "name": "path_url"
+        },
+        {
+          "name": "prepare"
+        },
+        {
+          "name": "prepare_auth"
+        },
+        {
+          "name": "prepare_body"
+        },
+        {
+          "name": "prepare_content_length"
+        },
+        {
+          "name": "prepare_cookies"
+        },
+        {
+          "name": "prepare_headers"
+        },
+        {
+          "name": "prepare_hooks"
+        },
+        {
+          "name": "prepare_method"
+        },
+        {
+          "name": "prepare_url"
+        },
+        {
+          "name": "raise_for_status"
+        },
+        {
+          "name": "register_hook"
+        },
+        {
+          "name": "text"
+        }
+      ],
+      "is_entry": false,
+      "group": "source"
     },
     {
-      "file": "docs/conf.py",
-      "functions": [],
-      "is_entry": false
+      "file": "src/requests/utils.py",
+      "functions": [
+        {
+          "name": "_parse_content_type_header"
+        },
+        {
+          "name": "_validate_header_part"
+        },
+        {
+          "name": "add_dict_to_cookiejar"
+        },
+        {
+          "name": "address_in_network"
+        },
+        {
+          "name": "atomic_open"
+        },
+        {
+          "name": "check_header_validity"
+        },
+        {
+          "name": "default_headers"
+        },
+        {
+          "name": "default_user_agent"
+        },
+        {
+          "name": "dict_from_cookiejar"
+        },
+        {
+          "name": "dict_to_sequence"
+        },
+        {
+          "name": "dotted_netmask"
+        },
+        {
+          "name": "extract_zipped_paths"
+        },
+        {
+          "name": "from_key_val_list"
+        },
+        {
+          "name": "get_auth_from_url"
+        },
+        {
+          "name": "get_encoding_from_headers"
+        },
+        {
+          "name": "get_encodings_from_content"
+        },
+        {
+          "name": "get_environ_proxies"
+        },
+        {
+          "name": "get_netrc_auth"
+        },
+        {
+          "name": "get_proxy"
+        },
+        {
+          "name": "get_unicode_from_response"
+        },
+        {
+          "name": "guess_filename"
+        },
+        {
+          "name": "guess_json_utf"
+        },
+        {
+          "name": "is_ipv4_address"
+        },
+        {
+          "name": "is_valid_cidr"
+        },
+        {
+          "name": "iter_slices"
+        },
+        {
+          "name": "parse_dict_header"
+        },
+        {
+          "name": "parse_header_links"
+        },
+        {
+          "name": "parse_list_header"
+        },
+        {
+          "name": "prepend_scheme_if_needed"
+        },
+        {
+          "name": "proxy_bypass"
+        },
+        {
+          "name": "proxy_bypass_registry"
+        },
+        {
+          "name": "requote_uri"
+        },
+        {
+          "name": "resolve_proxies"
+        },
+        {
+          "name": "rewind_body"
+        },
+        {
+          "name": "select_proxy"
+        },
+        {
+          "name": "set_environ"
+        },
+        {
+          "name": "should_bypass_proxies"
+        },
+        {
+          "name": "stream_decode_response_unicode"
+        },
+        {
+          "name": "super_len"
+        },
+        {
+          "name": "to_key_val_list"
+        },
+        {
+          "name": "unquote_header_value"
+        },
+        {
+          "name": "unquote_unreserved"
+        },
+        {
+          "name": "urldefragauth"
+        }
+      ],
+      "is_entry": false,
+      "group": "source"
     },
     {
-      "file": "setup.py",
-      "functions": [],
-      "is_entry": false
+      "file": "src/requests/compat.py",
+      "functions": [
+        {
+          "name": "_resolve_char_detection"
+        }
+      ],
+      "is_entry": false,
+      "group": "source"
     },
     {
       "file": "src/requests/__init__.py",
@@ -30,24 +371,8 @@
           "name": "check_compatibility"
         }
       ],
-      "is_entry": false
-    },
-    {
-      "file": "src/requests/__version__.py",
-      "functions": [],
-      "is_entry": false
-    },
-    {
-      "file": "src/requests/_internal_utils.py",
-      "functions": [
-        {
-          "name": "to_native_string"
-        },
-        {
-          "name": "unicode_is_ascii"
-        }
-      ],
-      "is_entry": false
+      "is_entry": false,
+      "group": "source"
     },
     {
       "file": "src/requests/adapters.py",
@@ -104,37 +429,8 @@
           "name": "send"
         }
       ],
-      "is_entry": false
-    },
-    {
-      "file": "src/requests/api.py",
-      "functions": [
-        {
-          "name": "delete"
-        },
-        {
-          "name": "get"
-        },
-        {
-          "name": "head"
-        },
-        {
-          "name": "options"
-        },
-        {
-          "name": "patch"
-        },
-        {
-          "name": "post"
-        },
-        {
-          "name": "put"
-        },
-        {
-          "name": "request"
-        }
-      ],
-      "is_entry": false
+      "is_entry": false,
+      "group": "source"
     },
     {
       "file": "src/requests/auth.py",
@@ -179,16 +475,8 @@
           "name": "sha_utf8"
         }
       ],
-      "is_entry": false
-    },
-    {
-      "file": "src/requests/compat.py",
-      "functions": [
-        {
-          "name": "_resolve_char_detection"
-        }
-      ],
-      "is_entry": false
+      "is_entry": false,
+      "group": "source"
     },
     {
       "file": "src/requests/cookies.py",
@@ -338,7 +626,21 @@
           "name": "values"
         }
       ],
-      "is_entry": false
+      "is_entry": false,
+      "group": "source"
+    },
+    {
+      "file": "src/requests/_internal_utils.py",
+      "functions": [
+        {
+          "name": "to_native_string"
+        },
+        {
+          "name": "unicode_is_ascii"
+        }
+      ],
+      "is_entry": false,
+      "group": "source"
     },
     {
       "file": "src/requests/exceptions.py",
@@ -350,264 +652,8 @@
           "name": "__reduce__"
         }
       ],
-      "is_entry": false
-    },
-    {
-      "file": "src/requests/help.py",
-      "functions": [
-        {
-          "name": "_implementation"
-        },
-        {
-          "name": "info"
-        },
-        {
-          "name": "main"
-        }
-      ],
-      "is_entry": false
-    },
-    {
-      "file": "src/requests/hooks.py",
-      "functions": [
-        {
-          "name": "default_hooks"
-        },
-        {
-          "name": "dispatch_hook"
-        }
-      ],
-      "is_entry": false
-    },
-    {
-      "file": "src/requests/models.py",
-      "functions": [
-        {
-          "name": "__bool__"
-        },
-        {
-          "name": "__enter__"
-        },
-        {
-          "name": "__exit__"
-        },
-        {
-          "name": "__getstate__"
-        },
-        {
-          "name": "__init__"
-        },
-        {
-          "name": "__iter__"
-        },
-        {
-          "name": "__nonzero__"
-        },
-        {
-          "name": "__repr__"
-        },
-        {
-          "name": "__setstate__"
-        },
-        {
-          "name": "_encode_files"
-        },
-        {
-          "name": "_encode_params"
-        },
-        {
-          "name": "_get_idna_encoded_host"
-        },
-        {
-          "name": "apparent_encoding"
-        },
-        {
-          "name": "close"
-        },
-        {
-          "name": "content"
-        },
-        {
-          "name": "copy"
-        },
-        {
-          "name": "deregister_hook"
-        },
-        {
-          "name": "generate"
-        },
-        {
-          "name": "is_permanent_redirect"
-        },
-        {
-          "name": "is_redirect"
-        },
-        {
-          "name": "iter_content"
-        },
-        {
-          "name": "iter_lines"
-        },
-        {
-          "name": "json"
-        },
-        {
-          "name": "links"
-        },
-        {
-          "name": "next"
-        },
-        {
-          "name": "ok"
-        },
-        {
-          "name": "path_url"
-        },
-        {
-          "name": "prepare"
-        },
-        {
-          "name": "prepare_auth"
-        },
-        {
-          "name": "prepare_body"
-        },
-        {
-          "name": "prepare_content_length"
-        },
-        {
-          "name": "prepare_cookies"
-        },
-        {
-          "name": "prepare_headers"
-        },
-        {
-          "name": "prepare_hooks"
-        },
-        {
-          "name": "prepare_method"
-        },
-        {
-          "name": "prepare_url"
-        },
-        {
-          "name": "raise_for_status"
-        },
-        {
-          "name": "register_hook"
-        },
-        {
-          "name": "text"
-        }
-      ],
-      "is_entry": false
-    },
-    {
-      "file": "src/requests/packages.py",
-      "functions": [],
-      "is_entry": false
-    },
-    {
-      "file": "src/requests/sessions.py",
-      "functions": [
-        {
-          "name": "__enter__"
-        },
-        {
-          "name": "__exit__"
-        },
-        {
-          "name": "__getstate__"
-        },
-        {
-          "name": "__init__"
-        },
-        {
-          "name": "__setstate__"
-        },
-        {
-          "name": "close"
-        },
-        {
-          "name": "delete"
-        },
-        {
-          "name": "get"
-        },
-        {
-          "name": "get_adapter"
-        },
-        {
-          "name": "get_redirect_target"
-        },
-        {
-          "name": "head"
-        },
-        {
-          "name": "merge_environment_settings"
-        },
-        {
-          "name": "merge_hooks"
-        },
-        {
-          "name": "merge_setting"
-        },
-        {
-          "name": "mount"
-        },
-        {
-          "name": "options"
-        },
-        {
-          "name": "patch"
-        },
-        {
-          "name": "post"
-        },
-        {
-          "name": "prepare_request"
-        },
-        {
-          "name": "put"
-        },
-        {
-          "name": "rebuild_auth"
-        },
-        {
-          "name": "rebuild_method"
-        },
-        {
-          "name": "rebuild_proxies"
-        },
-        {
-          "name": "request"
-        },
-        {
-          "name": "resolve_redirects"
-        },
-        {
-          "name": "send"
-        },
-        {
-          "name": "session"
-        },
-        {
-          "name": "should_strip_auth"
-        }
-      ],
-      "is_entry": false
-    },
-    {
-      "file": "src/requests/status_codes.py",
-      "functions": [
-        {
-          "name": "_init"
-        },
-        {
-          "name": "doc"
-        }
-      ],
-      "is_entry": false
+      "is_entry": false,
+      "group": "source"
     },
     {
       "file": "src/requests/structures.py",
@@ -646,1400 +692,112 @@
           "name": "lower_items"
         }
       ],
-      "is_entry": false
+      "is_entry": false,
+      "group": "source"
     },
     {
-      "file": "src/requests/utils.py",
+      "file": "src/requests/status_codes.py",
       "functions": [
         {
-          "name": "_parse_content_type_header"
+          "name": "_init"
         },
         {
-          "name": "_validate_header_part"
-        },
-        {
-          "name": "add_dict_to_cookiejar"
-        },
-        {
-          "name": "address_in_network"
-        },
-        {
-          "name": "atomic_open"
-        },
-        {
-          "name": "check_header_validity"
-        },
-        {
-          "name": "default_headers"
-        },
-        {
-          "name": "default_user_agent"
-        },
-        {
-          "name": "dict_from_cookiejar"
-        },
-        {
-          "name": "dict_to_sequence"
-        },
-        {
-          "name": "dotted_netmask"
-        },
-        {
-          "name": "extract_zipped_paths"
-        },
-        {
-          "name": "from_key_val_list"
-        },
-        {
-          "name": "get_auth_from_url"
-        },
-        {
-          "name": "get_encoding_from_headers"
-        },
-        {
-          "name": "get_encodings_from_content"
-        },
-        {
-          "name": "get_environ_proxies"
-        },
-        {
-          "name": "get_netrc_auth"
-        },
-        {
-          "name": "get_proxy"
-        },
-        {
-          "name": "get_unicode_from_response"
-        },
-        {
-          "name": "guess_filename"
-        },
-        {
-          "name": "guess_json_utf"
-        },
-        {
-          "name": "is_ipv4_address"
-        },
-        {
-          "name": "is_valid_cidr"
-        },
-        {
-          "name": "iter_slices"
-        },
-        {
-          "name": "parse_dict_header"
-        },
-        {
-          "name": "parse_header_links"
-        },
-        {
-          "name": "parse_list_header"
-        },
-        {
-          "name": "prepend_scheme_if_needed"
-        },
-        {
-          "name": "proxy_bypass"
-        },
-        {
-          "name": "proxy_bypass_registry"
-        },
-        {
-          "name": "requote_uri"
-        },
-        {
-          "name": "resolve_proxies"
-        },
-        {
-          "name": "rewind_body"
-        },
-        {
-          "name": "select_proxy"
-        },
-        {
-          "name": "set_environ"
-        },
-        {
-          "name": "should_bypass_proxies"
-        },
-        {
-          "name": "stream_decode_response_unicode"
-        },
-        {
-          "name": "super_len"
-        },
-        {
-          "name": "to_key_val_list"
-        },
-        {
-          "name": "unquote_header_value"
-        },
-        {
-          "name": "unquote_unreserved"
-        },
-        {
-          "name": "urldefragauth"
+          "name": "doc"
         }
       ],
-      "is_entry": false
+      "is_entry": false,
+      "group": "source"
     },
     {
-      "file": "tests/__init__.py",
+      "file": "src/requests/__version__.py",
       "functions": [],
-      "is_entry": false
+      "is_entry": false,
+      "group": "source"
     },
     {
-      "file": "tests/compat.py",
+      "file": "src/requests/api.py",
       "functions": [
         {
-          "name": "u"
+          "name": "delete"
+        },
+        {
+          "name": "get"
+        },
+        {
+          "name": "head"
+        },
+        {
+          "name": "options"
+        },
+        {
+          "name": "patch"
+        },
+        {
+          "name": "post"
+        },
+        {
+          "name": "put"
+        },
+        {
+          "name": "request"
         }
       ],
-      "is_entry": false
+      "is_entry": false,
+      "group": "source"
     },
     {
-      "file": "tests/conftest.py",
+      "file": "src/requests/hooks.py",
       "functions": [
         {
-          "name": "httpbin"
+          "name": "default_hooks"
         },
         {
-          "name": "httpbin_secure"
-        },
-        {
-          "name": "inner"
-        },
-        {
-          "name": "nosan_server"
-        },
-        {
-          "name": "prepare_url"
+          "name": "dispatch_hook"
         }
       ],
-      "is_entry": false
+      "is_entry": false,
+      "group": "source"
     },
     {
-      "file": "tests/test_adapters.py",
-      "functions": [
-        {
-          "name": "test_request_url_trims_leading_path_separators"
-        }
-      ],
-      "is_entry": false
-    },
-    {
-      "file": "tests/test_help.py",
-      "functions": [
-        {
-          "name": "__init__"
-        },
-        {
-          "name": "test_idna_with_version_attribute"
-        },
-        {
-          "name": "test_idna_without_version_attribute"
-        },
-        {
-          "name": "test_system_ssl"
-        }
-      ],
-      "is_entry": false
-    },
-    {
-      "file": "tests/test_hooks.py",
-      "functions": [
-        {
-          "name": "hook"
-        },
-        {
-          "name": "test_default_hooks"
-        },
-        {
-          "name": "test_hooks"
-        }
-      ],
-      "is_entry": false
-    },
-    {
-      "file": "tests/test_lowlevel.py",
-      "functions": [
-        {
-          "name": "digest_failed_response_handler"
-        },
-        {
-          "name": "digest_response_handler"
-        },
-        {
-          "name": "echo_response_handler"
-        },
-        {
-          "name": "incomplete_chunked_response_handler"
-        },
-        {
-          "name": "multiple_content_length_response_handler"
-        },
-        {
-          "name": "redirect_resp_handler"
-        },
-        {
-          "name": "response_handler"
-        },
-        {
-          "name": "test_chunked_encoding_error"
-        },
-        {
-          "name": "test_chunked_upload"
-        },
-        {
-          "name": "test_chunked_upload_doesnt_skip_host_header"
-        },
-        {
-          "name": "test_chunked_upload_uses_only_specified_host_header"
-        },
-        {
-          "name": "test_conflicting_content_lengths"
-        },
-        {
-          "name": "test_digestauth_401_count_reset_on_redirect"
-        },
-        {
-          "name": "test_digestauth_401_only_sent_once"
-        },
-        {
-          "name": "test_digestauth_only_on_4xx"
-        },
-        {
-          "name": "test_fragment_not_sent_with_request"
-        },
-        {
-          "name": "test_fragment_update_on_redirect"
-        },
-        {
-          "name": "test_json_decode_compatibility_for_alt_utf_encodings"
-        },
-        {
-          "name": "test_redirect_rfc1808_to_non_ascii_location"
-        },
-        {
-          "name": "test_use_proxy_from_environment"
-        }
-      ],
-      "is_entry": false
-    },
-    {
-      "file": "tests/test_packages.py",
-      "functions": [
-        {
-          "name": "test_can_access_chardet_attribute"
-        },
-        {
-          "name": "test_can_access_idna_attribute"
-        },
-        {
-          "name": "test_can_access_urllib3_attribute"
-        }
-      ],
-      "is_entry": false
-    },
-    {
-      "file": "tests/test_requests.py",
-      "functions": [
-        {
-          "name": "__call__"
-        },
-        {
-          "name": "__delitem__"
-        },
-        {
-          "name": "__getitem__"
-        },
-        {
-          "name": "__init__"
-        },
-        {
-          "name": "__iter__"
-        },
-        {
-          "name": "__len__"
-        },
-        {
-          "name": "__setitem__"
-        },
-        {
-          "name": "_build_raw"
-        },
-        {
-          "name": "_patch_adapter_gzipped_redirect"
-        },
-        {
-          "name": "build_response"
-        },
-        {
-          "name": "get_netrc_auth_mock"
-        },
-        {
-          "name": "get_redirect_target"
-        },
-        {
-          "name": "hook"
-        },
-        {
-          "name": "hook1"
-        },
-        {
-          "name": "hook2"
-        },
-        {
-          "name": "normalize_percent_encode"
-        },
-        {
-          "name": "read"
-        },
-        {
-          "name": "read_mock"
-        },
-        {
-          "name": "response_handler"
-        },
-        {
-          "name": "seek"
-        },
-        {
-          "name": "send"
-        },
-        {
-          "name": "tell"
-        },
-        {
-          "name": "test_BASICAUTH_TUPLE_HTTP_200_OK_GET"
-        },
-        {
-          "name": "test_DIGESTAUTH_QUOTES_QOP_VALUE"
-        },
-        {
-          "name": "test_DIGESTAUTH_WRONG_HTTP_401_GET"
-        },
-        {
-          "name": "test_DIGEST_AUTH_RETURNS_COOKIE"
-        },
-        {
-          "name": "test_DIGEST_AUTH_SETS_SESSION_COOKIES"
-        },
-        {
-          "name": "test_DIGEST_HTTP_200_OK_GET"
-        },
-        {
-          "name": "test_DIGEST_STREAM"
-        },
-        {
-          "name": "test_HTTP_200_OK_GET_ALTERNATIVE"
-        },
-        {
-          "name": "test_HTTP_200_OK_GET_WITH_MIXED_PARAMS"
-        },
-        {
-          "name": "test_HTTP_200_OK_GET_WITH_PARAMS"
-        },
-        {
-          "name": "test_HTTP_200_OK_HEAD"
-        },
-        {
-          "name": "test_HTTP_200_OK_PUT"
-        },
-        {
-          "name": "test_HTTP_302_ALLOW_REDIRECT_GET"
-        },
-        {
-          "name": "test_HTTP_302_TOO_MANY_REDIRECTS"
-        },
-        {
-          "name": "test_HTTP_302_TOO_MANY_REDIRECTS_WITH_PARAMS"
-        },
-        {
-          "name": "test_HTTP_307_ALLOW_REDIRECT_POST"
-        },
-        {
-          "name": "test_HTTP_307_ALLOW_REDIRECT_POST_WITH_SEEKABLE"
-        },
-        {
-          "name": "test_POSTBIN_GET_POST_FILES"
-        },
-        {
-          "name": "test_POSTBIN_GET_POST_FILES_WITH_DATA"
-        },
-        {
-          "name": "test_POSTBIN_SEEKED_OBJECT_WITH_NO_ITER"
-        },
-        {
-          "name": "test_auth_is_retained_for_redirect_on_host"
-        },
-        {
-          "name": "test_auth_is_stripped_on_http_downgrade"
-        },
-        {
-          "name": "test_autoset_header_values_are_native"
-        },
-        {
-          "name": "test_basic_auth_str_is_always_native"
-        },
-        {
-          "name": "test_basic_building"
-        },
-        {
-          "name": "test_basicauth_encodes_byte_strings"
-        },
-        {
-          "name": "test_basicauth_with_netrc"
-        },
-        {
-          "name": "test_basicauth_with_netrc_leak"
-        },
-        {
-          "name": "test_binary_put"
-        },
-        {
-          "name": "test_can_send_file_object_with_non_string_filename"
-        },
-        {
-          "name": "test_can_send_objects_with_files"
-        },
-        {
-          "name": "test_cannot_send_unprepared_requests"
-        },
-        {
-          "name": "test_certificate_failure"
-        },
-        {
-          "name": "test_chunked_upload_does_not_set_content_length_header"
-        },
-        {
-          "name": "test_conflicting_post_params"
-        },
-        {
-          "name": "test_connect_timeout"
-        },
-        {
-          "name": "test_contains"
-        },
-        {
-          "name": "test_content_length_for_bytes_data"
-        },
-        {
-          "name": "test_content_length_for_string_data_counts_bytes"
-        },
-        {
-          "name": "test_cookie_as_dict_items"
-        },
-        {
-          "name": "test_cookie_as_dict_keeps_items"
-        },
-        {
-          "name": "test_cookie_as_dict_keeps_len"
-        },
-        {
-          "name": "test_cookie_as_dict_keys"
-        },
-        {
-          "name": "test_cookie_as_dict_values"
-        },
-        {
-          "name": "test_cookie_duplicate_names_different_domains"
-        },
-        {
-          "name": "test_cookie_duplicate_names_raises_cookie_conflict_error"
-        },
-        {
-          "name": "test_cookie_parameters"
-        },
-        {
-          "name": "test_cookie_persists_via_api"
-        },
-        {
-          "name": "test_cookie_policy_copy"
-        },
-        {
-          "name": "test_cookie_quote_wrapped"
-        },
-        {
-          "name": "test_cookie_removed_on_expire"
-        },
-        {
-          "name": "test_cookie_sent_on_redirect"
-        },
-        {
-          "name": "test_cookielib_cookiejar_on_redirect"
-        },
-        {
-          "name": "test_copy"
-        },
-        {
-          "name": "test_custom_content_type"
-        },
-        {
-          "name": "test_custom_redirect_mixin"
-        },
-        {
-          "name": "test_data_argument_accepts_tuples"
-        },
-        {
-          "name": "test_decompress_gzip"
-        },
-        {
-          "name": "test_delitem"
-        },
-        {
-          "name": "test_different_connection_pool_for_mtls_settings"
-        },
-        {
-          "name": "test_different_connection_pool_for_tls_settings_verify_True"
-        },
-        {
-          "name": "test_different_connection_pool_for_tls_settings_verify_bundle_expired_cert"
-        },
-        {
-          "name": "test_different_connection_pool_for_tls_settings_verify_bundle_unexpired_cert"
-        },
-        {
-          "name": "test_different_encodings_dont_break_post"
-        },
-        {
-          "name": "test_docstring_example"
-        },
-        {
-          "name": "test_empty_content_length"
-        },
-        {
-          "name": "test_empty_response_has_content_none"
-        },
-        {
-          "name": "test_empty_stream_with_auth_does_not_set_content_length_header"
-        },
-        {
-          "name": "test_encoded_methods"
-        },
-        {
-          "name": "test_entry_points"
-        },
-        {
-          "name": "test_env_cert_bundles"
-        },
-        {
-          "name": "test_equality"
-        },
-        {
-          "name": "test_errors"
-        },
-        {
-          "name": "test_expires_invalid_int"
-        },
-        {
-          "name": "test_expires_none"
-        },
-        {
-          "name": "test_expires_valid_str"
-        },
-        {
-          "name": "test_fixes_1329"
-        },
-        {
-          "name": "test_fixes_649"
-        },
-        {
-          "name": "test_form_encoded_post_query_multivalued_element"
-        },
-        {
-          "name": "test_fragment_maintained_on_redirect"
-        },
-        {
-          "name": "test_generic_cookiejar_works"
-        },
-        {
-          "name": "test_get"
-        },
-        {
-          "name": "test_getitem"
-        },
-        {
-          "name": "test_header_and_body_removal_on_redirect"
-        },
-        {
-          "name": "test_header_keys_are_native"
-        },
-        {
-          "name": "test_header_no_leading_space"
-        },
-        {
-          "name": "test_header_no_return_chars"
-        },
-        {
-          "name": "test_header_remove_is_case_insensitive"
-        },
-        {
-          "name": "test_header_validation"
-        },
-        {
-          "name": "test_header_value_not_str"
-        },
-        {
-          "name": "test_header_with_subclass_types"
-        },
-        {
-          "name": "test_headers_on_session_with_None_are_not_sent"
-        },
-        {
-          "name": "test_headers_preserve_order"
-        },
-        {
-          "name": "test_history_is_always_a_list"
-        },
-        {
-          "name": "test_hook_receives_request_arguments"
-        },
-        {
-          "name": "test_http_301_changes_post_to_get"
-        },
-        {
-          "name": "test_http_301_doesnt_change_head_to_get"
-        },
-        {
-          "name": "test_http_302_changes_post_to_get"
-        },
-        {
-          "name": "test_http_302_doesnt_change_head_to_get"
-        },
-        {
-          "name": "test_http_303_changes_post_to_get"
-        },
-        {
-          "name": "test_http_303_doesnt_change_head_to_get"
-        },
-        {
-          "name": "test_http_error"
-        },
-        {
-          "name": "test_http_with_certificate"
-        },
-        {
-          "name": "test_https_warnings"
-        },
-        {
-          "name": "test_init"
-        },
-        {
-          "name": "test_invalid_ca_certificate_path"
-        },
-        {
-          "name": "test_invalid_files_input"
-        },
-        {
-          "name": "test_invalid_ssl_certificate_files"
-        },
-        {
-          "name": "test_invalid_timeout"
-        },
-        {
-          "name": "test_invalid_url"
-        },
-        {
-          "name": "test_iter"
-        },
-        {
-          "name": "test_iter_content_wraps_exceptions"
-        },
-        {
-          "name": "test_json_decode_compatibility"
-        },
-        {
-          "name": "test_json_decode_errors_are_serializable_deserializable"
-        },
-        {
-          "name": "test_json_decode_persists_doc_attr"
-        },
-        {
-          "name": "test_json_encodes_as_bytes"
-        },
-        {
-          "name": "test_json_param_post_content_type_works"
-        },
-        {
-          "name": "test_json_param_post_should_not_override_data_param"
-        },
-        {
-          "name": "test_len"
-        },
-        {
-          "name": "test_links"
-        },
-        {
-          "name": "test_long_authinfo_in_url"
-        },
-        {
-          "name": "test_lower_items"
-        },
-        {
-          "name": "test_manual_redirect_with_partial_body_read"
-        },
-        {
-          "name": "test_max_age_invalid_str"
-        },
-        {
-          "name": "test_max_age_valid_int"
-        },
-        {
-          "name": "test_mixed_case_scheme_acceptable"
-        },
-        {
-          "name": "test_no_body_content_length"
-        },
-        {
-          "name": "test_no_content_length"
-        },
-        {
-          "name": "test_non_prepared_request_error"
-        },
-        {
-          "name": "test_none_timeout"
-        },
-        {
-          "name": "test_nonhttp_schemes_dont_check_URLs"
-        },
-        {
-          "name": "test_override_content_length"
-        },
-        {
-          "name": "test_param_cookiejar_works"
-        },
-        {
-          "name": "test_parameters_for_nonstandard_schemes"
-        },
-        {
-          "name": "test_params_are_added_before_fragment"
-        },
-        {
-          "name": "test_params_are_merged_case_sensitive"
-        },
-        {
-          "name": "test_params_bytes_are_encoded"
-        },
-        {
-          "name": "test_params_original_order_is_preserved_by_default"
-        },
-        {
-          "name": "test_path_is_not_double_encoded"
-        },
-        {
-          "name": "test_post_json_nan"
-        },
-        {
-          "name": "test_post_with_custom_mapping"
-        },
-        {
-          "name": "test_prepare_body_position_non_stream"
-        },
-        {
-          "name": "test_prepare_request_with_bytestring_url"
-        },
-        {
-          "name": "test_prepared_copy"
-        },
-        {
-          "name": "test_prepared_from_session"
-        },
-        {
-          "name": "test_prepared_request_hook"
-        },
-        {
-          "name": "test_prepared_request_is_pickleable"
-        },
-        {
-          "name": "test_prepared_request_with_file_is_pickleable"
-        },
-        {
-          "name": "test_prepared_request_with_hook_is_pickleable"
-        },
-        {
-          "name": "test_preparing_bad_url"
-        },
-        {
-          "name": "test_preparing_url"
-        },
-        {
-          "name": "test_preserve_key_case"
-        },
-        {
-          "name": "test_preserve_last_key_case"
-        },
-        {
-          "name": "test_proxy_auth"
-        },
-        {
-          "name": "test_proxy_auth_empty_pass"
-        },
-        {
-          "name": "test_proxy_authorization_not_appended_to_https_request"
-        },
-        {
-          "name": "test_proxy_authorization_preserved_on_request"
-        },
-        {
-          "name": "test_proxy_env_vars_override_default"
-        },
-        {
-          "name": "test_proxy_error"
-        },
-        {
-          "name": "test_proxy_error_on_bad_url"
-        },
-        {
-          "name": "test_pyopenssl_redirect"
-        },
-        {
-          "name": "test_read_timeout"
-        },
-        {
-          "name": "test_redirect_with_wrong_gzipped_header"
-        },
-        {
-          "name": "test_redirecting_to_bad_url"
-        },
-        {
-          "name": "test_request_and_response_are_pickleable"
-        },
-        {
-          "name": "test_request_cookie_overrides_session_cookie"
-        },
-        {
-          "name": "test_request_cookies_not_persisted"
-        },
-        {
-          "name": "test_request_ok_set"
-        },
-        {
-          "name": "test_request_with_bytestring_host"
-        },
-        {
-          "name": "test_requests_are_updated_each_time"
-        },
-        {
-          "name": "test_requests_history_is_saved"
-        },
-        {
-          "name": "test_requests_in_history_are_not_overridden"
-        },
-        {
-          "name": "test_respect_proxy_env_on_get"
-        },
-        {
-          "name": "test_respect_proxy_env_on_request"
-        },
-        {
-          "name": "test_respect_proxy_env_on_send_self_prepared_request"
-        },
-        {
-          "name": "test_respect_proxy_env_on_send_session_prepared_request"
-        },
-        {
-          "name": "test_respect_proxy_env_on_send_with_redirects"
-        },
-        {
-          "name": "test_response_chunk_size_type"
-        },
-        {
-          "name": "test_response_context_manager"
-        },
-        {
-          "name": "test_response_decode_unicode"
-        },
-        {
-          "name": "test_response_is_iterable"
-        },
-        {
-          "name": "test_response_iter_lines"
-        },
-        {
-          "name": "test_response_iter_lines_reentrant"
-        },
-        {
-          "name": "test_response_json_when_content_is_None"
-        },
-        {
-          "name": "test_response_reason_unicode"
-        },
-        {
-          "name": "test_response_reason_unicode_fallback"
-        },
-        {
-          "name": "test_response_without_release_conn"
-        },
-        {
-          "name": "test_rewind_body"
-        },
-        {
-          "name": "test_rewind_body_failed_seek"
-        },
-        {
-          "name": "test_rewind_body_failed_tell"
-        },
-        {
-          "name": "test_rewind_body_no_seek"
-        },
-        {
-          "name": "test_rewind_partially_read_body"
-        },
-        {
-          "name": "test_session_close_proxy_clear"
-        },
-        {
-          "name": "test_session_get_adapter_prefix_matching"
-        },
-        {
-          "name": "test_session_get_adapter_prefix_matching_is_case_insensitive"
-        },
-        {
-          "name": "test_session_get_adapter_prefix_matching_mixed_case"
-        },
-        {
-          "name": "test_session_get_adapter_prefix_with_trailing_slash"
-        },
-        {
-          "name": "test_session_get_adapter_prefix_without_trailing_slash"
-        },
-        {
-          "name": "test_session_hooks_are_overridden_by_request_hooks"
-        },
-        {
-          "name": "test_session_hooks_are_used_with_no_request_hooks"
-        },
-        {
-          "name": "test_session_pickling"
-        },
-        {
-          "name": "test_set_basicauth"
-        },
-        {
-          "name": "test_set_cookie_on_301"
-        },
-        {
-          "name": "test_setdefault"
-        },
-        {
-          "name": "test_should_strip_auth_default_port"
-        },
-        {
-          "name": "test_should_strip_auth_host_change"
-        },
-        {
-          "name": "test_should_strip_auth_http_downgrade"
-        },
-        {
-          "name": "test_should_strip_auth_https_upgrade"
-        },
-        {
-          "name": "test_should_strip_auth_port_change"
-        },
-        {
-          "name": "test_status_code_425"
-        },
-        {
-          "name": "test_status_raising"
-        },
-        {
-          "name": "test_stream_timeout"
-        },
-        {
-          "name": "test_stream_with_auth_does_not_set_transfer_encoding_header"
-        },
-        {
-          "name": "test_time_elapsed_blank"
-        },
-        {
-          "name": "test_total_timeout_connect"
-        },
-        {
-          "name": "test_transfer_enc_removal_on_redirect"
-        },
-        {
-          "name": "test_transport_adapter_ordering"
-        },
-        {
-          "name": "test_unconsumed_session_response_closes_connection"
-        },
-        {
-          "name": "test_unicode_get"
-        },
-        {
-          "name": "test_unicode_header_name"
-        },
-        {
-          "name": "test_unicode_method_name"
-        },
-        {
-          "name": "test_unicode_method_name_with_request_object"
-        },
-        {
-          "name": "test_unicode_multipart_post"
-        },
-        {
-          "name": "test_unicode_multipart_post_fieldnames"
-        },
-        {
-          "name": "test_update"
-        },
-        {
-          "name": "test_update_retains_unchanged"
-        },
-        {
-          "name": "test_uppercase_scheme_redirect"
-        },
-        {
-          "name": "test_url_mutation"
-        },
-        {
-          "name": "test_urlencoded_get_query_multivalued_param"
-        },
-        {
-          "name": "test_urllib3_pool_connection_closed"
-        },
-        {
-          "name": "test_urllib3_retries"
-        },
-        {
-          "name": "test_user_agent_transfers"
-        },
-        {
-          "name": "test_whitespaces_are_removed_from_url"
-        }
-      ],
-      "is_entry": false
-    },
-    {
-      "file": "tests/test_structures.py",
-      "functions": [
-        {
-          "name": "setup"
-        },
-        {
-          "name": "test_copy"
-        },
-        {
-          "name": "test_delitem"
-        },
-        {
-          "name": "test_get"
-        },
-        {
-          "name": "test_getitem"
-        },
-        {
-          "name": "test_instance_equality"
-        },
-        {
-          "name": "test_list"
-        },
-        {
-          "name": "test_lower_items"
-        },
-        {
-          "name": "test_repr"
-        }
-      ],
-      "is_entry": false
-    },
-    {
-      "file": "tests/test_testserver.py",
-      "functions": [
-        {
-          "name": "handler"
-        },
-        {
-          "name": "test_basic"
-        },
-        {
-          "name": "test_basic_response"
-        },
-        {
-          "name": "test_basic_waiting_server"
-        },
-        {
-          "name": "test_multiple_requests"
-        },
-        {
-          "name": "test_request_recovery"
-        },
-        {
-          "name": "test_request_recovery_with_bigger_timeout"
-        },
-        {
-          "name": "test_requests_after_timeout_are_not_received"
-        },
-        {
-          "name": "test_server_closes"
-        },
-        {
-          "name": "test_server_finishes_on_error"
-        },
-        {
-          "name": "test_server_finishes_when_no_connections"
-        },
-        {
-          "name": "test_text_response"
-        }
-      ],
-      "is_entry": false
-    },
-    {
-      "file": "tests/test_utils.py",
-      "functions": [
-        {
-          "name": "Close"
-        },
-        {
-          "name": "OpenKey"
-        },
-        {
-          "name": "QueryValueEx"
-        },
-        {
-          "name": "__init__"
-        },
-        {
-          "name": "__len__"
-        },
-        {
-          "name": "no_proxy"
-        },
-        {
-          "name": "seek"
-        },
-        {
-          "name": "tell"
-        },
-        {
-          "name": "test__parse_content_type_header"
-        },
-        {
-          "name": "test_add_dict_to_cookiejar"
-        },
-        {
-          "name": "test_bad_utf_like_encoding"
-        },
-        {
-          "name": "test_bypass"
-        },
-        {
-          "name": "test_bypass_no_proxy_keyword"
-        },
-        {
-          "name": "test_dotted_netmask"
-        },
-        {
-          "name": "test_encoded"
-        },
-        {
-          "name": "test_file"
-        },
-        {
-          "name": "test_get_auth_from_url"
-        },
-        {
-          "name": "test_get_encoding_from_headers"
-        },
-        {
-          "name": "test_guess_by_bom"
-        },
-        {
-          "name": "test_guess_filename_invalid"
-        },
-        {
-          "name": "test_guess_filename_valid"
-        },
-        {
-          "name": "test_invalid"
-        },
-        {
-          "name": "test_invalid_unc_path"
-        },
-        {
-          "name": "test_io_streams"
-        },
-        {
-          "name": "test_is_filename"
-        },
-        {
-          "name": "test_iter_slices"
-        },
-        {
-          "name": "test_none"
-        },
-        {
-          "name": "test_not_bypass"
-        },
-        {
-          "name": "test_not_bypass_no_proxy_keyword"
-        },
-        {
-          "name": "test_not_vulnerable_to_bad_url_parsing"
-        },
-        {
-          "name": "test_parse_dict_header"
-        },
-        {
-          "name": "test_parse_header_links"
-        },
-        {
-          "name": "test_pragmas"
-        },
-        {
-          "name": "test_precedence"
-        },
-        {
-          "name": "test_prepend_scheme_if_needed"
-        },
-        {
-          "name": "test_requote_uri_with_unquoted_percents"
-        },
-        {
-          "name": "test_select_proxies"
-        },
-        {
-          "name": "test_set_environ"
-        },
-        {
-          "name": "test_set_environ_raises_exception"
-        },
-        {
-          "name": "test_should_bypass_proxies"
-        },
-        {
-          "name": "test_should_bypass_proxies_no_proxy"
-        },
-        {
-          "name": "test_should_bypass_proxies_pass_only_hostname"
-        },
-        {
-          "name": "test_should_bypass_proxies_win_registry"
-        },
-        {
-          "name": "test_should_bypass_proxies_win_registry_ProxyOverride_value"
-        },
-        {
-          "name": "test_should_bypass_proxies_win_registry_bad_values"
-        },
-        {
-          "name": "test_string"
-        },
-        {
-          "name": "test_super_len_correctly_calculates_len_of_partially_read_file"
-        },
-        {
-          "name": "test_super_len_handles_files_raising_weird_errors_in_tell"
-        },
-        {
-          "name": "test_super_len_tell_ioerror"
-        },
-        {
-          "name": "test_super_len_with__len__"
-        },
-        {
-          "name": "test_super_len_with_fileno"
-        },
-        {
-          "name": "test_super_len_with_no__len__"
-        },
-        {
-          "name": "test_super_len_with_no_matches"
-        },
-        {
-          "name": "test_super_len_with_tell"
-        },
-        {
-          "name": "test_tarfile_member"
-        },
-        {
-          "name": "test_to_native_string"
-        },
-        {
-          "name": "test_unicode_is_ascii"
-        },
-        {
-          "name": "test_unquote_unreserved"
-        },
-        {
-          "name": "test_unzipped_paths_unchanged"
-        },
-        {
-          "name": "test_urldefragauth"
-        },
-        {
-          "name": "test_valid"
-        },
-        {
-          "name": "test_works"
-        },
-        {
-          "name": "test_zipped_paths_extracted"
-        }
-      ],
-      "is_entry": false
-    },
-    {
-      "file": "tests/testserver/__init__.py",
+      "file": "src/requests/packages.py",
       "functions": [],
-      "is_entry": false
+      "is_entry": false,
+      "group": "source"
     },
     {
-      "file": "tests/testserver/server.py",
-      "functions": [
-        {
-          "name": "__enter__"
-        },
-        {
-          "name": "__exit__"
-        },
-        {
-          "name": "__init__"
-        },
-        {
-          "name": "_accept_connection"
-        },
-        {
-          "name": "_close_server_sock_ignore_errors"
-        },
-        {
-          "name": "_create_socket_and_bind"
-        },
-        {
-          "name": "_handle_requests"
-        },
-        {
-          "name": "basic_response_server"
-        },
-        {
-          "name": "consume_socket_content"
-        },
-        {
-          "name": "run"
-        },
-        {
-          "name": "text_response_handler"
-        },
-        {
-          "name": "text_response_server"
-        }
-      ],
-      "is_entry": false
+      "file": "src/requests/certs.py",
+      "functions": [],
+      "is_entry": false,
+      "group": "source"
     },
     {
-      "file": "tests/utils.py",
+      "file": "src/requests/help.py",
       "functions": [
         {
-          "name": "override_environ"
+          "name": "_implementation"
+        },
+        {
+          "name": "info"
+        },
+        {
+          "name": "main"
         }
       ],
-      "is_entry": false
+      "is_entry": false,
+      "group": "source"
+    },
+    {
+      "file": "setup.py",
+      "functions": [],
+      "is_entry": false,
+      "group": "project"
     }
   ],
   "metadata": {
-    "entry_point": "src/requests/certs.py"
+    "entry_point": null,
+    "file_count": 19,
+    "source_count": 18,
+    "test_count": 0,
+    "docs_count": 0
   }
 }

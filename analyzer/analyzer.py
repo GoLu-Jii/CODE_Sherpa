@@ -17,7 +17,7 @@ Main public API:
 
 import ast
 from pathlib import Path
-from typing import Dict, Set, Optional, List
+from typing import Dict, Set, Optional, List, Tuple
 import json
 
 
@@ -30,6 +30,7 @@ class CodeVisitor(ast.NodeVisitor):
 
     def __init__(self):
         self.imports: Set[str] = set()
+        self.import_from_nodes: List[Tuple[int, Optional[str], List[str]]] = []
         self.functions: Set[str] = set()
         self.calls: Dict[str, Set[str]] = {}
 
@@ -47,7 +48,9 @@ class CodeVisitor(ast.NodeVisitor):
         self.generic_visit(node)
 
     def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
-        if node.module:
+        imported_names = [alias.name for alias in node.names]
+        self.import_from_nodes.append((node.level, node.module, imported_names))
+        if node.level == 0 and node.module:
             self.imports.add(node.module)
         self.generic_visit(node)
 
@@ -134,30 +137,82 @@ class CodeVisitor(ast.NodeVisitor):
 # Parsing Helpers
 # ============================================================
 
-def parse_python_file(file_path: Path) -> Optional[ast.AST]:
+def parse_python_file(file_path: Path) -> Tuple[Optional[ast.AST], Optional[str]]:
     try:
         source = file_path.read_text(encoding="utf-8")
-        return ast.parse(source, filename=str(file_path))
-    except Exception:
-        return None
+        return ast.parse(source, filename=str(file_path)), None
+    except Exception as exc:
+        return None, str(exc)
+
+
+def rel_file_to_module(rel_path: str) -> str:
+    path_no_ext = rel_path[:-3] if rel_path.endswith(".py") else rel_path
+    module = path_no_ext.replace("/", ".")
+    if module.endswith(".__init__"):
+        return module[:-9]
+    return module
+
+
+def resolve_relative_import(
+    current_module: str,
+    is_package_module: bool,
+    level: int,
+    module: Optional[str],
+    imported_names: List[str]
+) -> List[str]:
+    if level <= 0:
+        return [module] if module else imported_names
+
+    current_parts = [p for p in current_module.split(".") if p]
+    if not current_parts:
+        return []
+
+    package_parts = current_parts if is_package_module else current_parts[:-1]
+
+    ascend = max(level - 1, 0)
+    if ascend > len(package_parts):
+        return []
+    anchor = package_parts[:len(package_parts) - ascend]
+
+    resolved = []
+    if module:
+        resolved.append(".".join(anchor + module.split(".")))
+    else:
+        for name in imported_names:
+            resolved.append(".".join(anchor + name.split(".")))
+    return [item for item in resolved if item]
 
 
 # ============================================================
 # File Analysis
 # ============================================================
 
-def analyze_file(file_path: Path) -> Dict:
-    tree = parse_python_file(file_path)
+def analyze_file(file_path: Path, rel_path: str) -> Dict:
+    tree, parse_error = parse_python_file(file_path)
 
     if tree is None:
         return {
             "entry": False,
             "imports": [],
-            "functions": {}
+            "functions": {},
+            "parse_error": parse_error
         }
 
     visitor = CodeVisitor()
     visitor.visit(tree)
+    current_module = rel_file_to_module(rel_path)
+    is_package_module = rel_path.endswith("__init__.py")
+
+    for level, module, imported_names in visitor.import_from_nodes:
+        resolved_modules = resolve_relative_import(
+            current_module=current_module,
+            is_package_module=is_package_module,
+            level=level,
+            module=module,
+            imported_names=imported_names
+        )
+        for resolved in resolved_modules:
+            visitor.imports.add(resolved)
 
     return {
         "entry": visitor.has_main_guard,
@@ -167,7 +222,8 @@ def analyze_file(file_path: Path) -> Dict:
                 "calls": sorted(visitor.calls.get(name, []))
             }
             for name in sorted(visitor.functions)
-        }
+        },
+        "parse_error": None
     }
 
 
@@ -179,7 +235,7 @@ def analyze_repo_files(repo_path: str) -> Dict[str, Dict]:
 
     for file_rel_path in files:
         full_path = Path(repo_path) / file_rel_path
-        results[file_rel_path] = analyze_file(full_path)
+        results[file_rel_path] = analyze_file(full_path, file_rel_path)
 
     return results
 
@@ -209,6 +265,9 @@ def build_unified_model(repo_path: str) -> Dict:
 
     unified = {
         "entry_point": entry_point,
+        "metadata": {
+            "parse_errors": []
+        },
         "files": {}
     }
 
@@ -219,6 +278,11 @@ def build_unified_model(repo_path: str) -> Dict:
             "functions": file_data["functions"],
             "depends_on": dependency_graph.get(file_path, [])
         }
+        if file_data.get("parse_error"):
+            unified["metadata"]["parse_errors"].append({
+                "file": file_path,
+                "error": file_data["parse_error"]
+            })
 
     return unified
 
