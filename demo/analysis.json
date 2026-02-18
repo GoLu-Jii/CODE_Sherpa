@@ -1,7 +1,1597 @@
 {
   "entry_point": null,
   "metadata": {
-    "parse_errors": []
+    "parse_errors": [],
+    "resolved_call_edges": [
+      {
+        "from": "src.requests._check_cryptography",
+        "to": "warnings.warn"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.__init__",
+        "to": "src.requests.adapters.HTTPAdapter.init_poolmanager"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.__init__",
+        "to": "urllib3.util.retry.Retry"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.__init__",
+        "to": "urllib3.util.retry.Retry.from_int"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.__setstate__",
+        "to": "src.requests.adapters.HTTPAdapter.init_poolmanager"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.build_connection_pool_key_attributes",
+        "to": "src.requests.adapters._urllib3_request_context"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.build_response",
+        "to": "src.requests.cookies.extract_cookies_to_jar"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.build_response",
+        "to": "src.requests.models.Response"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.build_response",
+        "to": "src.requests.structures.CaseInsensitiveDict"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.build_response",
+        "to": "src.requests.utils.get_encoding_from_headers"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.cert_verify",
+        "to": "os.path.path.exists"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.cert_verify",
+        "to": "os.path.path.isdir"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.cert_verify",
+        "to": "src.requests.utils.extract_zipped_paths"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.close",
+        "to": "src.requests.adapters.HTTPAdapter.poolmanager.clear"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.close",
+        "to": "src.requests.adapters.HTTPAdapter.proxy_manager.values"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.get_connection",
+        "to": "src.requests.adapters.HTTPAdapter.poolmanager.connection_from_url"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.get_connection",
+        "to": "src.requests.adapters.HTTPAdapter.proxy_manager_for"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.get_connection",
+        "to": "src.requests.adapters.HTTPAdapter.proxy_manager_for.connection_from_url"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.get_connection",
+        "to": "src.requests.compat.urlparse"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.get_connection",
+        "to": "src.requests.compat.urlparse.geturl"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.get_connection",
+        "to": "src.requests.exceptions.InvalidProxyURL"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.get_connection",
+        "to": "src.requests.utils.prepend_scheme_if_needed"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.get_connection",
+        "to": "src.requests.utils.select_proxy"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.get_connection",
+        "to": "urllib3.util.parse_url"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.get_connection",
+        "to": "warnings.warn"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.get_connection_with_tls_context",
+        "to": "src.requests.adapters.HTTPAdapter.build_connection_pool_key_attributes"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.get_connection_with_tls_context",
+        "to": "src.requests.adapters.HTTPAdapter.poolmanager.connection_from_host"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.get_connection_with_tls_context",
+        "to": "src.requests.adapters.HTTPAdapter.proxy_manager_for"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.get_connection_with_tls_context",
+        "to": "src.requests.adapters.HTTPAdapter.proxy_manager_for.connection_from_host"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.get_connection_with_tls_context",
+        "to": "src.requests.exceptions.InvalidProxyURL"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.get_connection_with_tls_context",
+        "to": "src.requests.exceptions.InvalidURL"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.get_connection_with_tls_context",
+        "to": "src.requests.utils.prepend_scheme_if_needed"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.get_connection_with_tls_context",
+        "to": "src.requests.utils.select_proxy"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.get_connection_with_tls_context",
+        "to": "urllib3.util.parse_url"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.init_poolmanager",
+        "to": "urllib3.poolmanager.PoolManager"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.proxy_headers",
+        "to": "src.requests.auth._basic_auth_str"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.proxy_headers",
+        "to": "src.requests.utils.get_auth_from_url"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.proxy_manager_for",
+        "to": "src.requests.adapters.HTTPAdapter.proxy_headers"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.proxy_manager_for",
+        "to": "src.requests.utils.get_auth_from_url"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.proxy_manager_for",
+        "to": "urllib3.poolmanager.proxy_from_url"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.request_url",
+        "to": "src.requests.compat.urlparse"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.request_url",
+        "to": "src.requests.utils.select_proxy"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.request_url",
+        "to": "src.requests.utils.urldefragauth"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.send",
+        "to": "src.requests.adapters.HTTPAdapter.add_headers"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.send",
+        "to": "src.requests.adapters.HTTPAdapter.build_response"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.send",
+        "to": "src.requests.adapters.HTTPAdapter.cert_verify"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.send",
+        "to": "src.requests.adapters.HTTPAdapter.get_connection_with_tls_context"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.send",
+        "to": "src.requests.adapters.HTTPAdapter.get_connection_with_tls_context.urlopen"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.send",
+        "to": "src.requests.adapters.HTTPAdapter.request_url"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.send",
+        "to": "src.requests.exceptions.ConnectTimeout"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.send",
+        "to": "src.requests.exceptions.ConnectionError"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.send",
+        "to": "src.requests.exceptions.InvalidHeader"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.send",
+        "to": "src.requests.exceptions.InvalidURL"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.send",
+        "to": "src.requests.exceptions.ProxyError"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.send",
+        "to": "src.requests.exceptions.ReadTimeout"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.send",
+        "to": "src.requests.exceptions.RetryError"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.send",
+        "to": "src.requests.exceptions.SSLError"
+      },
+      {
+        "from": "src.requests.adapters.HTTPAdapter.send",
+        "to": "urllib3.util.Timeout"
+      },
+      {
+        "from": "src.requests.adapters._urllib3_request_context",
+        "to": "os.path.path.isdir"
+      },
+      {
+        "from": "src.requests.adapters._urllib3_request_context",
+        "to": "src.requests.compat.urlparse"
+      },
+      {
+        "from": "src.requests.adapters._urllib3_request_context",
+        "to": "src.requests.compat.urlparse.scheme.lower"
+      },
+      {
+        "from": "src.requests.api.delete",
+        "to": "src.requests.api.request"
+      },
+      {
+        "from": "src.requests.api.get",
+        "to": "src.requests.api.request"
+      },
+      {
+        "from": "src.requests.api.head",
+        "to": "src.requests.api.request"
+      },
+      {
+        "from": "src.requests.api.options",
+        "to": "src.requests.api.request"
+      },
+      {
+        "from": "src.requests.api.patch",
+        "to": "src.requests.api.request"
+      },
+      {
+        "from": "src.requests.api.post",
+        "to": "src.requests.api.request"
+      },
+      {
+        "from": "src.requests.api.put",
+        "to": "src.requests.api.request"
+      },
+      {
+        "from": "src.requests.api.request",
+        "to": "src.requests.sessions.Session"
+      },
+      {
+        "from": "src.requests.api.request",
+        "to": "src.requests.sessions.Session.request"
+      },
+      {
+        "from": "src.requests.auth.HTTPBasicAuth.__call__",
+        "to": "src.requests.auth._basic_auth_str"
+      },
+      {
+        "from": "src.requests.auth.HTTPDigestAuth.__call__",
+        "to": "src.requests.auth.HTTPDigestAuth.build_digest_header"
+      },
+      {
+        "from": "src.requests.auth.HTTPDigestAuth.__call__",
+        "to": "src.requests.auth.HTTPDigestAuth.init_per_thread_state"
+      },
+      {
+        "from": "src.requests.auth.HTTPDigestAuth.__init__",
+        "to": "threading.local"
+      },
+      {
+        "from": "src.requests.auth.HTTPDigestAuth.build_digest_header",
+        "to": "hashlib.md5"
+      },
+      {
+        "from": "src.requests.auth.HTTPDigestAuth.build_digest_header",
+        "to": "hashlib.sha1"
+      },
+      {
+        "from": "src.requests.auth.HTTPDigestAuth.build_digest_header",
+        "to": "hashlib.sha256"
+      },
+      {
+        "from": "src.requests.auth.HTTPDigestAuth.build_digest_header",
+        "to": "hashlib.sha512"
+      },
+      {
+        "from": "src.requests.auth.HTTPDigestAuth.build_digest_header",
+        "to": "os.urandom"
+      },
+      {
+        "from": "src.requests.auth.HTTPDigestAuth.build_digest_header",
+        "to": "src.requests.auth.HTTPDigestAuth._thread_local.chal.get"
+      },
+      {
+        "from": "src.requests.auth.HTTPDigestAuth.build_digest_header",
+        "to": "src.requests.auth.HTTPDigestAuth._thread_local.chal.get.split"
+      },
+      {
+        "from": "src.requests.auth.HTTPDigestAuth.build_digest_header",
+        "to": "src.requests.auth.HTTPDigestAuth._thread_local.chal.get.upper"
+      },
+      {
+        "from": "src.requests.auth.HTTPDigestAuth.build_digest_header",
+        "to": "src.requests.compat.str"
+      },
+      {
+        "from": "src.requests.auth.HTTPDigestAuth.build_digest_header",
+        "to": "src.requests.compat.urlparse"
+      },
+      {
+        "from": "src.requests.auth.HTTPDigestAuth.build_digest_header",
+        "to": "time.ctime"
+      },
+      {
+        "from": "src.requests.auth.HTTPDigestAuth.handle_401",
+        "to": "re.compile"
+      },
+      {
+        "from": "src.requests.auth.HTTPDigestAuth.handle_401",
+        "to": "re.compile.sub"
+      },
+      {
+        "from": "src.requests.auth.HTTPDigestAuth.handle_401",
+        "to": "src.requests.auth.HTTPDigestAuth.build_digest_header"
+      },
+      {
+        "from": "src.requests.auth.HTTPDigestAuth.handle_401",
+        "to": "src.requests.cookies.extract_cookies_to_jar"
+      },
+      {
+        "from": "src.requests.auth.HTTPDigestAuth.handle_401",
+        "to": "src.requests.utils.parse_dict_header"
+      },
+      {
+        "from": "src.requests.auth.HTTPProxyAuth.__call__",
+        "to": "src.requests.auth._basic_auth_str"
+      },
+      {
+        "from": "src.requests.auth._basic_auth_str",
+        "to": "base64.b64encode"
+      },
+      {
+        "from": "src.requests.auth._basic_auth_str",
+        "to": "src.requests._internal_utils.to_native_string"
+      },
+      {
+        "from": "src.requests.auth._basic_auth_str",
+        "to": "src.requests.compat.str"
+      },
+      {
+        "from": "src.requests.auth._basic_auth_str",
+        "to": "src.requests.compat.str.encode.encode"
+      },
+      {
+        "from": "src.requests.auth._basic_auth_str",
+        "to": "warnings.warn"
+      },
+      {
+        "from": "src.requests.check_compatibility",
+        "to": "warnings.warn"
+      },
+      {
+        "from": "src.requests.compat._resolve_char_detection",
+        "to": "importlib.import_module"
+      },
+      {
+        "from": "src.requests.cookies.MockRequest.__init__",
+        "to": "src.requests.compat.urlparse"
+      },
+      {
+        "from": "src.requests.cookies.MockRequest.get_full_url",
+        "to": "src.requests._internal_utils.to_native_string"
+      },
+      {
+        "from": "src.requests.cookies.MockRequest.get_full_url",
+        "to": "src.requests.compat.urlparse"
+      },
+      {
+        "from": "src.requests.cookies.MockRequest.get_full_url",
+        "to": "src.requests.compat.urlunparse"
+      },
+      {
+        "from": "src.requests.cookies.MockRequest.get_full_url",
+        "to": "src.requests.cookies.MockRequest._r.headers.get"
+      },
+      {
+        "from": "src.requests.cookies.MockRequest.get_header",
+        "to": "src.requests.cookies.MockRequest._new_headers.get"
+      },
+      {
+        "from": "src.requests.cookies.MockRequest.get_header",
+        "to": "src.requests.cookies.MockRequest._r.headers.get"
+      },
+      {
+        "from": "src.requests.cookies.MockRequest.get_host",
+        "to": "src.requests.compat.urlparse"
+      },
+      {
+        "from": "src.requests.cookies.MockRequest.get_origin_req_host",
+        "to": "src.requests.cookies.MockRequest.get_host"
+      },
+      {
+        "from": "src.requests.cookies.MockRequest.host",
+        "to": "src.requests.cookies.MockRequest.get_host"
+      },
+      {
+        "from": "src.requests.cookies.MockRequest.origin_req_host",
+        "to": "src.requests.cookies.MockRequest.get_origin_req_host"
+      },
+      {
+        "from": "src.requests.cookies.MockRequest.unverifiable",
+        "to": "src.requests.cookies.MockRequest.is_unverifiable"
+      },
+      {
+        "from": "src.requests.cookies.MockResponse.getheaders",
+        "to": "src.requests.cookies.MockResponse._headers.getheaders"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.__delitem__",
+        "to": "src.requests.cookies.remove_cookie_by_name"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.__getitem__",
+        "to": "src.requests.cookies.RequestsCookieJar._find_no_duplicates"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.__getstate__",
+        "to": "src.requests.cookies.RequestsCookieJar.__dict__.copy"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.__getstate__",
+        "to": "src.requests.cookies.RequestsCookieJar.__dict__.copy.pop"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.__setitem__",
+        "to": "src.requests.cookies.RequestsCookieJar.set"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.__setstate__",
+        "to": "src.requests.cookies.RequestsCookieJar.__dict__.update"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar._find_no_duplicates",
+        "to": "src.requests.cookies.CookieConflictError"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.copy",
+        "to": "src.requests.cookies.RequestsCookieJar"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.copy",
+        "to": "src.requests.cookies.RequestsCookieJar.get_policy"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.copy",
+        "to": "src.requests.cookies.RequestsCookieJar.set_policy"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.copy",
+        "to": "src.requests.cookies.RequestsCookieJar.update"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.get",
+        "to": "src.requests.cookies.RequestsCookieJar._find_no_duplicates"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.items",
+        "to": "src.requests.cookies.RequestsCookieJar.iteritems"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.keys",
+        "to": "src.requests.cookies.RequestsCookieJar.iterkeys"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.set",
+        "to": "src.requests.cookies.RequestsCookieJar.set_cookie"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.set",
+        "to": "src.requests.cookies.create_cookie"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.set",
+        "to": "src.requests.cookies.morsel_to_cookie"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.set",
+        "to": "src.requests.cookies.remove_cookie_by_name"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.update",
+        "to": "copy.copy"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.update",
+        "to": "src.requests.cookies.RequestsCookieJar.set_cookie"
+      },
+      {
+        "from": "src.requests.cookies.RequestsCookieJar.values",
+        "to": "src.requests.cookies.RequestsCookieJar.itervalues"
+      },
+      {
+        "from": "src.requests.cookies._copy_cookie_jar",
+        "to": "copy.copy"
+      },
+      {
+        "from": "src.requests.cookies._copy_cookie_jar",
+        "to": "copy.copy.clear"
+      },
+      {
+        "from": "src.requests.cookies._copy_cookie_jar",
+        "to": "copy.copy.set_cookie"
+      },
+      {
+        "from": "src.requests.cookies.cookiejar_from_dict",
+        "to": "src.requests.cookies.RequestsCookieJar"
+      },
+      {
+        "from": "src.requests.cookies.cookiejar_from_dict",
+        "to": "src.requests.cookies.RequestsCookieJar.set_cookie"
+      },
+      {
+        "from": "src.requests.cookies.cookiejar_from_dict",
+        "to": "src.requests.cookies.create_cookie"
+      },
+      {
+        "from": "src.requests.cookies.create_cookie",
+        "to": "src.requests.compat.cookielib.Cookie"
+      },
+      {
+        "from": "src.requests.cookies.extract_cookies_to_jar",
+        "to": "src.requests.cookies.MockRequest"
+      },
+      {
+        "from": "src.requests.cookies.extract_cookies_to_jar",
+        "to": "src.requests.cookies.MockResponse"
+      },
+      {
+        "from": "src.requests.cookies.get_cookie_header",
+        "to": "src.requests.cookies.MockRequest"
+      },
+      {
+        "from": "src.requests.cookies.get_cookie_header",
+        "to": "src.requests.cookies.MockRequest.get_new_headers"
+      },
+      {
+        "from": "src.requests.cookies.merge_cookies",
+        "to": "src.requests.cookies.cookiejar_from_dict"
+      },
+      {
+        "from": "src.requests.cookies.merge_cookies",
+        "to": "src.requests.cookies.cookiejar_from_dict.set_cookie"
+      },
+      {
+        "from": "src.requests.cookies.merge_cookies",
+        "to": "src.requests.cookies.cookiejar_from_dict.update"
+      },
+      {
+        "from": "src.requests.cookies.morsel_to_cookie",
+        "to": "calendar.timegm"
+      },
+      {
+        "from": "src.requests.cookies.morsel_to_cookie",
+        "to": "src.requests.cookies.create_cookie"
+      },
+      {
+        "from": "src.requests.cookies.morsel_to_cookie",
+        "to": "time.strptime"
+      },
+      {
+        "from": "src.requests.cookies.morsel_to_cookie",
+        "to": "time.time"
+      },
+      {
+        "from": "src.requests.exceptions.JSONDecodeError.__init__",
+        "to": "src.requests.compat.JSONDecodeError.__init__"
+      },
+      {
+        "from": "src.requests.exceptions.JSONDecodeError.__reduce__",
+        "to": "src.requests.compat.JSONDecodeError.__reduce__"
+      },
+      {
+        "from": "src.requests.help._implementation",
+        "to": "platform.python_implementation"
+      },
+      {
+        "from": "src.requests.help._implementation",
+        "to": "platform.python_version"
+      },
+      {
+        "from": "src.requests.help.info",
+        "to": "platform.release"
+      },
+      {
+        "from": "src.requests.help.info",
+        "to": "platform.system"
+      },
+      {
+        "from": "src.requests.help.info",
+        "to": "src.requests.help._implementation"
+      },
+      {
+        "from": "src.requests.help.main",
+        "to": "json.dumps"
+      },
+      {
+        "from": "src.requests.help.main",
+        "to": "src.requests.help.info"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.__init__",
+        "to": "src.requests.hooks.default_hooks"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.copy",
+        "to": "src.requests.cookies._copy_cookie_jar"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.copy",
+        "to": "src.requests.models.PreparedRequest"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.copy",
+        "to": "src.requests.models.PreparedRequest.headers.copy"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare",
+        "to": "src.requests.models.PreparedRequest.prepare_auth"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare",
+        "to": "src.requests.models.PreparedRequest.prepare_body"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare",
+        "to": "src.requests.models.PreparedRequest.prepare_cookies"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare",
+        "to": "src.requests.models.PreparedRequest.prepare_headers"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare",
+        "to": "src.requests.models.PreparedRequest.prepare_hooks"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare",
+        "to": "src.requests.models.PreparedRequest.prepare_method"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare",
+        "to": "src.requests.models.PreparedRequest.prepare_url"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_auth",
+        "to": "src.requests.auth.HTTPBasicAuth"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_auth",
+        "to": "src.requests.models.PreparedRequest.__dict__.update"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_auth",
+        "to": "src.requests.models.PreparedRequest.prepare_content_length"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_auth",
+        "to": "src.requests.utils.get_auth_from_url"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_body",
+        "to": "src.requests.compat.builtin_str"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_body",
+        "to": "src.requests.compat.json.dumps"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_body",
+        "to": "src.requests.compat.json.dumps.encode.encode"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_body",
+        "to": "src.requests.compat.json.dumps.encode.tell"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_body",
+        "to": "src.requests.exceptions.InvalidJSONError"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_body",
+        "to": "src.requests.models.PreparedRequest._encode_files"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_body",
+        "to": "src.requests.models.PreparedRequest._encode_params"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_body",
+        "to": "src.requests.models.PreparedRequest.prepare_content_length"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_body",
+        "to": "src.requests.utils.super_len"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_content_length",
+        "to": "src.requests.compat.builtin_str"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_content_length",
+        "to": "src.requests.models.PreparedRequest.headers.get"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_content_length",
+        "to": "src.requests.utils.super_len"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_cookies",
+        "to": "src.requests.cookies.cookiejar_from_dict"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_cookies",
+        "to": "src.requests.cookies.get_cookie_header"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_headers",
+        "to": "src.requests._internal_utils.to_native_string"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_headers",
+        "to": "src.requests.structures.CaseInsensitiveDict"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_headers",
+        "to": "src.requests.utils.check_header_validity"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_hooks",
+        "to": "src.requests.models.PreparedRequest.register_hook"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_method",
+        "to": "src.requests._internal_utils.to_native_string"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_method",
+        "to": "src.requests.models.PreparedRequest.method.upper"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_url",
+        "to": "src.requests._internal_utils.to_native_string"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_url",
+        "to": "src.requests._internal_utils.unicode_is_ascii"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_url",
+        "to": "src.requests.compat.urlunparse"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_url",
+        "to": "src.requests.exceptions.InvalidURL"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_url",
+        "to": "src.requests.exceptions.MissingSchema"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_url",
+        "to": "src.requests.models.PreparedRequest._encode_params"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_url",
+        "to": "src.requests.models.PreparedRequest._get_idna_encoded_host"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_url",
+        "to": "src.requests.models.PreparedRequest._get_idna_encoded_host.startswith"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_url",
+        "to": "src.requests.utils.requote_uri"
+      },
+      {
+        "from": "src.requests.models.PreparedRequest.prepare_url",
+        "to": "urllib3.util.parse_url"
+      },
+      {
+        "from": "src.requests.models.Request.__init__",
+        "to": "src.requests.hooks.default_hooks"
+      },
+      {
+        "from": "src.requests.models.Request.__init__",
+        "to": "src.requests.models.Request.register_hook"
+      },
+      {
+        "from": "src.requests.models.Request.prepare",
+        "to": "src.requests.models.PreparedRequest"
+      },
+      {
+        "from": "src.requests.models.Request.prepare",
+        "to": "src.requests.models.PreparedRequest.prepare"
+      },
+      {
+        "from": "src.requests.models.RequestEncodingMixin._encode_files",
+        "to": "src.requests.utils.guess_filename"
+      },
+      {
+        "from": "src.requests.models.RequestEncodingMixin._encode_files",
+        "to": "src.requests.utils.to_key_val_list"
+      },
+      {
+        "from": "src.requests.models.RequestEncodingMixin._encode_files",
+        "to": "urllib3.fields.RequestField"
+      },
+      {
+        "from": "src.requests.models.RequestEncodingMixin._encode_files",
+        "to": "urllib3.fields.RequestField.make_multipart"
+      },
+      {
+        "from": "src.requests.models.RequestEncodingMixin._encode_files",
+        "to": "urllib3.filepost.encode_multipart_formdata"
+      },
+      {
+        "from": "src.requests.models.RequestEncodingMixin._encode_params",
+        "to": "src.requests.compat.urlencode"
+      },
+      {
+        "from": "src.requests.models.RequestEncodingMixin._encode_params",
+        "to": "src.requests.utils.to_key_val_list"
+      },
+      {
+        "from": "src.requests.models.RequestEncodingMixin.path_url",
+        "to": "src.requests.compat.urlsplit"
+      },
+      {
+        "from": "src.requests.models.Response.__exit__",
+        "to": "src.requests.models.Response.close"
+      },
+      {
+        "from": "src.requests.models.Response.__init__",
+        "to": "datetime.timedelta"
+      },
+      {
+        "from": "src.requests.models.Response.__init__",
+        "to": "src.requests.cookies.cookiejar_from_dict"
+      },
+      {
+        "from": "src.requests.models.Response.__init__",
+        "to": "src.requests.structures.CaseInsensitiveDict"
+      },
+      {
+        "from": "src.requests.models.Response.__iter__",
+        "to": "src.requests.models.Response.iter_content"
+      },
+      {
+        "from": "src.requests.models.Response.apparent_encoding",
+        "to": "src.requests.compat.chardet.detect"
+      },
+      {
+        "from": "src.requests.models.Response.close",
+        "to": "src.requests.models.Response.raw.close"
+      },
+      {
+        "from": "src.requests.models.Response.content",
+        "to": "src.requests.models.Response.iter_content"
+      },
+      {
+        "from": "src.requests.models.Response.iter_content",
+        "to": "src.requests.exceptions.ChunkedEncodingError"
+      },
+      {
+        "from": "src.requests.models.Response.iter_content",
+        "to": "src.requests.exceptions.ConnectionError"
+      },
+      {
+        "from": "src.requests.models.Response.iter_content",
+        "to": "src.requests.exceptions.ContentDecodingError"
+      },
+      {
+        "from": "src.requests.models.Response.iter_content",
+        "to": "src.requests.exceptions.SSLError"
+      },
+      {
+        "from": "src.requests.models.Response.iter_content",
+        "to": "src.requests.exceptions.StreamConsumedError"
+      },
+      {
+        "from": "src.requests.models.Response.iter_content",
+        "to": "src.requests.models.Response.raw.read"
+      },
+      {
+        "from": "src.requests.models.Response.iter_content",
+        "to": "src.requests.models.Response.raw.stream"
+      },
+      {
+        "from": "src.requests.models.Response.iter_content",
+        "to": "src.requests.utils.iter_slices"
+      },
+      {
+        "from": "src.requests.models.Response.iter_content",
+        "to": "src.requests.utils.stream_decode_response_unicode"
+      },
+      {
+        "from": "src.requests.models.Response.iter_lines",
+        "to": "src.requests.models.Response.iter_content"
+      },
+      {
+        "from": "src.requests.models.Response.json",
+        "to": "src.requests.compat.json.loads"
+      },
+      {
+        "from": "src.requests.models.Response.json",
+        "to": "src.requests.exceptions.JSONDecodeError"
+      },
+      {
+        "from": "src.requests.models.Response.json",
+        "to": "src.requests.models.Response.content.decode"
+      },
+      {
+        "from": "src.requests.models.Response.json",
+        "to": "src.requests.utils.guess_json_utf"
+      },
+      {
+        "from": "src.requests.models.Response.links",
+        "to": "src.requests.models.Response.headers.get"
+      },
+      {
+        "from": "src.requests.models.Response.links",
+        "to": "src.requests.utils.parse_header_links"
+      },
+      {
+        "from": "src.requests.models.Response.ok",
+        "to": "src.requests.models.Response.raise_for_status"
+      },
+      {
+        "from": "src.requests.models.Response.raise_for_status",
+        "to": "src.requests.exceptions.HTTPError"
+      },
+      {
+        "from": "src.requests.models.Response.raise_for_status",
+        "to": "src.requests.models.Response.reason.decode"
+      },
+      {
+        "from": "src.requests.sessions.Session.__exit__",
+        "to": "src.requests.sessions.Session.close"
+      },
+      {
+        "from": "src.requests.sessions.Session.__init__",
+        "to": "collections.OrderedDict"
+      },
+      {
+        "from": "src.requests.sessions.Session.__init__",
+        "to": "src.requests.adapters.HTTPAdapter"
+      },
+      {
+        "from": "src.requests.sessions.Session.__init__",
+        "to": "src.requests.cookies.cookiejar_from_dict"
+      },
+      {
+        "from": "src.requests.sessions.Session.__init__",
+        "to": "src.requests.hooks.default_hooks"
+      },
+      {
+        "from": "src.requests.sessions.Session.__init__",
+        "to": "src.requests.sessions.Session.mount"
+      },
+      {
+        "from": "src.requests.sessions.Session.__init__",
+        "to": "src.requests.utils.default_headers"
+      },
+      {
+        "from": "src.requests.sessions.Session.close",
+        "to": "src.requests.sessions.Session.adapters.values"
+      },
+      {
+        "from": "src.requests.sessions.Session.delete",
+        "to": "src.requests.sessions.Session.request"
+      },
+      {
+        "from": "src.requests.sessions.Session.get",
+        "to": "src.requests.sessions.Session.request"
+      },
+      {
+        "from": "src.requests.sessions.Session.get_adapter",
+        "to": "src.requests.exceptions.InvalidSchema"
+      },
+      {
+        "from": "src.requests.sessions.Session.get_adapter",
+        "to": "src.requests.sessions.Session.adapters.items"
+      },
+      {
+        "from": "src.requests.sessions.Session.head",
+        "to": "src.requests.sessions.Session.request"
+      },
+      {
+        "from": "src.requests.sessions.Session.merge_environment_settings",
+        "to": "os.environ.get"
+      },
+      {
+        "from": "src.requests.sessions.Session.merge_environment_settings",
+        "to": "src.requests.sessions.merge_setting"
+      },
+      {
+        "from": "src.requests.sessions.Session.merge_environment_settings",
+        "to": "src.requests.utils.get_environ_proxies"
+      },
+      {
+        "from": "src.requests.sessions.Session.merge_environment_settings",
+        "to": "src.requests.utils.get_environ_proxies.items"
+      },
+      {
+        "from": "src.requests.sessions.Session.mount",
+        "to": "src.requests.sessions.Session.adapters.pop"
+      },
+      {
+        "from": "src.requests.sessions.Session.options",
+        "to": "src.requests.sessions.Session.request"
+      },
+      {
+        "from": "src.requests.sessions.Session.patch",
+        "to": "src.requests.sessions.Session.request"
+      },
+      {
+        "from": "src.requests.sessions.Session.post",
+        "to": "src.requests.sessions.Session.request"
+      },
+      {
+        "from": "src.requests.sessions.Session.prepare_request",
+        "to": "src.requests.cookies.RequestsCookieJar"
+      },
+      {
+        "from": "src.requests.sessions.Session.prepare_request",
+        "to": "src.requests.cookies.cookiejar_from_dict"
+      },
+      {
+        "from": "src.requests.sessions.Session.prepare_request",
+        "to": "src.requests.cookies.merge_cookies"
+      },
+      {
+        "from": "src.requests.sessions.Session.prepare_request",
+        "to": "src.requests.models.PreparedRequest"
+      },
+      {
+        "from": "src.requests.sessions.Session.prepare_request",
+        "to": "src.requests.models.PreparedRequest.prepare"
+      },
+      {
+        "from": "src.requests.sessions.Session.prepare_request",
+        "to": "src.requests.sessions.merge_hooks"
+      },
+      {
+        "from": "src.requests.sessions.Session.prepare_request",
+        "to": "src.requests.sessions.merge_setting"
+      },
+      {
+        "from": "src.requests.sessions.Session.prepare_request",
+        "to": "src.requests.utils.get_netrc_auth"
+      },
+      {
+        "from": "src.requests.sessions.Session.put",
+        "to": "src.requests.sessions.Session.request"
+      },
+      {
+        "from": "src.requests.sessions.Session.request",
+        "to": "src.requests.models.Request"
+      },
+      {
+        "from": "src.requests.sessions.Session.request",
+        "to": "src.requests.sessions.Session.merge_environment_settings"
+      },
+      {
+        "from": "src.requests.sessions.Session.request",
+        "to": "src.requests.sessions.Session.prepare_request"
+      },
+      {
+        "from": "src.requests.sessions.Session.request",
+        "to": "src.requests.sessions.Session.send"
+      },
+      {
+        "from": "src.requests.sessions.Session.send",
+        "to": "datetime.timedelta"
+      },
+      {
+        "from": "src.requests.sessions.Session.send",
+        "to": "src.requests.adapters.HTTPAdapter.send"
+      },
+      {
+        "from": "src.requests.sessions.Session.send",
+        "to": "src.requests.cookies.extract_cookies_to_jar"
+      },
+      {
+        "from": "src.requests.sessions.Session.send",
+        "to": "src.requests.hooks.dispatch_hook"
+      },
+      {
+        "from": "src.requests.sessions.Session.send",
+        "to": "src.requests.sessions.Session.get_adapter"
+      },
+      {
+        "from": "src.requests.sessions.Session.send",
+        "to": "src.requests.sessions.Session.resolve_redirects"
+      },
+      {
+        "from": "src.requests.sessions.Session.send",
+        "to": "src.requests.utils.resolve_proxies"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.get_redirect_target",
+        "to": "src.requests._internal_utils.to_native_string"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.rebuild_auth",
+        "to": "src.requests.sessions.SessionRedirectMixin.should_strip_auth"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.rebuild_auth",
+        "to": "src.requests.utils.get_netrc_auth"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.rebuild_proxies",
+        "to": "src.requests.auth._basic_auth_str"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.rebuild_proxies",
+        "to": "src.requests.compat.urlparse"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.rebuild_proxies",
+        "to": "src.requests.utils.get_auth_from_url"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.rebuild_proxies",
+        "to": "src.requests.utils.resolve_proxies"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.resolve_redirects",
+        "to": "src.requests._internal_utils.to_native_string"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.resolve_redirects",
+        "to": "src.requests.compat.urljoin"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.resolve_redirects",
+        "to": "src.requests.compat.urlparse"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.resolve_redirects",
+        "to": "src.requests.compat.urlparse._replace._replace"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.resolve_redirects",
+        "to": "src.requests.compat.urlparse._replace.geturl"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.resolve_redirects",
+        "to": "src.requests.cookies.extract_cookies_to_jar"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.resolve_redirects",
+        "to": "src.requests.cookies.merge_cookies"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.resolve_redirects",
+        "to": "src.requests.exceptions.TooManyRedirects"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.resolve_redirects",
+        "to": "src.requests.sessions.SessionRedirectMixin.get_redirect_target"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.resolve_redirects",
+        "to": "src.requests.sessions.SessionRedirectMixin.get_redirect_target.startswith"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.resolve_redirects",
+        "to": "src.requests.sessions.SessionRedirectMixin.rebuild_auth"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.resolve_redirects",
+        "to": "src.requests.sessions.SessionRedirectMixin.rebuild_method"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.resolve_redirects",
+        "to": "src.requests.sessions.SessionRedirectMixin.rebuild_proxies"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.resolve_redirects",
+        "to": "src.requests.sessions.SessionRedirectMixin.send"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.resolve_redirects",
+        "to": "src.requests.utils.requote_uri"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.resolve_redirects",
+        "to": "src.requests.utils.rewind_body"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.should_strip_auth",
+        "to": "src.requests.compat.urlparse"
+      },
+      {
+        "from": "src.requests.sessions.SessionRedirectMixin.should_strip_auth",
+        "to": "src.requests.utils.DEFAULT_PORTS.get"
+      },
+      {
+        "from": "src.requests.sessions.merge_hooks",
+        "to": "src.requests.sessions.merge_setting"
+      },
+      {
+        "from": "src.requests.sessions.merge_setting",
+        "to": "src.requests.utils.to_key_val_list"
+      },
+      {
+        "from": "src.requests.sessions.session",
+        "to": "src.requests.sessions.Session"
+      },
+      {
+        "from": "src.requests.structures.CaseInsensitiveDict.__eq__",
+        "to": "src.requests.structures.CaseInsensitiveDict"
+      },
+      {
+        "from": "src.requests.structures.CaseInsensitiveDict.__eq__",
+        "to": "src.requests.structures.CaseInsensitiveDict.lower_items"
+      },
+      {
+        "from": "src.requests.structures.CaseInsensitiveDict.__init__",
+        "to": "collections.OrderedDict"
+      },
+      {
+        "from": "src.requests.structures.CaseInsensitiveDict.__init__",
+        "to": "src.requests.structures.CaseInsensitiveDict.update"
+      },
+      {
+        "from": "src.requests.structures.CaseInsensitiveDict.__iter__",
+        "to": "src.requests.structures.CaseInsensitiveDict._store.values"
+      },
+      {
+        "from": "src.requests.structures.CaseInsensitiveDict.__repr__",
+        "to": "src.requests.structures.CaseInsensitiveDict.items"
+      },
+      {
+        "from": "src.requests.structures.CaseInsensitiveDict.copy",
+        "to": "src.requests.structures.CaseInsensitiveDict"
+      },
+      {
+        "from": "src.requests.structures.CaseInsensitiveDict.copy",
+        "to": "src.requests.structures.CaseInsensitiveDict._store.values"
+      },
+      {
+        "from": "src.requests.structures.CaseInsensitiveDict.lower_items",
+        "to": "src.requests.structures.CaseInsensitiveDict._store.items"
+      },
+      {
+        "from": "src.requests.structures.LookupDict.__getitem__",
+        "to": "src.requests.structures.LookupDict.__dict__.get"
+      },
+      {
+        "from": "src.requests.structures.LookupDict.get",
+        "to": "src.requests.structures.LookupDict.__dict__.get"
+      },
+      {
+        "from": "src.requests.utils._validate_header_part",
+        "to": "src.requests.exceptions.InvalidHeader"
+      },
+      {
+        "from": "src.requests.utils.add_dict_to_cookiejar",
+        "to": "src.requests.cookies.cookiejar_from_dict"
+      },
+      {
+        "from": "src.requests.utils.address_in_network",
+        "to": "socket.inet_aton"
+      },
+      {
+        "from": "src.requests.utils.address_in_network",
+        "to": "src.requests.utils.dotted_netmask"
+      },
+      {
+        "from": "src.requests.utils.address_in_network",
+        "to": "struct.unpack"
+      },
+      {
+        "from": "src.requests.utils.atomic_open",
+        "to": "os.fdopen"
+      },
+      {
+        "from": "src.requests.utils.atomic_open",
+        "to": "os.path.dirname"
+      },
+      {
+        "from": "src.requests.utils.atomic_open",
+        "to": "os.remove"
+      },
+      {
+        "from": "src.requests.utils.atomic_open",
+        "to": "os.replace"
+      },
+      {
+        "from": "src.requests.utils.atomic_open",
+        "to": "tempfile.mkstemp"
+      },
+      {
+        "from": "src.requests.utils.check_header_validity",
+        "to": "src.requests.utils._validate_header_part"
+      },
+      {
+        "from": "src.requests.utils.default_headers",
+        "to": "src.requests.structures.CaseInsensitiveDict"
+      },
+      {
+        "from": "src.requests.utils.default_headers",
+        "to": "src.requests.utils.default_user_agent"
+      },
+      {
+        "from": "src.requests.utils.dotted_netmask",
+        "to": "socket.inet_ntoa"
+      },
+      {
+        "from": "src.requests.utils.dotted_netmask",
+        "to": "struct.pack"
+      },
+      {
+        "from": "src.requests.utils.extract_zipped_paths",
+        "to": "os.path.exists"
+      },
+      {
+        "from": "src.requests.utils.extract_zipped_paths",
+        "to": "os.path.join"
+      },
+      {
+        "from": "src.requests.utils.extract_zipped_paths",
+        "to": "os.path.split"
+      },
+      {
+        "from": "src.requests.utils.extract_zipped_paths",
+        "to": "src.requests.utils.atomic_open"
+      },
+      {
+        "from": "src.requests.utils.extract_zipped_paths",
+        "to": "src.requests.utils.atomic_open.write"
+      },
+      {
+        "from": "src.requests.utils.extract_zipped_paths",
+        "to": "tempfile.gettempdir"
+      },
+      {
+        "from": "src.requests.utils.extract_zipped_paths",
+        "to": "zipfile.ZipFile"
+      },
+      {
+        "from": "src.requests.utils.extract_zipped_paths",
+        "to": "zipfile.ZipFile.namelist"
+      },
+      {
+        "from": "src.requests.utils.extract_zipped_paths",
+        "to": "zipfile.ZipFile.read"
+      },
+      {
+        "from": "src.requests.utils.extract_zipped_paths",
+        "to": "zipfile.is_zipfile"
+      },
+      {
+        "from": "src.requests.utils.from_key_val_list",
+        "to": "collections.OrderedDict"
+      },
+      {
+        "from": "src.requests.utils.get_auth_from_url",
+        "to": "src.requests.compat.unquote"
+      },
+      {
+        "from": "src.requests.utils.get_auth_from_url",
+        "to": "src.requests.compat.urlparse"
+      },
+      {
+        "from": "src.requests.utils.get_encoding_from_headers",
+        "to": "src.requests.utils._parse_content_type_header"
+      },
+      {
+        "from": "src.requests.utils.get_encodings_from_content",
+        "to": "re.compile"
+      },
+      {
+        "from": "src.requests.utils.get_encodings_from_content",
+        "to": "re.compile.findall"
+      },
+      {
+        "from": "src.requests.utils.get_encodings_from_content",
+        "to": "warnings.warn"
+      },
+      {
+        "from": "src.requests.utils.get_environ_proxies",
+        "to": "src.requests.compat.getproxies"
+      },
+      {
+        "from": "src.requests.utils.get_environ_proxies",
+        "to": "src.requests.utils.should_bypass_proxies"
+      },
+      {
+        "from": "src.requests.utils.get_netrc_auth",
+        "to": "os.environ.get"
+      },
+      {
+        "from": "src.requests.utils.get_netrc_auth",
+        "to": "os.path.exists"
+      },
+      {
+        "from": "src.requests.utils.get_netrc_auth",
+        "to": "os.path.expanduser"
+      },
+      {
+        "from": "src.requests.utils.get_netrc_auth",
+        "to": "src.requests.compat.urlparse"
+      },
+      {
+        "from": "src.requests.utils.get_unicode_from_response",
+        "to": "src.requests.compat.str"
+      },
+      {
+        "from": "src.requests.utils.get_unicode_from_response",
+        "to": "src.requests.utils.get_encoding_from_headers"
+      },
+      {
+        "from": "src.requests.utils.get_unicode_from_response",
+        "to": "warnings.warn"
+      },
+      {
+        "from": "src.requests.utils.guess_filename",
+        "to": "os.path.basename"
+      },
+      {
+        "from": "src.requests.utils.is_ipv4_address",
+        "to": "socket.inet_aton"
+      },
+      {
+        "from": "src.requests.utils.is_valid_cidr",
+        "to": "socket.inet_aton"
+      },
+      {
+        "from": "src.requests.utils.parse_dict_header",
+        "to": "src.requests.compat.parse_http_list"
+      },
+      {
+        "from": "src.requests.utils.parse_dict_header",
+        "to": "src.requests.utils.unquote_header_value"
+      },
+      {
+        "from": "src.requests.utils.parse_header_links",
+        "to": "re.split"
+      },
+      {
+        "from": "src.requests.utils.parse_list_header",
+        "to": "src.requests.compat.parse_http_list"
+      },
+      {
+        "from": "src.requests.utils.parse_list_header",
+        "to": "src.requests.utils.unquote_header_value"
+      },
+      {
+        "from": "src.requests.utils.prepend_scheme_if_needed",
+        "to": "src.requests.compat.urlunparse"
+      },
+      {
+        "from": "src.requests.utils.prepend_scheme_if_needed",
+        "to": "urllib3.util.parse_url"
+      },
+      {
+        "from": "src.requests.utils.requote_uri",
+        "to": "src.requests.compat.quote"
+      },
+      {
+        "from": "src.requests.utils.requote_uri",
+        "to": "src.requests.utils.unquote_unreserved"
+      },
+      {
+        "from": "src.requests.utils.resolve_proxies",
+        "to": "src.requests.compat.urlparse"
+      },
+      {
+        "from": "src.requests.utils.resolve_proxies",
+        "to": "src.requests.utils.get_environ_proxies"
+      },
+      {
+        "from": "src.requests.utils.resolve_proxies",
+        "to": "src.requests.utils.get_environ_proxies.get"
+      },
+      {
+        "from": "src.requests.utils.resolve_proxies",
+        "to": "src.requests.utils.should_bypass_proxies"
+      },
+      {
+        "from": "src.requests.utils.rewind_body",
+        "to": "src.requests.exceptions.UnrewindableBodyError"
+      },
+      {
+        "from": "src.requests.utils.select_proxy",
+        "to": "src.requests.compat.urlparse"
+      },
+      {
+        "from": "src.requests.utils.set_environ",
+        "to": "os.environ.get"
+      },
+      {
+        "from": "src.requests.utils.should_bypass_proxies",
+        "to": "os.environ.get"
+      },
+      {
+        "from": "src.requests.utils.should_bypass_proxies",
+        "to": "src.requests.compat.proxy_bypass"
+      },
+      {
+        "from": "src.requests.utils.should_bypass_proxies",
+        "to": "src.requests.compat.urlparse"
+      },
+      {
+        "from": "src.requests.utils.should_bypass_proxies",
+        "to": "src.requests.compat.urlparse.hostname.endswith"
+      },
+      {
+        "from": "src.requests.utils.should_bypass_proxies",
+        "to": "src.requests.utils.address_in_network"
+      },
+      {
+        "from": "src.requests.utils.should_bypass_proxies",
+        "to": "src.requests.utils.is_ipv4_address"
+      },
+      {
+        "from": "src.requests.utils.should_bypass_proxies",
+        "to": "src.requests.utils.is_valid_cidr"
+      },
+      {
+        "from": "src.requests.utils.should_bypass_proxies",
+        "to": "src.requests.utils.set_environ"
+      },
+      {
+        "from": "src.requests.utils.stream_decode_response_unicode",
+        "to": "codecs.getincrementaldecoder"
+      },
+      {
+        "from": "src.requests.utils.super_len",
+        "to": "os.fstat"
+      },
+      {
+        "from": "src.requests.utils.super_len",
+        "to": "warnings.warn"
+      },
+      {
+        "from": "src.requests.utils.unquote_unreserved",
+        "to": "src.requests.exceptions.InvalidURL"
+      },
+      {
+        "from": "src.requests.utils.urldefragauth",
+        "to": "src.requests.compat.urlparse"
+      },
+      {
+        "from": "src.requests.utils.urldefragauth",
+        "to": "src.requests.compat.urlunparse"
+      }
+    ]
   },
   "files": {
     "setup.py": {
@@ -18,9 +1608,6 @@
     "src/requests/__init__.py": {
       "entry": false,
       "imports": [
-        "chardet",
-        "charset_normalizer",
-        "cryptography",
         "logging",
         "src.requests.__version__",
         "src.requests.api",
@@ -30,22 +1617,11 @@
         "src.requests.sessions",
         "src.requests.status_codes",
         "src.requests.utils",
-        "ssl",
         "urllib3",
-        "urllib3.contrib",
         "urllib3.exceptions",
         "warnings"
       ],
       "functions": {
-        "_check_cryptography": {
-          "calls": [
-            "format",
-            "list",
-            "map",
-            "split",
-            "warn"
-          ]
-        },
         "check_compatibility": {
           "calls": [
             "append",
@@ -53,6 +1629,20 @@
             "len",
             "split",
             "warn"
+          ],
+          "resolved_calls": [
+            "warnings.warn"
+          ]
+        },
+        "_check_cryptography": {
+          "calls": [
+            "list",
+            "map",
+            "split",
+            "warn"
+          ],
+          "resolved_calls": [
+            "warnings.warn"
           ]
         }
       },
@@ -84,13 +1674,15 @@
           "calls": [
             "decode",
             "isinstance"
-          ]
+          ],
+          "resolved_calls": []
         },
         "unicode_is_ascii": {
           "calls": [
             "encode",
             "isinstance"
-          ]
+          ],
+          "resolved_calls": []
         }
       },
       "depends_on": [
@@ -110,7 +1702,6 @@
         "src.requests.structures",
         "src.requests.utils",
         "typing",
-        "urllib3.contrib.socks",
         "urllib3.exceptions",
         "urllib3.poolmanager",
         "urllib3.util",
@@ -118,32 +1709,6 @@
         "warnings"
       ],
       "functions": {
-        "SOCKSProxyManager": {
-          "calls": [
-            "InvalidSchema"
-          ]
-        },
-        "__getstate__": {
-          "calls": [
-            "getattr"
-          ]
-        },
-        "__init__": {
-          "calls": [
-            "Retry",
-            "__init__",
-            "from_int",
-            "init_poolmanager",
-            "super"
-          ]
-        },
-        "__setstate__": {
-          "calls": [
-            "init_poolmanager",
-            "items",
-            "setattr"
-          ]
-        },
         "_urllib3_request_context": {
           "calls": [
             "isdir",
@@ -151,17 +1716,94 @@
             "len",
             "lower",
             "urlparse"
+          ],
+          "resolved_calls": [
+            "os.path.path.isdir",
+            "src.requests.compat.urlparse",
+            "src.requests.compat.urlparse.scheme.lower"
           ]
         },
-        "add_headers": {
-          "calls": []
-        },
-        "build_connection_pool_key_attributes": {
+        "BaseAdapter.__init__": {
           "calls": [
-            "_urllib3_request_context"
+            "super"
+          ],
+          "resolved_calls": []
+        },
+        "BaseAdapter.send": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "BaseAdapter.close": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "HTTPAdapter.__init__": {
+          "calls": [
+            "Retry",
+            "from_int",
+            "init_poolmanager",
+            "super"
+          ],
+          "resolved_calls": [
+            "src.requests.adapters.HTTPAdapter.init_poolmanager",
+            "urllib3.util.retry.Retry",
+            "urllib3.util.retry.Retry.from_int"
           ]
         },
-        "build_response": {
+        "HTTPAdapter.__getstate__": {
+          "calls": [
+            "getattr"
+          ],
+          "resolved_calls": []
+        },
+        "HTTPAdapter.__setstate__": {
+          "calls": [
+            "init_poolmanager",
+            "items",
+            "setattr"
+          ],
+          "resolved_calls": [
+            "src.requests.adapters.HTTPAdapter.init_poolmanager"
+          ]
+        },
+        "HTTPAdapter.init_poolmanager": {
+          "calls": [
+            "PoolManager"
+          ],
+          "resolved_calls": [
+            "urllib3.poolmanager.PoolManager"
+          ]
+        },
+        "HTTPAdapter.proxy_manager_for": {
+          "calls": [
+            "SOCKSProxyManager",
+            "get_auth_from_url",
+            "lower",
+            "proxy_from_url",
+            "proxy_headers"
+          ],
+          "resolved_calls": [
+            "src.requests.adapters.HTTPAdapter.proxy_headers",
+            "src.requests.utils.get_auth_from_url",
+            "urllib3.poolmanager.proxy_from_url"
+          ]
+        },
+        "HTTPAdapter.cert_verify": {
+          "calls": [
+            "OSError",
+            "exists",
+            "extract_zipped_paths",
+            "isdir",
+            "isinstance",
+            "lower"
+          ],
+          "resolved_calls": [
+            "os.path.path.exists",
+            "os.path.path.isdir",
+            "src.requests.utils.extract_zipped_paths"
+          ]
+        },
+        "HTTPAdapter.build_response": {
           "calls": [
             "CaseInsensitiveDict",
             "Response",
@@ -170,26 +1812,46 @@
             "get_encoding_from_headers",
             "getattr",
             "isinstance"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.extract_cookies_to_jar",
+            "src.requests.models.Response",
+            "src.requests.structures.CaseInsensitiveDict",
+            "src.requests.utils.get_encoding_from_headers"
           ]
         },
-        "cert_verify": {
+        "HTTPAdapter.build_connection_pool_key_attributes": {
           "calls": [
-            "OSError",
-            "exists",
-            "extract_zipped_paths",
-            "isdir",
-            "isinstance",
-            "lower",
-            "startswith"
+            "_urllib3_request_context"
+          ],
+          "resolved_calls": [
+            "src.requests.adapters._urllib3_request_context"
           ]
         },
-        "close": {
+        "HTTPAdapter.get_connection_with_tls_context": {
           "calls": [
-            "clear",
-            "values"
+            "InvalidProxyURL",
+            "InvalidURL",
+            "build_connection_pool_key_attributes",
+            "connection_from_host",
+            "parse_url",
+            "prepend_scheme_if_needed",
+            "proxy_manager_for",
+            "select_proxy"
+          ],
+          "resolved_calls": [
+            "src.requests.adapters.HTTPAdapter.build_connection_pool_key_attributes",
+            "src.requests.adapters.HTTPAdapter.poolmanager.connection_from_host",
+            "src.requests.adapters.HTTPAdapter.proxy_manager_for",
+            "src.requests.adapters.HTTPAdapter.proxy_manager_for.connection_from_host",
+            "src.requests.exceptions.InvalidProxyURL",
+            "src.requests.exceptions.InvalidURL",
+            "src.requests.utils.prepend_scheme_if_needed",
+            "src.requests.utils.select_proxy",
+            "urllib3.util.parse_url"
           ]
         },
-        "get_connection": {
+        "HTTPAdapter.get_connection": {
           "calls": [
             "InvalidProxyURL",
             "connection_from_url",
@@ -200,52 +1862,59 @@
             "select_proxy",
             "urlparse",
             "warn"
+          ],
+          "resolved_calls": [
+            "src.requests.adapters.HTTPAdapter.poolmanager.connection_from_url",
+            "src.requests.adapters.HTTPAdapter.proxy_manager_for",
+            "src.requests.adapters.HTTPAdapter.proxy_manager_for.connection_from_url",
+            "src.requests.compat.urlparse",
+            "src.requests.compat.urlparse.geturl",
+            "src.requests.exceptions.InvalidProxyURL",
+            "src.requests.utils.prepend_scheme_if_needed",
+            "src.requests.utils.select_proxy",
+            "urllib3.util.parse_url",
+            "warnings.warn"
           ]
         },
-        "get_connection_with_tls_context": {
+        "HTTPAdapter.close": {
           "calls": [
-            "InvalidProxyURL",
-            "InvalidURL",
-            "build_connection_pool_key_attributes",
-            "connection_from_host",
-            "parse_url",
-            "prepend_scheme_if_needed",
-            "proxy_manager_for",
-            "select_proxy"
+            "clear",
+            "values"
+          ],
+          "resolved_calls": [
+            "src.requests.adapters.HTTPAdapter.poolmanager.clear",
+            "src.requests.adapters.HTTPAdapter.proxy_manager.values"
           ]
         },
-        "init_poolmanager": {
+        "HTTPAdapter.request_url": {
           "calls": [
-            "PoolManager"
-          ]
-        },
-        "proxy_headers": {
-          "calls": [
-            "_basic_auth_str",
-            "get_auth_from_url"
-          ]
-        },
-        "proxy_manager_for": {
-          "calls": [
-            "SOCKSProxyManager",
-            "get_auth_from_url",
-            "lower",
-            "proxy_from_url",
-            "proxy_headers",
-            "startswith"
-          ]
-        },
-        "request_url": {
-          "calls": [
-            "lower",
             "lstrip",
             "select_proxy",
             "startswith",
             "urldefragauth",
             "urlparse"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.urlparse",
+            "src.requests.utils.select_proxy",
+            "src.requests.utils.urldefragauth"
           ]
         },
-        "send": {
+        "HTTPAdapter.add_headers": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "HTTPAdapter.proxy_headers": {
+          "calls": [
+            "_basic_auth_str",
+            "get_auth_from_url"
+          ],
+          "resolved_calls": [
+            "src.requests.auth._basic_auth_str",
+            "src.requests.utils.get_auth_from_url"
+          ]
+        },
+        "HTTPAdapter.send": {
           "calls": [
             "ConnectTimeout",
             "ConnectionError",
@@ -264,6 +1933,23 @@
             "isinstance",
             "request_url",
             "urlopen"
+          ],
+          "resolved_calls": [
+            "src.requests.adapters.HTTPAdapter.add_headers",
+            "src.requests.adapters.HTTPAdapter.build_response",
+            "src.requests.adapters.HTTPAdapter.cert_verify",
+            "src.requests.adapters.HTTPAdapter.get_connection_with_tls_context",
+            "src.requests.adapters.HTTPAdapter.get_connection_with_tls_context.urlopen",
+            "src.requests.adapters.HTTPAdapter.request_url",
+            "src.requests.exceptions.ConnectTimeout",
+            "src.requests.exceptions.ConnectionError",
+            "src.requests.exceptions.InvalidHeader",
+            "src.requests.exceptions.InvalidURL",
+            "src.requests.exceptions.ProxyError",
+            "src.requests.exceptions.ReadTimeout",
+            "src.requests.exceptions.RetryError",
+            "src.requests.exceptions.SSLError",
+            "urllib3.util.Timeout"
           ]
         }
       },
@@ -283,46 +1969,71 @@
         "src.requests.sessions"
       ],
       "functions": {
-        "delete": {
+        "request": {
           "calls": [
+            "Session",
             "request"
+          ],
+          "resolved_calls": [
+            "src.requests.sessions.Session",
+            "src.requests.sessions.Session.request"
           ]
         },
         "get": {
           "calls": [
             "request"
+          ],
+          "resolved_calls": [
+            "src.requests.api.request"
+          ]
+        },
+        "options": {
+          "calls": [
+            "request"
+          ],
+          "resolved_calls": [
+            "src.requests.api.request"
           ]
         },
         "head": {
           "calls": [
             "request",
             "setdefault"
-          ]
-        },
-        "options": {
-          "calls": [
-            "request"
-          ]
-        },
-        "patch": {
-          "calls": [
-            "request"
+          ],
+          "resolved_calls": [
+            "src.requests.api.request"
           ]
         },
         "post": {
           "calls": [
             "request"
+          ],
+          "resolved_calls": [
+            "src.requests.api.request"
           ]
         },
         "put": {
           "calls": [
             "request"
+          ],
+          "resolved_calls": [
+            "src.requests.api.request"
           ]
         },
-        "request": {
+        "patch": {
           "calls": [
-            "Session",
             "request"
+          ],
+          "resolved_calls": [
+            "src.requests.api.request"
+          ]
+        },
+        "delete": {
+          "calls": [
+            "request"
+          ],
+          "resolved_calls": [
+            "src.requests.api.request"
           ]
         }
       },
@@ -346,59 +2057,112 @@
         "warnings"
       ],
       "functions": {
-        "__call__": {
-          "calls": [
-            "build_digest_header",
-            "init_per_thread_state",
-            "register_hook",
-            "tell"
-          ]
-        },
-        "__eq__": {
-          "calls": [
-            "all",
-            "getattr"
-          ]
-        },
-        "__init__": {
-          "calls": [
-            "local"
-          ]
-        },
-        "__ne__": {
-          "calls": []
-        },
         "_basic_auth_str": {
           "calls": [
             "b64encode",
             "encode",
-            "format",
             "isinstance",
-            "join",
             "str",
-            "strip",
             "to_native_string",
             "type",
             "warn"
+          ],
+          "resolved_calls": [
+            "base64.b64encode",
+            "src.requests._internal_utils.to_native_string",
+            "src.requests.compat.str",
+            "src.requests.compat.str.encode.encode",
+            "warnings.warn"
           ]
         },
-        "build_digest_header": {
+        "AuthBase.__call__": {
+          "calls": [
+            "NotImplementedError"
+          ],
+          "resolved_calls": []
+        },
+        "HTTPBasicAuth.__init__": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "HTTPBasicAuth.__eq__": {
+          "calls": [
+            "all",
+            "getattr"
+          ],
+          "resolved_calls": []
+        },
+        "HTTPBasicAuth.__ne__": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "HTTPBasicAuth.__call__": {
+          "calls": [
+            "_basic_auth_str"
+          ],
+          "resolved_calls": [
+            "src.requests.auth._basic_auth_str"
+          ]
+        },
+        "HTTPProxyAuth.__call__": {
+          "calls": [
+            "_basic_auth_str"
+          ],
+          "resolved_calls": [
+            "src.requests.auth._basic_auth_str"
+          ]
+        },
+        "HTTPDigestAuth.__init__": {
+          "calls": [
+            "local"
+          ],
+          "resolved_calls": [
+            "threading.local"
+          ]
+        },
+        "HTTPDigestAuth.init_per_thread_state": {
+          "calls": [
+            "hasattr"
+          ],
+          "resolved_calls": []
+        },
+        "HTTPDigestAuth.build_digest_header": {
           "calls": [
             "KD",
             "ctime",
             "encode",
             "get",
             "hash_utf8",
-            "hexdigest",
+            "isinstance",
+            "md5",
             "sha1",
+            "sha256",
+            "sha512",
             "split",
             "str",
             "upper",
             "urandom",
             "urlparse"
+          ],
+          "resolved_calls": [
+            "hashlib.md5",
+            "hashlib.sha1",
+            "hashlib.sha256",
+            "hashlib.sha512",
+            "os.urandom",
+            "src.requests.auth.HTTPDigestAuth._thread_local.chal.get",
+            "src.requests.auth.HTTPDigestAuth._thread_local.chal.get.split",
+            "src.requests.auth.HTTPDigestAuth._thread_local.chal.get.upper",
+            "src.requests.compat.str",
+            "src.requests.compat.urlparse",
+            "time.ctime"
           ]
         },
-        "handle_401": {
+        "HTTPDigestAuth.handle_redirect": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "HTTPDigestAuth.handle_401": {
           "calls": [
             "append",
             "build_digest_header",
@@ -413,47 +2177,37 @@
             "seek",
             "send",
             "sub"
+          ],
+          "resolved_calls": [
+            "re.compile",
+            "re.compile.sub",
+            "src.requests.auth.HTTPDigestAuth.build_digest_header",
+            "src.requests.cookies.extract_cookies_to_jar",
+            "src.requests.utils.parse_dict_header"
           ]
         },
-        "handle_redirect": {
-          "calls": []
-        },
-        "init_per_thread_state": {
+        "HTTPDigestAuth.__call__": {
           "calls": [
-            "hasattr"
+            "build_digest_header",
+            "init_per_thread_state",
+            "register_hook",
+            "tell"
+          ],
+          "resolved_calls": [
+            "src.requests.auth.HTTPDigestAuth.build_digest_header",
+            "src.requests.auth.HTTPDigestAuth.init_per_thread_state"
           ]
         },
-        "md5_utf8": {
+        "HTTPDigestAuth.__eq__": {
           "calls": [
-            "encode",
-            "hexdigest",
-            "isinstance",
-            "md5"
-          ]
+            "all",
+            "getattr"
+          ],
+          "resolved_calls": []
         },
-        "sha256_utf8": {
-          "calls": [
-            "encode",
-            "hexdigest",
-            "isinstance",
-            "sha256"
-          ]
-        },
-        "sha512_utf8": {
-          "calls": [
-            "encode",
-            "hexdigest",
-            "isinstance",
-            "sha512"
-          ]
-        },
-        "sha_utf8": {
-          "calls": [
-            "encode",
-            "hexdigest",
-            "isinstance",
-            "sha1"
-          ]
+        "HTTPDigestAuth.__ne__": {
+          "calls": [],
+          "resolved_calls": []
         }
       },
       "depends_on": [
@@ -480,8 +2234,6 @@
         "http.cookies",
         "importlib",
         "io",
-        "json",
-        "simplejson",
         "sys",
         "urllib.parse",
         "urllib.request",
@@ -491,6 +2243,9 @@
         "_resolve_char_detection": {
           "calls": [
             "import_module"
+          ],
+          "resolved_calls": [
+            "importlib.import_module"
           ]
         }
       },
@@ -501,48 +2256,355 @@
       "imports": [
         "calendar",
         "copy",
-        "dummy_threading",
         "src.requests._internal_utils",
         "src.requests.compat",
-        "threading",
         "time"
       ],
       "functions": {
-        "__contains__": {
+        "MockRequest.__init__": {
           "calls": [
-            "__contains__",
-            "super"
+            "urlparse"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.urlparse"
           ]
         },
-        "__delitem__": {
+        "MockRequest.get_type": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "MockRequest.get_host": {
           "calls": [
-            "remove_cookie_by_name"
+            "urlparse"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.urlparse"
           ]
         },
-        "__getitem__": {
+        "MockRequest.get_origin_req_host": {
+          "calls": [
+            "get_host"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.MockRequest.get_host"
+          ]
+        },
+        "MockRequest.get_full_url": {
+          "calls": [
+            "get",
+            "to_native_string",
+            "urlparse",
+            "urlunparse"
+          ],
+          "resolved_calls": [
+            "src.requests._internal_utils.to_native_string",
+            "src.requests.compat.urlparse",
+            "src.requests.compat.urlunparse",
+            "src.requests.cookies.MockRequest._r.headers.get"
+          ]
+        },
+        "MockRequest.is_unverifiable": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "MockRequest.has_header": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "MockRequest.get_header": {
+          "calls": [
+            "get"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.MockRequest._new_headers.get",
+            "src.requests.cookies.MockRequest._r.headers.get"
+          ]
+        },
+        "MockRequest.add_header": {
+          "calls": [
+            "NotImplementedError"
+          ],
+          "resolved_calls": []
+        },
+        "MockRequest.add_unredirected_header": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "MockRequest.get_new_headers": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "MockRequest.unverifiable": {
+          "calls": [
+            "is_unverifiable"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.MockRequest.is_unverifiable"
+          ]
+        },
+        "MockRequest.origin_req_host": {
+          "calls": [
+            "get_origin_req_host"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.MockRequest.get_origin_req_host"
+          ]
+        },
+        "MockRequest.host": {
+          "calls": [
+            "get_host"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.MockRequest.get_host"
+          ]
+        },
+        "MockResponse.__init__": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "MockResponse.info": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "MockResponse.getheaders": {
+          "calls": [
+            "getheaders"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.MockResponse._headers.getheaders"
+          ]
+        },
+        "extract_cookies_to_jar": {
+          "calls": [
+            "MockRequest",
+            "MockResponse",
+            "extract_cookies",
+            "hasattr"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.MockRequest",
+            "src.requests.cookies.MockResponse"
+          ]
+        },
+        "get_cookie_header": {
+          "calls": [
+            "MockRequest",
+            "add_cookie_header",
+            "get_new_headers"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.MockRequest",
+            "src.requests.cookies.MockRequest.get_new_headers"
+          ]
+        },
+        "remove_cookie_by_name": {
+          "calls": [
+            "append",
+            "clear"
+          ],
+          "resolved_calls": []
+        },
+        "RequestsCookieJar.get": {
           "calls": [
             "_find_no_duplicates"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.RequestsCookieJar._find_no_duplicates"
           ]
         },
-        "__getstate__": {
+        "RequestsCookieJar.set": {
+          "calls": [
+            "create_cookie",
+            "get",
+            "isinstance",
+            "morsel_to_cookie",
+            "remove_cookie_by_name",
+            "set_cookie"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.RequestsCookieJar.set_cookie",
+            "src.requests.cookies.create_cookie",
+            "src.requests.cookies.morsel_to_cookie",
+            "src.requests.cookies.remove_cookie_by_name"
+          ]
+        },
+        "RequestsCookieJar.iterkeys": {
+          "calls": [
+            "iter"
+          ],
+          "resolved_calls": []
+        },
+        "RequestsCookieJar.keys": {
+          "calls": [
+            "iterkeys",
+            "list"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.RequestsCookieJar.iterkeys"
+          ]
+        },
+        "RequestsCookieJar.itervalues": {
+          "calls": [
+            "iter"
+          ],
+          "resolved_calls": []
+        },
+        "RequestsCookieJar.values": {
+          "calls": [
+            "itervalues",
+            "list"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.RequestsCookieJar.itervalues"
+          ]
+        },
+        "RequestsCookieJar.iteritems": {
+          "calls": [
+            "iter"
+          ],
+          "resolved_calls": []
+        },
+        "RequestsCookieJar.items": {
+          "calls": [
+            "iteritems",
+            "list"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.RequestsCookieJar.iteritems"
+          ]
+        },
+        "RequestsCookieJar.list_domains": {
+          "calls": [
+            "append",
+            "iter"
+          ],
+          "resolved_calls": []
+        },
+        "RequestsCookieJar.list_paths": {
+          "calls": [
+            "append",
+            "iter"
+          ],
+          "resolved_calls": []
+        },
+        "RequestsCookieJar.multiple_domains": {
+          "calls": [
+            "append",
+            "iter"
+          ],
+          "resolved_calls": []
+        },
+        "RequestsCookieJar.get_dict": {
+          "calls": [
+            "iter"
+          ],
+          "resolved_calls": []
+        },
+        "RequestsCookieJar.__contains__": {
+          "calls": [
+            "super"
+          ],
+          "resolved_calls": []
+        },
+        "RequestsCookieJar.__getitem__": {
+          "calls": [
+            "_find_no_duplicates"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.RequestsCookieJar._find_no_duplicates"
+          ]
+        },
+        "RequestsCookieJar.__setitem__": {
+          "calls": [
+            "set"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.RequestsCookieJar.set"
+          ]
+        },
+        "RequestsCookieJar.__delitem__": {
+          "calls": [
+            "remove_cookie_by_name"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.remove_cookie_by_name"
+          ]
+        },
+        "RequestsCookieJar.set_cookie": {
+          "calls": [
+            "endswith",
+            "hasattr",
+            "replace",
+            "startswith",
+            "super"
+          ],
+          "resolved_calls": []
+        },
+        "RequestsCookieJar.update": {
+          "calls": [
+            "copy",
+            "isinstance",
+            "set_cookie",
+            "super"
+          ],
+          "resolved_calls": [
+            "copy.copy",
+            "src.requests.cookies.RequestsCookieJar.set_cookie"
+          ]
+        },
+        "RequestsCookieJar._find": {
+          "calls": [
+            "KeyError",
+            "iter"
+          ],
+          "resolved_calls": []
+        },
+        "RequestsCookieJar._find_no_duplicates": {
+          "calls": [
+            "CookieConflictError",
+            "KeyError",
+            "iter"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.CookieConflictError"
+          ]
+        },
+        "RequestsCookieJar.__getstate__": {
           "calls": [
             "copy",
             "pop"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.RequestsCookieJar.__dict__.copy",
+            "src.requests.cookies.RequestsCookieJar.__dict__.copy.pop"
           ]
         },
-        "__init__": {
-          "calls": []
-        },
-        "__setitem__": {
-          "calls": [
-            "set"
-          ]
-        },
-        "__setstate__": {
+        "RequestsCookieJar.__setstate__": {
           "calls": [
             "RLock",
             "update"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.RequestsCookieJar.__dict__.update"
           ]
+        },
+        "RequestsCookieJar.copy": {
+          "calls": [
+            "RequestsCookieJar",
+            "get_policy",
+            "set_policy",
+            "update"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.RequestsCookieJar",
+            "src.requests.cookies.RequestsCookieJar.get_policy",
+            "src.requests.cookies.RequestsCookieJar.set_policy",
+            "src.requests.cookies.RequestsCookieJar.update"
+          ]
+        },
+        "RequestsCookieJar.get_policy": {
+          "calls": [],
+          "resolved_calls": []
         },
         "_copy_cookie_jar": {
           "calls": [
@@ -550,42 +2612,11 @@
             "copy",
             "hasattr",
             "set_cookie"
-          ]
-        },
-        "_find": {
-          "calls": [
-            "KeyError",
-            "iter"
-          ]
-        },
-        "_find_no_duplicates": {
-          "calls": [
-            "CookieConflictError",
-            "KeyError",
-            "iter"
-          ]
-        },
-        "add_header": {
-          "calls": [
-            "NotImplementedError"
-          ]
-        },
-        "add_unredirected_header": {
-          "calls": []
-        },
-        "cookiejar_from_dict": {
-          "calls": [
-            "RequestsCookieJar",
-            "create_cookie",
-            "set_cookie"
-          ]
-        },
-        "copy": {
-          "calls": [
-            "RequestsCookieJar",
-            "get_policy",
-            "set_policy",
-            "update"
+          ],
+          "resolved_calls": [
+            "copy.copy",
+            "copy.copy.clear",
+            "copy.copy.set_cookie"
           ]
         },
         "create_cookie": {
@@ -595,133 +2626,10 @@
             "bool",
             "list",
             "set",
-            "startswith",
             "update"
-          ]
-        },
-        "extract_cookies_to_jar": {
-          "calls": [
-            "MockRequest",
-            "MockResponse",
-            "extract_cookies",
-            "hasattr"
-          ]
-        },
-        "get": {
-          "calls": [
-            "_find_no_duplicates"
-          ]
-        },
-        "get_cookie_header": {
-          "calls": [
-            "MockRequest",
-            "add_cookie_header",
-            "get",
-            "get_new_headers"
-          ]
-        },
-        "get_dict": {
-          "calls": [
-            "iter"
-          ]
-        },
-        "get_full_url": {
-          "calls": [
-            "get",
-            "to_native_string",
-            "urlparse",
-            "urlunparse"
-          ]
-        },
-        "get_header": {
-          "calls": [
-            "get"
-          ]
-        },
-        "get_host": {
-          "calls": [
-            "urlparse"
-          ]
-        },
-        "get_new_headers": {
-          "calls": []
-        },
-        "get_origin_req_host": {
-          "calls": [
-            "get_host"
-          ]
-        },
-        "get_policy": {
-          "calls": []
-        },
-        "get_type": {
-          "calls": []
-        },
-        "getheaders": {
-          "calls": [
-            "getheaders"
-          ]
-        },
-        "has_header": {
-          "calls": []
-        },
-        "host": {
-          "calls": [
-            "get_host"
-          ]
-        },
-        "info": {
-          "calls": []
-        },
-        "is_unverifiable": {
-          "calls": []
-        },
-        "items": {
-          "calls": [
-            "iteritems",
-            "list"
-          ]
-        },
-        "iteritems": {
-          "calls": [
-            "iter"
-          ]
-        },
-        "iterkeys": {
-          "calls": [
-            "iter"
-          ]
-        },
-        "itervalues": {
-          "calls": [
-            "iter"
-          ]
-        },
-        "keys": {
-          "calls": [
-            "iterkeys",
-            "list"
-          ]
-        },
-        "list_domains": {
-          "calls": [
-            "append",
-            "iter"
-          ]
-        },
-        "list_paths": {
-          "calls": [
-            "append",
-            "iter"
-          ]
-        },
-        "merge_cookies": {
-          "calls": [
-            "ValueError",
-            "cookiejar_from_dict",
-            "isinstance",
-            "set_cookie",
-            "update"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.cookielib.Cookie"
           ]
         },
         "morsel_to_cookie": {
@@ -733,63 +2641,38 @@
             "strptime",
             "time",
             "timegm"
+          ],
+          "resolved_calls": [
+            "calendar.timegm",
+            "src.requests.cookies.create_cookie",
+            "time.strptime",
+            "time.time"
           ]
         },
-        "multiple_domains": {
+        "cookiejar_from_dict": {
           "calls": [
-            "append",
-            "iter"
-          ]
-        },
-        "origin_req_host": {
-          "calls": [
-            "get_origin_req_host"
-          ]
-        },
-        "remove_cookie_by_name": {
-          "calls": [
-            "append",
-            "clear"
-          ]
-        },
-        "set": {
-          "calls": [
+            "RequestsCookieJar",
             "create_cookie",
-            "get",
-            "isinstance",
-            "morsel_to_cookie",
-            "remove_cookie_by_name",
             "set_cookie"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.RequestsCookieJar",
+            "src.requests.cookies.RequestsCookieJar.set_cookie",
+            "src.requests.cookies.create_cookie"
           ]
         },
-        "set_cookie": {
+        "merge_cookies": {
           "calls": [
-            "endswith",
-            "hasattr",
-            "replace",
-            "set_cookie",
-            "startswith",
-            "super"
-          ]
-        },
-        "unverifiable": {
-          "calls": [
-            "is_unverifiable"
-          ]
-        },
-        "update": {
-          "calls": [
-            "copy",
+            "ValueError",
+            "cookiejar_from_dict",
             "isinstance",
             "set_cookie",
-            "super",
             "update"
-          ]
-        },
-        "values": {
-          "calls": [
-            "itervalues",
-            "list"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.cookiejar_from_dict",
+            "src.requests.cookies.cookiejar_from_dict.set_cookie",
+            "src.requests.cookies.cookiejar_from_dict.update"
           ]
         }
       },
@@ -805,14 +2688,28 @@
         "urllib3.exceptions"
       ],
       "functions": {
-        "__init__": {
+        "RequestException.__init__": {
+          "calls": [
+            "hasattr",
+            "pop",
+            "super"
+          ],
+          "resolved_calls": []
+        },
+        "JSONDecodeError.__init__": {
           "calls": [
             "__init__"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.JSONDecodeError.__init__"
           ]
         },
-        "__reduce__": {
+        "JSONDecodeError.__reduce__": {
           "calls": [
             "__reduce__"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.JSONDecodeError.__reduce__"
           ]
         }
       },
@@ -823,26 +2720,23 @@
     "src/requests/help.py": {
       "entry": true,
       "imports": [
-        "OpenSSL",
-        "chardet",
-        "charset_normalizer",
-        "cryptography",
         "idna",
         "json",
         "platform",
         "src.requests.__version__",
         "ssl",
         "sys",
-        "urllib3",
-        "urllib3.contrib"
+        "urllib3"
       ],
       "functions": {
         "_implementation": {
           "calls": [
-            "format",
-            "join",
             "python_implementation",
             "python_version"
+          ],
+          "resolved_calls": [
+            "platform.python_implementation",
+            "platform.python_version"
           ]
         },
         "info": {
@@ -851,6 +2745,11 @@
             "getattr",
             "release",
             "system"
+          ],
+          "resolved_calls": [
+            "platform.release",
+            "platform.system",
+            "src.requests.help._implementation"
           ]
         },
         "main": {
@@ -858,6 +2757,10 @@
             "dumps",
             "info",
             "print"
+          ],
+          "resolved_calls": [
+            "json.dumps",
+            "src.requests.help.info"
           ]
         }
       },
@@ -870,14 +2773,16 @@
       "imports": [],
       "functions": {
         "default_hooks": {
-          "calls": []
+          "calls": [],
+          "resolved_calls": []
         },
         "dispatch_hook": {
           "calls": [
             "get",
             "hasattr",
             "hook"
-          ]
+          ],
+          "resolved_calls": []
         }
       },
       "depends_on": []
@@ -887,7 +2792,6 @@
       "imports": [
         "datetime",
         "encodings.idna",
-        "idna",
         "io",
         "src.requests._internal_utils",
         "src.requests.auth",
@@ -904,47 +2808,30 @@
         "urllib3.util"
       ],
       "functions": {
-        "__bool__": {
-          "calls": []
-        },
-        "__enter__": {
-          "calls": []
-        },
-        "__exit__": {
+        "RequestEncodingMixin.path_url": {
           "calls": [
-            "close"
+            "append",
+            "urlsplit"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.urlsplit"
           ]
         },
-        "__getstate__": {
+        "RequestEncodingMixin._encode_params": {
           "calls": [
-            "getattr"
+            "append",
+            "encode",
+            "hasattr",
+            "isinstance",
+            "to_key_val_list",
+            "urlencode"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.urlencode",
+            "src.requests.utils.to_key_val_list"
           ]
         },
-        "__init__": {
-          "calls": [
-            "CaseInsensitiveDict",
-            "cookiejar_from_dict",
-            "timedelta"
-          ]
-        },
-        "__iter__": {
-          "calls": [
-            "iter_content"
-          ]
-        },
-        "__nonzero__": {
-          "calls": []
-        },
-        "__repr__": {
-          "calls": []
-        },
-        "__setstate__": {
-          "calls": [
-            "items",
-            "setattr"
-          ]
-        },
-        "_encode_files": {
+        "RequestEncodingMixin._encode_files": {
           "calls": [
             "RequestField",
             "ValueError",
@@ -960,122 +2847,62 @@
             "read",
             "str",
             "to_key_val_list"
+          ],
+          "resolved_calls": [
+            "src.requests.utils.guess_filename",
+            "src.requests.utils.to_key_val_list",
+            "urllib3.fields.RequestField",
+            "urllib3.fields.RequestField.make_multipart",
+            "urllib3.filepost.encode_multipart_formdata"
           ]
         },
-        "_encode_params": {
+        "RequestHooksMixin.register_hook": {
           "calls": [
-            "append",
-            "encode",
+            "ValueError",
             "hasattr",
-            "isinstance",
-            "to_key_val_list",
-            "urlencode"
-          ]
+            "isinstance"
+          ],
+          "resolved_calls": []
         },
-        "_get_idna_encoded_host": {
+        "RequestHooksMixin.deregister_hook": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "Request.__init__": {
           "calls": [
-            "decode",
-            "encode"
+            "default_hooks",
+            "items",
+            "list",
+            "register_hook"
+          ],
+          "resolved_calls": [
+            "src.requests.hooks.default_hooks",
+            "src.requests.models.Request.register_hook"
           ]
         },
-        "apparent_encoding": {
-          "calls": [
-            "detect"
-          ]
+        "Request.__repr__": {
+          "calls": [],
+          "resolved_calls": []
         },
-        "close": {
-          "calls": [
-            "close",
-            "getattr",
-            "release_conn"
-          ]
-        },
-        "content": {
-          "calls": [
-            "RuntimeError",
-            "iter_content",
-            "join"
-          ]
-        },
-        "copy": {
+        "Request.prepare": {
           "calls": [
             "PreparedRequest",
-            "_copy_cookie_jar",
-            "copy"
+            "prepare"
+          ],
+          "resolved_calls": [
+            "src.requests.models.PreparedRequest",
+            "src.requests.models.PreparedRequest.prepare"
           ]
         },
-        "deregister_hook": {
+        "PreparedRequest.__init__": {
           "calls": [
-            "remove"
+            "default_hooks"
+          ],
+          "resolved_calls": [
+            "src.requests.hooks.default_hooks"
           ]
         },
-        "generate": {
-          "calls": [
-            "ChunkedEncodingError",
-            "ConnectionError",
-            "ContentDecodingError",
-            "RequestsSSLError",
-            "hasattr",
-            "read",
-            "stream"
-          ]
-        },
-        "is_permanent_redirect": {
-          "calls": []
-        },
-        "is_redirect": {
-          "calls": []
-        },
-        "iter_content": {
-          "calls": [
-            "StreamConsumedError",
-            "TypeError",
-            "generate",
-            "isinstance",
-            "iter_slices",
-            "stream_decode_response_unicode",
-            "type"
-          ]
-        },
-        "iter_lines": {
-          "calls": [
-            "iter_content",
-            "pop",
-            "split",
-            "splitlines"
-          ]
-        },
-        "json": {
-          "calls": [
-            "RequestsJSONDecodeError",
-            "decode",
-            "guess_json_utf",
-            "len",
-            "loads"
-          ]
-        },
-        "links": {
-          "calls": [
-            "get",
-            "parse_header_links"
-          ]
-        },
-        "next": {
-          "calls": []
-        },
-        "ok": {
-          "calls": [
-            "raise_for_status"
-          ]
-        },
-        "path_url": {
-          "calls": [
-            "append",
-            "join",
-            "urlsplit"
-          ]
-        },
-        "prepare": {
+        "PreparedRequest.prepare": {
           "calls": [
             "prepare_auth",
             "prepare_body",
@@ -1084,73 +2911,50 @@
             "prepare_hooks",
             "prepare_method",
             "prepare_url"
+          ],
+          "resolved_calls": [
+            "src.requests.models.PreparedRequest.prepare_auth",
+            "src.requests.models.PreparedRequest.prepare_body",
+            "src.requests.models.PreparedRequest.prepare_cookies",
+            "src.requests.models.PreparedRequest.prepare_headers",
+            "src.requests.models.PreparedRequest.prepare_hooks",
+            "src.requests.models.PreparedRequest.prepare_method",
+            "src.requests.models.PreparedRequest.prepare_url"
           ]
         },
-        "prepare_auth": {
+        "PreparedRequest.__repr__": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "PreparedRequest.copy": {
           "calls": [
-            "HTTPBasicAuth",
-            "any",
-            "auth",
-            "get_auth_from_url",
-            "isinstance",
-            "len",
-            "prepare_content_length",
-            "update"
+            "PreparedRequest",
+            "_copy_cookie_jar",
+            "copy"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies._copy_cookie_jar",
+            "src.requests.models.PreparedRequest",
+            "src.requests.models.PreparedRequest.headers.copy"
           ]
         },
-        "prepare_body": {
-          "calls": [
-            "InvalidJSONError",
-            "NotImplementedError",
-            "_encode_files",
-            "_encode_params",
-            "all",
-            "builtin_str",
-            "dumps",
-            "encode",
-            "getattr",
-            "hasattr",
-            "isinstance",
-            "object",
-            "prepare_content_length",
-            "super_len",
-            "tell"
-          ]
-        },
-        "prepare_content_length": {
-          "calls": [
-            "builtin_str",
-            "get",
-            "super_len"
-          ]
-        },
-        "prepare_cookies": {
-          "calls": [
-            "cookiejar_from_dict",
-            "get_cookie_header",
-            "isinstance"
-          ]
-        },
-        "prepare_headers": {
-          "calls": [
-            "CaseInsensitiveDict",
-            "check_header_validity",
-            "items",
-            "to_native_string"
-          ]
-        },
-        "prepare_hooks": {
-          "calls": [
-            "register_hook"
-          ]
-        },
-        "prepare_method": {
+        "PreparedRequest.prepare_method": {
           "calls": [
             "to_native_string",
             "upper"
+          ],
+          "resolved_calls": [
+            "src.requests._internal_utils.to_native_string",
+            "src.requests.models.PreparedRequest.method.upper"
           ]
         },
-        "prepare_url": {
+        "PreparedRequest._get_idna_encoded_host": {
+          "calls": [
+            "encode"
+          ],
+          "resolved_calls": []
+        },
+        "PreparedRequest.prepare_url": {
           "calls": [
             "InvalidURL",
             "MissingSchema",
@@ -1167,27 +2971,296 @@
             "to_native_string",
             "unicode_is_ascii",
             "urlunparse"
+          ],
+          "resolved_calls": [
+            "src.requests._internal_utils.to_native_string",
+            "src.requests._internal_utils.unicode_is_ascii",
+            "src.requests.compat.urlunparse",
+            "src.requests.exceptions.InvalidURL",
+            "src.requests.exceptions.MissingSchema",
+            "src.requests.models.PreparedRequest._encode_params",
+            "src.requests.models.PreparedRequest._get_idna_encoded_host",
+            "src.requests.models.PreparedRequest._get_idna_encoded_host.startswith",
+            "src.requests.utils.requote_uri",
+            "urllib3.util.parse_url"
           ]
         },
-        "raise_for_status": {
+        "PreparedRequest.prepare_headers": {
+          "calls": [
+            "CaseInsensitiveDict",
+            "check_header_validity",
+            "items",
+            "to_native_string"
+          ],
+          "resolved_calls": [
+            "src.requests._internal_utils.to_native_string",
+            "src.requests.structures.CaseInsensitiveDict",
+            "src.requests.utils.check_header_validity"
+          ]
+        },
+        "PreparedRequest.prepare_body": {
+          "calls": [
+            "InvalidJSONError",
+            "NotImplementedError",
+            "_encode_files",
+            "_encode_params",
+            "all",
+            "builtin_str",
+            "dumps",
+            "encode",
+            "getattr",
+            "hasattr",
+            "isinstance",
+            "object",
+            "prepare_content_length",
+            "super_len",
+            "tell"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.builtin_str",
+            "src.requests.compat.json.dumps",
+            "src.requests.compat.json.dumps.encode.encode",
+            "src.requests.compat.json.dumps.encode.tell",
+            "src.requests.exceptions.InvalidJSONError",
+            "src.requests.models.PreparedRequest._encode_files",
+            "src.requests.models.PreparedRequest._encode_params",
+            "src.requests.models.PreparedRequest.prepare_content_length",
+            "src.requests.utils.super_len"
+          ]
+        },
+        "PreparedRequest.prepare_content_length": {
+          "calls": [
+            "builtin_str",
+            "get",
+            "super_len"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.builtin_str",
+            "src.requests.models.PreparedRequest.headers.get",
+            "src.requests.utils.super_len"
+          ]
+        },
+        "PreparedRequest.prepare_auth": {
+          "calls": [
+            "HTTPBasicAuth",
+            "any",
+            "auth",
+            "get_auth_from_url",
+            "isinstance",
+            "len",
+            "prepare_content_length",
+            "update"
+          ],
+          "resolved_calls": [
+            "src.requests.auth.HTTPBasicAuth",
+            "src.requests.models.PreparedRequest.__dict__.update",
+            "src.requests.models.PreparedRequest.prepare_content_length",
+            "src.requests.utils.get_auth_from_url"
+          ]
+        },
+        "PreparedRequest.prepare_cookies": {
+          "calls": [
+            "cookiejar_from_dict",
+            "get_cookie_header",
+            "isinstance"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.cookiejar_from_dict",
+            "src.requests.cookies.get_cookie_header"
+          ]
+        },
+        "PreparedRequest.prepare_hooks": {
+          "calls": [
+            "register_hook"
+          ],
+          "resolved_calls": [
+            "src.requests.models.PreparedRequest.register_hook"
+          ]
+        },
+        "Response.__init__": {
+          "calls": [
+            "CaseInsensitiveDict",
+            "cookiejar_from_dict",
+            "timedelta"
+          ],
+          "resolved_calls": [
+            "datetime.timedelta",
+            "src.requests.cookies.cookiejar_from_dict",
+            "src.requests.structures.CaseInsensitiveDict"
+          ]
+        },
+        "Response.__enter__": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "Response.__exit__": {
+          "calls": [
+            "close"
+          ],
+          "resolved_calls": [
+            "src.requests.models.Response.close"
+          ]
+        },
+        "Response.__getstate__": {
+          "calls": [
+            "getattr"
+          ],
+          "resolved_calls": []
+        },
+        "Response.__setstate__": {
+          "calls": [
+            "items",
+            "setattr"
+          ],
+          "resolved_calls": []
+        },
+        "Response.__repr__": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "Response.__bool__": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "Response.__nonzero__": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "Response.__iter__": {
+          "calls": [
+            "iter_content"
+          ],
+          "resolved_calls": [
+            "src.requests.models.Response.iter_content"
+          ]
+        },
+        "Response.ok": {
+          "calls": [
+            "raise_for_status"
+          ],
+          "resolved_calls": [
+            "src.requests.models.Response.raise_for_status"
+          ]
+        },
+        "Response.is_redirect": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "Response.is_permanent_redirect": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "Response.next": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "Response.apparent_encoding": {
+          "calls": [
+            "detect"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.chardet.detect"
+          ]
+        },
+        "Response.iter_content": {
+          "calls": [
+            "ChunkedEncodingError",
+            "ConnectionError",
+            "ContentDecodingError",
+            "RequestsSSLError",
+            "StreamConsumedError",
+            "TypeError",
+            "generate",
+            "hasattr",
+            "isinstance",
+            "iter_slices",
+            "read",
+            "stream",
+            "stream_decode_response_unicode",
+            "type"
+          ],
+          "resolved_calls": [
+            "src.requests.exceptions.ChunkedEncodingError",
+            "src.requests.exceptions.ConnectionError",
+            "src.requests.exceptions.ContentDecodingError",
+            "src.requests.exceptions.SSLError",
+            "src.requests.exceptions.StreamConsumedError",
+            "src.requests.models.Response.raw.read",
+            "src.requests.models.Response.raw.stream",
+            "src.requests.utils.iter_slices",
+            "src.requests.utils.stream_decode_response_unicode"
+          ]
+        },
+        "Response.iter_lines": {
+          "calls": [
+            "iter_content",
+            "pop",
+            "split",
+            "splitlines"
+          ],
+          "resolved_calls": [
+            "src.requests.models.Response.iter_content"
+          ]
+        },
+        "Response.content": {
+          "calls": [
+            "RuntimeError",
+            "iter_content"
+          ],
+          "resolved_calls": [
+            "src.requests.models.Response.iter_content"
+          ]
+        },
+        "Response.text": {
+          "calls": [
+            "str"
+          ],
+          "resolved_calls": []
+        },
+        "Response.json": {
+          "calls": [
+            "RequestsJSONDecodeError",
+            "decode",
+            "guess_json_utf",
+            "len",
+            "loads"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.json.loads",
+            "src.requests.exceptions.JSONDecodeError",
+            "src.requests.models.Response.content.decode",
+            "src.requests.utils.guess_json_utf"
+          ]
+        },
+        "Response.links": {
+          "calls": [
+            "get",
+            "parse_header_links"
+          ],
+          "resolved_calls": [
+            "src.requests.models.Response.headers.get",
+            "src.requests.utils.parse_header_links"
+          ]
+        },
+        "Response.raise_for_status": {
           "calls": [
             "HTTPError",
             "decode",
             "isinstance"
+          ],
+          "resolved_calls": [
+            "src.requests.exceptions.HTTPError",
+            "src.requests.models.Response.reason.decode"
           ]
         },
-        "register_hook": {
+        "Response.close": {
           "calls": [
-            "ValueError",
-            "append",
-            "extend",
-            "hasattr",
-            "isinstance"
-          ]
-        },
-        "text": {
-          "calls": [
-            "str"
+            "close",
+            "getattr",
+            "release_conn"
+          ],
+          "resolved_calls": [
+            "src.requests.models.Response.raw.close"
           ]
         }
       },
@@ -1235,87 +3308,6 @@
         "time"
       ],
       "functions": {
-        "__enter__": {
-          "calls": []
-        },
-        "__exit__": {
-          "calls": [
-            "close"
-          ]
-        },
-        "__getstate__": {
-          "calls": [
-            "getattr"
-          ]
-        },
-        "__init__": {
-          "calls": [
-            "HTTPAdapter",
-            "OrderedDict",
-            "cookiejar_from_dict",
-            "default_headers",
-            "default_hooks",
-            "mount"
-          ]
-        },
-        "__setstate__": {
-          "calls": [
-            "items",
-            "setattr"
-          ]
-        },
-        "close": {
-          "calls": [
-            "close",
-            "values"
-          ]
-        },
-        "delete": {
-          "calls": [
-            "request"
-          ]
-        },
-        "get": {
-          "calls": [
-            "request",
-            "setdefault"
-          ]
-        },
-        "get_adapter": {
-          "calls": [
-            "InvalidSchema",
-            "items",
-            "lower",
-            "startswith"
-          ]
-        },
-        "get_redirect_target": {
-          "calls": [
-            "encode",
-            "to_native_string"
-          ]
-        },
-        "head": {
-          "calls": [
-            "request",
-            "setdefault"
-          ]
-        },
-        "merge_environment_settings": {
-          "calls": [
-            "get",
-            "get_environ_proxies",
-            "items",
-            "merge_setting",
-            "setdefault"
-          ]
-        },
-        "merge_hooks": {
-          "calls": [
-            "get",
-            "merge_setting"
-          ]
-        },
         "merge_setting": {
           "calls": [
             "dict_class",
@@ -1323,79 +3315,40 @@
             "items",
             "to_key_val_list",
             "update"
+          ],
+          "resolved_calls": [
+            "src.requests.utils.to_key_val_list"
           ]
         },
-        "mount": {
+        "merge_hooks": {
           "calls": [
-            "len",
-            "pop"
+            "get",
+            "merge_setting"
+          ],
+          "resolved_calls": [
+            "src.requests.sessions.merge_setting"
           ]
         },
-        "options": {
+        "SessionRedirectMixin.get_redirect_target": {
           "calls": [
-            "request",
-            "setdefault"
+            "encode",
+            "to_native_string"
+          ],
+          "resolved_calls": [
+            "src.requests._internal_utils.to_native_string"
           ]
         },
-        "patch": {
+        "SessionRedirectMixin.should_strip_auth": {
           "calls": [
-            "request"
-          ]
-        },
-        "post": {
-          "calls": [
-            "request"
-          ]
-        },
-        "prepare_request": {
-          "calls": [
-            "PreparedRequest",
-            "RequestsCookieJar",
-            "cookiejar_from_dict",
-            "get_netrc_auth",
-            "isinstance",
-            "merge_cookies",
-            "merge_hooks",
-            "merge_setting",
-            "prepare",
-            "upper"
-          ]
-        },
-        "put": {
-          "calls": [
-            "request"
-          ]
-        },
-        "rebuild_auth": {
-          "calls": [
-            "get_netrc_auth",
-            "prepare_auth",
-            "should_strip_auth"
-          ]
-        },
-        "rebuild_method": {
-          "calls": []
-        },
-        "rebuild_proxies": {
-          "calls": [
-            "_basic_auth_str",
-            "get_auth_from_url",
-            "resolve_proxies",
-            "startswith",
+            "get",
             "urlparse"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.urlparse",
+            "src.requests.utils.DEFAULT_PORTS.get"
           ]
         },
-        "request": {
-          "calls": [
-            "Request",
-            "merge_environment_settings",
-            "prepare_request",
-            "send",
-            "update",
-            "upper"
-          ]
-        },
-        "resolve_redirects": {
+        "SessionRedirectMixin.resolve_redirects": {
           "calls": [
             "TooManyRedirects",
             "_replace",
@@ -1405,7 +3358,6 @@
             "extract_cookies_to_jar",
             "get_redirect_target",
             "geturl",
-            "join",
             "len",
             "merge_cookies",
             "pop",
@@ -1421,9 +3373,186 @@
             "to_native_string",
             "urljoin",
             "urlparse"
+          ],
+          "resolved_calls": [
+            "src.requests._internal_utils.to_native_string",
+            "src.requests.compat.urljoin",
+            "src.requests.compat.urlparse",
+            "src.requests.compat.urlparse._replace._replace",
+            "src.requests.compat.urlparse._replace.geturl",
+            "src.requests.cookies.extract_cookies_to_jar",
+            "src.requests.cookies.merge_cookies",
+            "src.requests.exceptions.TooManyRedirects",
+            "src.requests.sessions.SessionRedirectMixin.get_redirect_target",
+            "src.requests.sessions.SessionRedirectMixin.get_redirect_target.startswith",
+            "src.requests.sessions.SessionRedirectMixin.rebuild_auth",
+            "src.requests.sessions.SessionRedirectMixin.rebuild_method",
+            "src.requests.sessions.SessionRedirectMixin.rebuild_proxies",
+            "src.requests.sessions.SessionRedirectMixin.send",
+            "src.requests.utils.requote_uri",
+            "src.requests.utils.rewind_body"
           ]
         },
-        "send": {
+        "SessionRedirectMixin.rebuild_auth": {
+          "calls": [
+            "get_netrc_auth",
+            "prepare_auth",
+            "should_strip_auth"
+          ],
+          "resolved_calls": [
+            "src.requests.sessions.SessionRedirectMixin.should_strip_auth",
+            "src.requests.utils.get_netrc_auth"
+          ]
+        },
+        "SessionRedirectMixin.rebuild_proxies": {
+          "calls": [
+            "_basic_auth_str",
+            "get_auth_from_url",
+            "resolve_proxies",
+            "startswith",
+            "urlparse"
+          ],
+          "resolved_calls": [
+            "src.requests.auth._basic_auth_str",
+            "src.requests.compat.urlparse",
+            "src.requests.utils.get_auth_from_url",
+            "src.requests.utils.resolve_proxies"
+          ]
+        },
+        "SessionRedirectMixin.rebuild_method": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "Session.__init__": {
+          "calls": [
+            "HTTPAdapter",
+            "OrderedDict",
+            "cookiejar_from_dict",
+            "default_headers",
+            "default_hooks",
+            "mount"
+          ],
+          "resolved_calls": [
+            "collections.OrderedDict",
+            "src.requests.adapters.HTTPAdapter",
+            "src.requests.cookies.cookiejar_from_dict",
+            "src.requests.hooks.default_hooks",
+            "src.requests.sessions.Session.mount",
+            "src.requests.utils.default_headers"
+          ]
+        },
+        "Session.__enter__": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "Session.__exit__": {
+          "calls": [
+            "close"
+          ],
+          "resolved_calls": [
+            "src.requests.sessions.Session.close"
+          ]
+        },
+        "Session.prepare_request": {
+          "calls": [
+            "PreparedRequest",
+            "RequestsCookieJar",
+            "cookiejar_from_dict",
+            "get_netrc_auth",
+            "isinstance",
+            "merge_cookies",
+            "merge_hooks",
+            "merge_setting",
+            "prepare",
+            "upper"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.RequestsCookieJar",
+            "src.requests.cookies.cookiejar_from_dict",
+            "src.requests.cookies.merge_cookies",
+            "src.requests.models.PreparedRequest",
+            "src.requests.models.PreparedRequest.prepare",
+            "src.requests.sessions.merge_hooks",
+            "src.requests.sessions.merge_setting",
+            "src.requests.utils.get_netrc_auth"
+          ]
+        },
+        "Session.request": {
+          "calls": [
+            "Request",
+            "merge_environment_settings",
+            "prepare_request",
+            "send",
+            "update",
+            "upper"
+          ],
+          "resolved_calls": [
+            "src.requests.models.Request",
+            "src.requests.sessions.Session.merge_environment_settings",
+            "src.requests.sessions.Session.prepare_request",
+            "src.requests.sessions.Session.send"
+          ]
+        },
+        "Session.get": {
+          "calls": [
+            "request",
+            "setdefault"
+          ],
+          "resolved_calls": [
+            "src.requests.sessions.Session.request"
+          ]
+        },
+        "Session.options": {
+          "calls": [
+            "request",
+            "setdefault"
+          ],
+          "resolved_calls": [
+            "src.requests.sessions.Session.request"
+          ]
+        },
+        "Session.head": {
+          "calls": [
+            "request",
+            "setdefault"
+          ],
+          "resolved_calls": [
+            "src.requests.sessions.Session.request"
+          ]
+        },
+        "Session.post": {
+          "calls": [
+            "request"
+          ],
+          "resolved_calls": [
+            "src.requests.sessions.Session.request"
+          ]
+        },
+        "Session.put": {
+          "calls": [
+            "request"
+          ],
+          "resolved_calls": [
+            "src.requests.sessions.Session.request"
+          ]
+        },
+        "Session.patch": {
+          "calls": [
+            "request"
+          ],
+          "resolved_calls": [
+            "src.requests.sessions.Session.request"
+          ]
+        },
+        "Session.delete": {
+          "calls": [
+            "request"
+          ],
+          "resolved_calls": [
+            "src.requests.sessions.Session.request"
+          ]
+        },
+        "Session.send": {
           "calls": [
             "ValueError",
             "dispatch_hook",
@@ -1440,17 +3569,80 @@
             "send",
             "setdefault",
             "timedelta"
+          ],
+          "resolved_calls": [
+            "datetime.timedelta",
+            "src.requests.adapters.HTTPAdapter.send",
+            "src.requests.cookies.extract_cookies_to_jar",
+            "src.requests.hooks.dispatch_hook",
+            "src.requests.sessions.Session.get_adapter",
+            "src.requests.sessions.Session.resolve_redirects",
+            "src.requests.utils.resolve_proxies"
           ]
+        },
+        "Session.merge_environment_settings": {
+          "calls": [
+            "get",
+            "get_environ_proxies",
+            "items",
+            "merge_setting",
+            "setdefault"
+          ],
+          "resolved_calls": [
+            "os.environ.get",
+            "src.requests.sessions.merge_setting",
+            "src.requests.utils.get_environ_proxies",
+            "src.requests.utils.get_environ_proxies.items"
+          ]
+        },
+        "Session.get_adapter": {
+          "calls": [
+            "InvalidSchema",
+            "items",
+            "lower"
+          ],
+          "resolved_calls": [
+            "src.requests.exceptions.InvalidSchema",
+            "src.requests.sessions.Session.adapters.items"
+          ]
+        },
+        "Session.close": {
+          "calls": [
+            "close",
+            "values"
+          ],
+          "resolved_calls": [
+            "src.requests.sessions.Session.adapters.values"
+          ]
+        },
+        "Session.mount": {
+          "calls": [
+            "len",
+            "pop"
+          ],
+          "resolved_calls": [
+            "src.requests.sessions.Session.adapters.pop"
+          ]
+        },
+        "Session.__getstate__": {
+          "calls": [
+            "getattr"
+          ],
+          "resolved_calls": []
+        },
+        "Session.__setstate__": {
+          "calls": [
+            "items",
+            "setattr"
+          ],
+          "resolved_calls": []
         },
         "session": {
           "calls": [
             "Session"
-          ]
-        },
-        "should_strip_auth": {
-          "calls": [
-            "get",
-            "urlparse"
+          ],
+          "resolved_calls": [
+            "src.requests.sessions.Session"
           ]
         }
       },
@@ -1478,17 +3670,12 @@
           "calls": [
             "doc",
             "items",
-            "join",
             "setattr",
             "sorted",
             "startswith",
             "upper"
-          ]
-        },
-        "doc": {
-          "calls": [
-            "join"
-          ]
+          ],
+          "resolved_calls": []
         }
       },
       "depends_on": [
@@ -1502,62 +3689,112 @@
         "src.requests.compat"
       ],
       "functions": {
-        "__delitem__": {
+        "CaseInsensitiveDict.__init__": {
           "calls": [
-            "lower"
+            "OrderedDict",
+            "update"
+          ],
+          "resolved_calls": [
+            "collections.OrderedDict",
+            "src.requests.structures.CaseInsensitiveDict.update"
           ]
         },
-        "__eq__": {
+        "CaseInsensitiveDict.__setitem__": {
+          "calls": [
+            "lower"
+          ],
+          "resolved_calls": []
+        },
+        "CaseInsensitiveDict.__getitem__": {
+          "calls": [
+            "lower"
+          ],
+          "resolved_calls": []
+        },
+        "CaseInsensitiveDict.__delitem__": {
+          "calls": [
+            "lower"
+          ],
+          "resolved_calls": []
+        },
+        "CaseInsensitiveDict.__iter__": {
+          "calls": [
+            "values"
+          ],
+          "resolved_calls": [
+            "src.requests.structures.CaseInsensitiveDict._store.values"
+          ]
+        },
+        "CaseInsensitiveDict.__len__": {
+          "calls": [
+            "len"
+          ],
+          "resolved_calls": []
+        },
+        "CaseInsensitiveDict.lower_items": {
+          "calls": [
+            "items"
+          ],
+          "resolved_calls": [
+            "src.requests.structures.CaseInsensitiveDict._store.items"
+          ]
+        },
+        "CaseInsensitiveDict.__eq__": {
           "calls": [
             "CaseInsensitiveDict",
             "dict",
             "isinstance",
             "lower_items"
+          ],
+          "resolved_calls": [
+            "src.requests.structures.CaseInsensitiveDict",
+            "src.requests.structures.CaseInsensitiveDict.lower_items"
           ]
         },
-        "__getitem__": {
-          "calls": [
-            "get"
-          ]
-        },
-        "__init__": {
-          "calls": [
-            "__init__",
-            "super"
-          ]
-        },
-        "__iter__": {
-          "calls": [
-            "values"
-          ]
-        },
-        "__len__": {
-          "calls": [
-            "len"
-          ]
-        },
-        "__repr__": {
-          "calls": []
-        },
-        "__setitem__": {
-          "calls": [
-            "lower"
-          ]
-        },
-        "copy": {
+        "CaseInsensitiveDict.copy": {
           "calls": [
             "CaseInsensitiveDict",
             "values"
+          ],
+          "resolved_calls": [
+            "src.requests.structures.CaseInsensitiveDict",
+            "src.requests.structures.CaseInsensitiveDict._store.values"
           ]
         },
-        "get": {
+        "CaseInsensitiveDict.__repr__": {
+          "calls": [
+            "dict",
+            "items",
+            "str"
+          ],
+          "resolved_calls": [
+            "src.requests.structures.CaseInsensitiveDict.items"
+          ]
+        },
+        "LookupDict.__init__": {
+          "calls": [
+            "super"
+          ],
+          "resolved_calls": []
+        },
+        "LookupDict.__repr__": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "LookupDict.__getitem__": {
           "calls": [
             "get"
+          ],
+          "resolved_calls": [
+            "src.requests.structures.LookupDict.__dict__.get"
           ]
         },
-        "lower_items": {
+        "LookupDict.get": {
           "calls": [
-            "items"
+            "get"
+          ],
+          "resolved_calls": [
+            "src.requests.structures.LookupDict.__dict__.get"
           ]
         }
       },
@@ -1572,7 +3809,6 @@
         "collections",
         "contextlib",
         "io",
-        "netrc",
         "os",
         "re",
         "socket",
@@ -1588,76 +3824,57 @@
         "tempfile",
         "urllib3.util",
         "warnings",
-        "winreg",
         "zipfile"
       ],
       "functions": {
-        "_parse_content_type_header": {
-          "calls": [
-            "find",
-            "lower",
-            "split",
-            "strip"
-          ]
-        },
-        "_validate_header_part": {
-          "calls": [
-            "InvalidHeader",
-            "isinstance",
-            "match",
-            "type"
-          ]
-        },
-        "add_dict_to_cookiejar": {
-          "calls": [
-            "cookiejar_from_dict"
-          ]
-        },
-        "address_in_network": {
-          "calls": [
-            "dotted_netmask",
-            "inet_aton",
-            "int",
-            "split",
-            "unpack"
-          ]
-        },
-        "atomic_open": {
-          "calls": [
-            "dirname",
-            "fdopen",
-            "mkstemp",
-            "remove",
-            "replace"
-          ]
-        },
-        "check_header_validity": {
-          "calls": [
-            "_validate_header_part"
-          ]
-        },
-        "default_headers": {
-          "calls": [
-            "CaseInsensitiveDict",
-            "default_user_agent"
-          ]
-        },
-        "default_user_agent": {
-          "calls": []
-        },
-        "dict_from_cookiejar": {
-          "calls": []
-        },
         "dict_to_sequence": {
           "calls": [
             "hasattr",
             "items"
+          ],
+          "resolved_calls": []
+        },
+        "super_len": {
+          "calls": [
+            "encode",
+            "fileno",
+            "fstat",
+            "hasattr",
+            "isinstance",
+            "len",
+            "max",
+            "seek",
+            "tell",
+            "warn"
+          ],
+          "resolved_calls": [
+            "os.fstat",
+            "warnings.warn"
           ]
         },
-        "dotted_netmask": {
+        "get_netrc_auth": {
           "calls": [
-            "inet_ntoa",
-            "pack"
+            "exists",
+            "expanduser",
+            "get",
+            "netrc",
+            "urlparse"
+          ],
+          "resolved_calls": [
+            "os.environ.get",
+            "os.path.exists",
+            "os.path.expanduser",
+            "src.requests.compat.urlparse"
+          ]
+        },
+        "guess_filename": {
+          "calls": [
+            "basename",
+            "getattr",
+            "isinstance"
+          ],
+          "resolved_calls": [
+            "os.path.basename"
           ]
         },
         "extract_zipped_paths": {
@@ -1672,6 +3889,34 @@
             "read",
             "split",
             "write"
+          ],
+          "resolved_calls": [
+            "os.path.exists",
+            "os.path.join",
+            "os.path.split",
+            "src.requests.utils.atomic_open",
+            "src.requests.utils.atomic_open.write",
+            "tempfile.gettempdir",
+            "zipfile.ZipFile",
+            "zipfile.ZipFile.namelist",
+            "zipfile.ZipFile.read",
+            "zipfile.is_zipfile"
+          ]
+        },
+        "atomic_open": {
+          "calls": [
+            "dirname",
+            "fdopen",
+            "mkstemp",
+            "remove",
+            "replace"
+          ],
+          "resolved_calls": [
+            "os.fdopen",
+            "os.path.dirname",
+            "os.remove",
+            "os.replace",
+            "tempfile.mkstemp"
           ]
         },
         "from_key_val_list": {
@@ -1679,19 +3924,58 @@
             "OrderedDict",
             "ValueError",
             "isinstance"
+          ],
+          "resolved_calls": [
+            "collections.OrderedDict"
           ]
         },
-        "get_auth_from_url": {
+        "to_key_val_list": {
           "calls": [
-            "unquote",
-            "urlparse"
+            "ValueError",
+            "isinstance",
+            "items",
+            "list"
+          ],
+          "resolved_calls": []
+        },
+        "parse_list_header": {
+          "calls": [
+            "_parse_list_header",
+            "append",
+            "unquote_header_value"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.parse_http_list",
+            "src.requests.utils.unquote_header_value"
           ]
         },
-        "get_encoding_from_headers": {
+        "parse_dict_header": {
           "calls": [
-            "_parse_content_type_header",
-            "get",
-            "strip"
+            "_parse_list_header",
+            "split",
+            "unquote_header_value"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.parse_http_list",
+            "src.requests.utils.unquote_header_value"
+          ]
+        },
+        "unquote_header_value": {
+          "calls": [
+            "replace"
+          ],
+          "resolved_calls": []
+        },
+        "dict_from_cookiejar": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "add_dict_to_cookiejar": {
+          "calls": [
+            "cookiejar_from_dict"
+          ],
+          "resolved_calls": [
+            "src.requests.cookies.cookiejar_from_dict"
           ]
         },
         "get_encodings_from_content": {
@@ -1699,29 +3983,45 @@
             "compile",
             "findall",
             "warn"
+          ],
+          "resolved_calls": [
+            "re.compile",
+            "re.compile.findall",
+            "warnings.warn"
           ]
         },
-        "get_environ_proxies": {
+        "_parse_content_type_header": {
           "calls": [
-            "getproxies",
-            "should_bypass_proxies"
+            "find",
+            "lower",
+            "split",
+            "strip"
+          ],
+          "resolved_calls": []
+        },
+        "get_encoding_from_headers": {
+          "calls": [
+            "_parse_content_type_header",
+            "get"
+          ],
+          "resolved_calls": [
+            "src.requests.utils._parse_content_type_header"
           ]
         },
-        "get_netrc_auth": {
+        "stream_decode_response_unicode": {
           "calls": [
-            "authenticators",
-            "exists",
-            "expanduser",
-            "get",
-            "netrc",
-            "urlparse"
+            "decode",
+            "getincrementaldecoder"
+          ],
+          "resolved_calls": [
+            "codecs.getincrementaldecoder"
           ]
         },
-        "get_proxy": {
+        "iter_slices": {
           "calls": [
-            "get",
-            "upper"
-          ]
+            "len"
+          ],
+          "resolved_calls": []
         },
         "get_unicode_from_response": {
           "calls": [
@@ -1729,23 +4029,67 @@
             "get_encoding_from_headers",
             "str",
             "warn"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.str",
+            "src.requests.utils.get_encoding_from_headers",
+            "warnings.warn"
           ]
         },
-        "guess_filename": {
+        "unquote_unreserved": {
           "calls": [
-            "basename",
-            "getattr",
-            "isinstance"
+            "InvalidURL",
+            "chr",
+            "int",
+            "isalnum",
+            "len",
+            "range",
+            "split"
+          ],
+          "resolved_calls": [
+            "src.requests.exceptions.InvalidURL"
           ]
         },
-        "guess_json_utf": {
+        "requote_uri": {
           "calls": [
-            "count"
+            "quote",
+            "unquote_unreserved"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.quote",
+            "src.requests.utils.unquote_unreserved"
+          ]
+        },
+        "address_in_network": {
+          "calls": [
+            "dotted_netmask",
+            "inet_aton",
+            "int",
+            "split",
+            "unpack"
+          ],
+          "resolved_calls": [
+            "socket.inet_aton",
+            "src.requests.utils.dotted_netmask",
+            "struct.unpack"
+          ]
+        },
+        "dotted_netmask": {
+          "calls": [
+            "inet_ntoa",
+            "pack"
+          ],
+          "resolved_calls": [
+            "socket.inet_ntoa",
+            "struct.pack"
           ]
         },
         "is_ipv4_address": {
           "calls": [
             "inet_aton"
+          ],
+          "resolved_calls": [
+            "socket.inet_aton"
           ]
         },
         "is_valid_cidr": {
@@ -1754,63 +4098,61 @@
             "inet_aton",
             "int",
             "split"
+          ],
+          "resolved_calls": [
+            "socket.inet_aton"
           ]
         },
-        "iter_slices": {
+        "set_environ": {
           "calls": [
-            "len"
+            "get"
+          ],
+          "resolved_calls": [
+            "os.environ.get"
           ]
         },
-        "parse_dict_header": {
+        "should_bypass_proxies": {
           "calls": [
-            "_parse_list_header",
-            "split",
-            "unquote_header_value"
-          ]
-        },
-        "parse_header_links": {
-          "calls": [
-            "append",
-            "split",
-            "strip"
-          ]
-        },
-        "parse_list_header": {
-          "calls": [
-            "_parse_list_header",
-            "append",
-            "unquote_header_value"
-          ]
-        },
-        "prepend_scheme_if_needed": {
-          "calls": [
-            "join",
-            "parse_url",
-            "urlunparse"
-          ]
-        },
-        "proxy_bypass": {
-          "calls": [
-            "getproxies_environment",
-            "proxy_bypass_environment",
-            "proxy_bypass_registry"
-          ]
-        },
-        "proxy_bypass_registry": {
-          "calls": [
-            "OpenKey",
-            "QueryValueEx",
-            "filter",
-            "int",
-            "match",
+            "address_in_network",
+            "endswith",
+            "get",
+            "get_proxy",
+            "is_ipv4_address",
+            "is_valid_cidr",
+            "proxy_bypass",
             "replace",
-            "split"
+            "set_environ",
+            "upper",
+            "urlparse"
+          ],
+          "resolved_calls": [
+            "os.environ.get",
+            "src.requests.compat.proxy_bypass",
+            "src.requests.compat.urlparse",
+            "src.requests.compat.urlparse.hostname.endswith",
+            "src.requests.utils.address_in_network",
+            "src.requests.utils.is_ipv4_address",
+            "src.requests.utils.is_valid_cidr",
+            "src.requests.utils.set_environ"
           ]
         },
-        "requote_uri": {
+        "get_environ_proxies": {
           "calls": [
-            "quote",
-            "unquote_unreserved"
+            "getproxies",
+            "should_bypass_proxies"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.getproxies",
+            "src.requests.utils.should_bypass_proxies"
+          ]
+        },
+        "select_proxy": {
+          "calls": [
+            "get",
+            "urlparse"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.urlparse"
           ]
         },
         "resolve_proxies": {
@@ -1821,6 +4163,92 @@
             "setdefault",
             "should_bypass_proxies",
             "urlparse"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.urlparse",
+            "src.requests.utils.get_environ_proxies",
+            "src.requests.utils.get_environ_proxies.get",
+            "src.requests.utils.should_bypass_proxies"
+          ]
+        },
+        "default_user_agent": {
+          "calls": [],
+          "resolved_calls": []
+        },
+        "default_headers": {
+          "calls": [
+            "CaseInsensitiveDict",
+            "default_user_agent"
+          ],
+          "resolved_calls": [
+            "src.requests.structures.CaseInsensitiveDict",
+            "src.requests.utils.default_user_agent"
+          ]
+        },
+        "parse_header_links": {
+          "calls": [
+            "append",
+            "split",
+            "strip"
+          ],
+          "resolved_calls": [
+            "re.split"
+          ]
+        },
+        "guess_json_utf": {
+          "calls": [
+            "count"
+          ],
+          "resolved_calls": []
+        },
+        "prepend_scheme_if_needed": {
+          "calls": [
+            "parse_url",
+            "urlunparse"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.urlunparse",
+            "urllib3.util.parse_url"
+          ]
+        },
+        "get_auth_from_url": {
+          "calls": [
+            "unquote",
+            "urlparse"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.unquote",
+            "src.requests.compat.urlparse"
+          ]
+        },
+        "check_header_validity": {
+          "calls": [
+            "_validate_header_part"
+          ],
+          "resolved_calls": [
+            "src.requests.utils._validate_header_part"
+          ]
+        },
+        "_validate_header_part": {
+          "calls": [
+            "InvalidHeader",
+            "isinstance",
+            "match",
+            "type"
+          ],
+          "resolved_calls": [
+            "src.requests.exceptions.InvalidHeader"
+          ]
+        },
+        "urldefragauth": {
+          "calls": [
+            "rsplit",
+            "urlparse",
+            "urlunparse"
+          ],
+          "resolved_calls": [
+            "src.requests.compat.urlparse",
+            "src.requests.compat.urlunparse"
           ]
         },
         "rewind_body": {
@@ -1829,83 +4257,9 @@
             "body_seek",
             "getattr",
             "isinstance"
-          ]
-        },
-        "select_proxy": {
-          "calls": [
-            "get",
-            "urlparse"
-          ]
-        },
-        "set_environ": {
-          "calls": [
-            "get"
-          ]
-        },
-        "should_bypass_proxies": {
-          "calls": [
-            "address_in_network",
-            "endswith",
-            "get_proxy",
-            "is_ipv4_address",
-            "is_valid_cidr",
-            "proxy_bypass",
-            "replace",
-            "set_environ",
-            "split",
-            "urlparse"
-          ]
-        },
-        "stream_decode_response_unicode": {
-          "calls": [
-            "decode",
-            "getincrementaldecoder"
-          ]
-        },
-        "super_len": {
-          "calls": [
-            "encode",
-            "fileno",
-            "fstat",
-            "hasattr",
-            "isinstance",
-            "len",
-            "max",
-            "seek",
-            "tell",
-            "warn"
-          ]
-        },
-        "to_key_val_list": {
-          "calls": [
-            "ValueError",
-            "isinstance",
-            "items",
-            "list"
-          ]
-        },
-        "unquote_header_value": {
-          "calls": [
-            "replace"
-          ]
-        },
-        "unquote_unreserved": {
-          "calls": [
-            "InvalidURL",
-            "chr",
-            "int",
-            "isalnum",
-            "join",
-            "len",
-            "range",
-            "split"
-          ]
-        },
-        "urldefragauth": {
-          "calls": [
-            "rsplit",
-            "urlparse",
-            "urlunparse"
+          ],
+          "resolved_calls": [
+            "src.requests.exceptions.UnrewindableBodyError"
           ]
         }
       },

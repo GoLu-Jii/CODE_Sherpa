@@ -114,11 +114,10 @@ While our vision is a hosted platform, the **current implementation ** is a func
 
 **Capabilities:**
 *   **Language Support:** Python (`.py` files) via AST analysis.
-*   **Analysis:** Extracts files, functions, imports, and call graphs.
+*   **Analysis:** Extracts files, functions, imports, file dependencies, and resolved inter-file call edges.
 *   **Enrichment:** Optional integration with Groq API for AI explanations (sidecar mode). *(Currently disabled)*
 *   **Outputs:**
     *   `analysis.json`: Raw structural data.
-    *   `learning_order.json`: A proposed guided tour path.
     *   `flowchart.md`: Mermaid diagram of file dependencies.
     *   `annotations.json`: Sidecar file with AI explanations (if enabled).
 
@@ -177,8 +176,8 @@ python --version
 
 After running, the following files will be generated in the `demo/` folder:
 
-- **`demo/analysis.json`** â€” Complete code analysis including entry points, dependencies, and call graphs. **(Single Source of Truth)**
-- **`demo/learning_order.json`** â€” Structured learning path generated from the analysis.
+- **`demo/analysis.json`** â€” Complete code analysis including entry points, dependencies, raw calls, and resolved call edges (`metadata.resolved_call_edges`). **(Single Source of Truth)**
+
 - **`demo/flowchart.md`** â€” specific visual dependency graph in Mermaid format.
 - **`demo/annotations.json`** - Reserved for optional enrichment sidecar output when enabled.
 
@@ -191,11 +190,6 @@ Get-Content demo/analysis.json
 
 # Windows CMD / Linux / Mac
 type demo/analysis.json
-```
-
-**View the learning order:**
-```bash
-Get-Content demo/learning_order.json
 ```
 
 **View the flowchart:**
@@ -253,11 +247,6 @@ You can also run individual components separately:
 **Test analyzer only:**
 ```bash
 python -c "from analyzer.analyzer import build_unified_model; import json; result = build_unified_model('sample_repo'); print(json.dumps(result, indent=2))"
-```
-
-**Test tour builder:**
-```bash
-python tour/tour_builder.py demo/analysis.json
 ```
 
 **Test flowchart builder:**

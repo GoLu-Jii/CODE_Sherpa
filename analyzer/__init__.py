@@ -13,6 +13,8 @@ from .analyzer import (
     analyze_file,
     analyze_repo_files,
     build_unified_model,
+    build_resolved_call_adjacency,
+    trace_call_chain,
 )
 
 __all__ = [
@@ -20,4 +22,6 @@ __all__ = [
     "analyze_file",
     "analyze_repo_files",
     "build_unified_model",
+    "build_resolved_call_adjacency",
+    "trace_call_chain",
 ]

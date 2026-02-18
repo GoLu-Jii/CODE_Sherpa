@@ -21,7 +21,6 @@ import argparse
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from analyzer.analyzer import build_unified_model
-from tour.tour_builder import build_learning_order
 from flowchart.flow_builder import build_simple_file_graph
 from flowchart.exporter import export_mermaid
 
@@ -39,17 +38,6 @@ def run_analyze(repo_path: str, output_file: str) -> None:
         json.dump(analysis_result, f, indent=2)
     
     print("Analysis completed")
-
-
-def run_tour(input_file: str, output_file: str) -> None:
-    """Pipeline step 2: Guided tour generation."""
-    print("Generating tour...")
-    with open(input_file, "r", encoding="utf-8") as f:
-        analyzer_data = json.load(f)
-    result = build_learning_order(analyzer_data)
-    with open(output_file, "w", encoding="utf-8") as f:
-        json.dump(result, f, indent=2)
-    print("Tour generated")
 
 
 def run_flowchart(input_file: str, output_file: str) -> None:
@@ -91,23 +79,18 @@ def run_pipeline(repo_path: str, output_dir: str) -> None:
     
     New Flow (Decoupled):
         1. Analyze -> analysis.json
-        2. Tour -> learning_order.json (uses analysis.json)
-        3. Flowchart -> flowchart.md (uses analysis.json)
-        4. Enrich -> annotations.json (uses analysis.json, Optional)
+        2. Flowchart -> flowchart.md (uses analysis.json)
+        3. Enrich -> annotations.json (uses analysis.json, Optional)
     """
     # Define output files
     analysis_file = os.path.join(output_dir, "analysis.json")
-    learning_order_file = os.path.join(output_dir, "learning_order.json")
     flowchart_file = os.path.join(output_dir, "flowchart.md")
     annotations_file = os.path.join(output_dir, "annotations.json")
     
     # Step 1: Analyze
     run_analyze(repo_path, analysis_file)
     
-    # Step 2: Tour (Independent of enrichment)
-    run_tour(analysis_file, learning_order_file)
-    
-    # Step 3: Flowchart (Independent of enrichment)
+    # Step 2: Flowchart (Independent of enrichment)
     run_flowchart(analysis_file, flowchart_file)
     
     # Step 4: Enrich (Last & Optional sidecar)
