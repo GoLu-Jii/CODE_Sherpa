@@ -11,7 +11,7 @@ The hosted web platform, API service, and editor integrations described below re
 
 ---
 
-## ðŸ“‘ Table of Contents
+## Table of Contents
 
 - [CODE Sherpa](#code-sherpa)
   - [ðŸ“‘ Table of Contents](#-table-of-contents)
