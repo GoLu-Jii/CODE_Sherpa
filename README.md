@@ -1,4 +1,4 @@
-﻿# CODE Sherpa
+# CODE Sherpa
 
 **Project Nature:** *Deterministic Code Intelligence Engine (CLI Prototype)*  
 **Long-Term Vision:** *Hosted, API-First Platform*
@@ -139,17 +139,17 @@ python --version
 
 3. **Run the pipeline on a repository:**
    ```bash
-   python cli/main.py analyze <repository_path>
+   python backend/app/main.py analyze <repository_path>
    ```
 
    **Example with sample repository:**
    ```bash
-   python cli/main.py analyze sample_repo
+   python backend/app/main.py analyze sample_repo
    ```
 
    **Example with your own repository:**
    ```bash
-   python cli/main.py analyze C:\Users\YourName\Projects\my_project
+   python backend/app/main.py analyze C:\Users\YourName\Projects\my_project
    ```
 
 ### Output Files
@@ -196,18 +196,18 @@ Pipeline completed successfully
 If you encounter Unicode encoding issues, set the encoding environment variable:
 ```powershell
 $env:PYTHONIOENCODING="utf-8"
-python cli/main.py analyze sample_repo
+python backend/app/main.py analyze sample_repo
 ```
 
 **Repository path not found:**
-- Use absolute paths: `python cli/main.py analyze C:\full\path\to\repo`
-- Or relative paths: `python cli/main.py analyze ./repo_name`
+- Use absolute paths: `python backend/app/main.py analyze C:\full\path\to\repo`
+- Or relative paths: `python backend/app/main.py analyze ./repo_name`
 - Ensure the path exists and contains Python files (`.py` extension)
 - **Note:** Only Python repositories are currently supported
 
 **Module not found errors:**
 - Ensure you're running from the project root directory
-- Verify all folders (`analyzer/`, `cli/`, `flowchart/`) exist
+- Verify all folders (`backend/app/engine_ast/`, `backend/app/`) exist
 
 ### Testing Individual Components
 
@@ -215,12 +215,12 @@ You can also run individual components separately:
 
 **Test analyzer only:**
 ```bash
-python -c "from analyzer.analyzer import build_unified_model; import json; result = build_unified_model('sample_repo'); print(json.dumps(result, indent=2))"
+python -c "from app.engine_ast.analyzer import build_unified_model; import json; result = build_unified_model('sample_repo'); print(json.dumps(result, indent=2))"
 ```
 
 **Test flowchart builder:**
 ```bash
-python flowchart/flow_builder.py demo/analysis.json
+python backend/app/engine_ast/flowchart/flow_builder.py demo/analysis.json
 ```
 
 ---
