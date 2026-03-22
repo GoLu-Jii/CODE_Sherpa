@@ -1602,6 +1602,7 @@
         "setuptools",
         "sys"
       ],
+      "classes": {},
       "functions": {},
       "depends_on": []
     },
@@ -1621,8 +1622,11 @@
         "urllib3.exceptions",
         "warnings"
       ],
+      "classes": {},
       "functions": {
         "check_compatibility": {
+          "lineno": 58,
+          "end_lineno": 90,
           "calls": [
             "append",
             "int",
@@ -1635,6 +1639,8 @@
           ]
         },
         "_check_cryptography": {
+          "lineno": 93,
+          "end_lineno": 104,
           "calls": [
             "list",
             "map",
@@ -1660,6 +1666,7 @@
     "src/requests/__version__.py": {
       "entry": false,
       "imports": [],
+      "classes": {},
       "functions": {},
       "depends_on": []
     },
@@ -1669,8 +1676,11 @@
         "re",
         "src.requests.compat"
       ],
+      "classes": {},
       "functions": {
         "to_native_string": {
+          "lineno": 25,
+          "end_lineno": 35,
           "calls": [
             "decode",
             "isinstance"
@@ -1678,6 +1688,8 @@
           "resolved_calls": []
         },
         "unicode_is_ascii": {
+          "lineno": 38,
+          "end_lineno": 50,
           "calls": [
             "encode",
             "isinstance"
@@ -1708,8 +1720,20 @@
         "urllib3.util.retry",
         "warnings"
       ],
+      "classes": {
+        "BaseAdapter": {
+          "lineno": 113,
+          "end_lineno": 140
+        },
+        "HTTPAdapter": {
+          "lineno": 143,
+          "end_lineno": 696
+        }
+      },
       "functions": {
         "_urllib3_request_context": {
+          "lineno": 76,
+          "end_lineno": 110,
           "calls": [
             "isdir",
             "isinstance",
@@ -1724,20 +1748,28 @@
           ]
         },
         "BaseAdapter.__init__": {
+          "lineno": 116,
+          "end_lineno": 117,
           "calls": [
             "super"
           ],
           "resolved_calls": []
         },
         "BaseAdapter.send": {
+          "lineno": 119,
+          "end_lineno": 136,
           "calls": [],
           "resolved_calls": []
         },
         "BaseAdapter.close": {
+          "lineno": 138,
+          "end_lineno": 140,
           "calls": [],
           "resolved_calls": []
         },
         "HTTPAdapter.__init__": {
+          "lineno": 178,
+          "end_lineno": 198,
           "calls": [
             "Retry",
             "from_int",
@@ -1751,12 +1783,16 @@
           ]
         },
         "HTTPAdapter.__getstate__": {
+          "lineno": 200,
+          "end_lineno": 201,
           "calls": [
             "getattr"
           ],
           "resolved_calls": []
         },
         "HTTPAdapter.__setstate__": {
+          "lineno": 203,
+          "end_lineno": 214,
           "calls": [
             "init_poolmanager",
             "items",
@@ -1767,6 +1803,8 @@
           ]
         },
         "HTTPAdapter.init_poolmanager": {
+          "lineno": 216,
+          "end_lineno": 240,
           "calls": [
             "PoolManager"
           ],
@@ -1775,6 +1813,8 @@
           ]
         },
         "HTTPAdapter.proxy_manager_for": {
+          "lineno": 242,
+          "end_lineno": 278,
           "calls": [
             "SOCKSProxyManager",
             "get_auth_from_url",
@@ -1789,6 +1829,8 @@
           ]
         },
         "HTTPAdapter.cert_verify": {
+          "lineno": 280,
+          "end_lineno": 334,
           "calls": [
             "OSError",
             "exists",
@@ -1804,6 +1846,8 @@
           ]
         },
         "HTTPAdapter.build_response": {
+          "lineno": 336,
+          "end_lineno": 371,
           "calls": [
             "CaseInsensitiveDict",
             "Response",
@@ -1821,6 +1865,8 @@
           ]
         },
         "HTTPAdapter.build_connection_pool_key_attributes": {
+          "lineno": 373,
+          "end_lineno": 421,
           "calls": [
             "_urllib3_request_context"
           ],
@@ -1829,6 +1875,8 @@
           ]
         },
         "HTTPAdapter.get_connection_with_tls_context": {
+          "lineno": 423,
+          "end_lineno": 470,
           "calls": [
             "InvalidProxyURL",
             "InvalidURL",
@@ -1852,6 +1900,8 @@
           ]
         },
         "HTTPAdapter.get_connection": {
+          "lineno": 472,
+          "end_lineno": 511,
           "calls": [
             "InvalidProxyURL",
             "connection_from_url",
@@ -1877,6 +1927,8 @@
           ]
         },
         "HTTPAdapter.close": {
+          "lineno": 513,
+          "end_lineno": 521,
           "calls": [
             "clear",
             "values"
@@ -1887,6 +1939,8 @@
           ]
         },
         "HTTPAdapter.request_url": {
+          "lineno": 523,
+          "end_lineno": 553,
           "calls": [
             "lstrip",
             "select_proxy",
@@ -1901,10 +1955,14 @@
           ]
         },
         "HTTPAdapter.add_headers": {
+          "lineno": 555,
+          "end_lineno": 567,
           "calls": [],
           "resolved_calls": []
         },
         "HTTPAdapter.proxy_headers": {
+          "lineno": 569,
+          "end_lineno": 588,
           "calls": [
             "_basic_auth_str",
             "get_auth_from_url"
@@ -1915,6 +1973,8 @@
           ]
         },
         "HTTPAdapter.send": {
+          "lineno": 590,
+          "end_lineno": 696,
           "calls": [
             "ConnectTimeout",
             "ConnectionError",
@@ -1968,8 +2028,11 @@
       "imports": [
         "src.requests.sessions"
       ],
+      "classes": {},
       "functions": {
         "request": {
+          "lineno": 14,
+          "end_lineno": 59,
           "calls": [
             "Session",
             "request"
@@ -1980,6 +2043,8 @@
           ]
         },
         "get": {
+          "lineno": 62,
+          "end_lineno": 73,
           "calls": [
             "request"
           ],
@@ -1988,6 +2053,8 @@
           ]
         },
         "options": {
+          "lineno": 76,
+          "end_lineno": 85,
           "calls": [
             "request"
           ],
@@ -1996,6 +2063,8 @@
           ]
         },
         "head": {
+          "lineno": 88,
+          "end_lineno": 100,
           "calls": [
             "request",
             "setdefault"
@@ -2005,6 +2074,8 @@
           ]
         },
         "post": {
+          "lineno": 103,
+          "end_lineno": 115,
           "calls": [
             "request"
           ],
@@ -2013,6 +2084,8 @@
           ]
         },
         "put": {
+          "lineno": 118,
+          "end_lineno": 130,
           "calls": [
             "request"
           ],
@@ -2021,6 +2094,8 @@
           ]
         },
         "patch": {
+          "lineno": 133,
+          "end_lineno": 145,
           "calls": [
             "request"
           ],
@@ -2029,6 +2104,8 @@
           ]
         },
         "delete": {
+          "lineno": 148,
+          "end_lineno": 157,
           "calls": [
             "request"
           ],
@@ -2056,8 +2133,28 @@
         "time",
         "warnings"
       ],
+      "classes": {
+        "AuthBase": {
+          "lineno": 69,
+          "end_lineno": 73
+        },
+        "HTTPBasicAuth": {
+          "lineno": 76,
+          "end_lineno": 96
+        },
+        "HTTPProxyAuth": {
+          "lineno": 99,
+          "end_lineno": 104
+        },
+        "HTTPDigestAuth": {
+          "lineno": 107,
+          "end_lineno": 314
+        }
+      },
       "functions": {
         "_basic_auth_str": {
+          "lineno": 25,
+          "end_lineno": 66,
           "calls": [
             "b64encode",
             "encode",
@@ -2076,16 +2173,22 @@
           ]
         },
         "AuthBase.__call__": {
+          "lineno": 72,
+          "end_lineno": 73,
           "calls": [
             "NotImplementedError"
           ],
           "resolved_calls": []
         },
         "HTTPBasicAuth.__init__": {
+          "lineno": 79,
+          "end_lineno": 81,
           "calls": [],
           "resolved_calls": []
         },
         "HTTPBasicAuth.__eq__": {
+          "lineno": 83,
+          "end_lineno": 89,
           "calls": [
             "all",
             "getattr"
@@ -2093,10 +2196,14 @@
           "resolved_calls": []
         },
         "HTTPBasicAuth.__ne__": {
+          "lineno": 91,
+          "end_lineno": 92,
           "calls": [],
           "resolved_calls": []
         },
         "HTTPBasicAuth.__call__": {
+          "lineno": 94,
+          "end_lineno": 96,
           "calls": [
             "_basic_auth_str"
           ],
@@ -2105,6 +2212,8 @@
           ]
         },
         "HTTPProxyAuth.__call__": {
+          "lineno": 102,
+          "end_lineno": 104,
           "calls": [
             "_basic_auth_str"
           ],
@@ -2113,6 +2222,8 @@
           ]
         },
         "HTTPDigestAuth.__init__": {
+          "lineno": 110,
+          "end_lineno": 114,
           "calls": [
             "local"
           ],
@@ -2121,12 +2232,16 @@
           ]
         },
         "HTTPDigestAuth.init_per_thread_state": {
+          "lineno": 116,
+          "end_lineno": 124,
           "calls": [
             "hasattr"
           ],
           "resolved_calls": []
         },
         "HTTPDigestAuth.build_digest_header": {
+          "lineno": 126,
+          "end_lineno": 234,
           "calls": [
             "KD",
             "ctime",
@@ -2159,10 +2274,14 @@
           ]
         },
         "HTTPDigestAuth.handle_redirect": {
+          "lineno": 236,
+          "end_lineno": 239,
           "calls": [],
           "resolved_calls": []
         },
         "HTTPDigestAuth.handle_401": {
+          "lineno": 241,
+          "end_lineno": 283,
           "calls": [
             "append",
             "build_digest_header",
@@ -2187,6 +2306,8 @@
           ]
         },
         "HTTPDigestAuth.__call__": {
+          "lineno": 285,
+          "end_lineno": 303,
           "calls": [
             "build_digest_header",
             "init_per_thread_state",
@@ -2199,6 +2320,8 @@
           ]
         },
         "HTTPDigestAuth.__eq__": {
+          "lineno": 305,
+          "end_lineno": 311,
           "calls": [
             "all",
             "getattr"
@@ -2206,6 +2329,8 @@
           "resolved_calls": []
         },
         "HTTPDigestAuth.__ne__": {
+          "lineno": 313,
+          "end_lineno": 314,
           "calls": [],
           "resolved_calls": []
         }
@@ -2222,6 +2347,7 @@
       "imports": [
         "certifi"
       ],
+      "classes": {},
       "functions": {},
       "depends_on": []
     },
@@ -2239,8 +2365,11 @@
         "urllib.request",
         "urllib3"
       ],
+      "classes": {},
       "functions": {
         "_resolve_char_detection": {
+          "lineno": 30,
+          "end_lineno": 39,
           "calls": [
             "import_module"
           ],
@@ -2260,8 +2389,28 @@
         "src.requests.compat",
         "time"
       ],
+      "classes": {
+        "MockRequest": {
+          "lineno": 23,
+          "end_lineno": 100
+        },
+        "MockResponse": {
+          "lineno": 103,
+          "end_lineno": 121
+        },
+        "CookieConflictError": {
+          "lineno": 170,
+          "end_lineno": 173
+        },
+        "RequestsCookieJar": {
+          "lineno": 176,
+          "end_lineno": 437
+        }
+      },
       "functions": {
         "MockRequest.__init__": {
+          "lineno": 35,
+          "end_lineno": 38,
           "calls": [
             "urlparse"
           ],
@@ -2270,10 +2419,14 @@
           ]
         },
         "MockRequest.get_type": {
+          "lineno": 40,
+          "end_lineno": 41,
           "calls": [],
           "resolved_calls": []
         },
         "MockRequest.get_host": {
+          "lineno": 43,
+          "end_lineno": 44,
           "calls": [
             "urlparse"
           ],
@@ -2282,6 +2435,8 @@
           ]
         },
         "MockRequest.get_origin_req_host": {
+          "lineno": 46,
+          "end_lineno": 47,
           "calls": [
             "get_host"
           ],
@@ -2290,6 +2445,8 @@
           ]
         },
         "MockRequest.get_full_url": {
+          "lineno": 49,
+          "end_lineno": 67,
           "calls": [
             "get",
             "to_native_string",
@@ -2304,14 +2461,20 @@
           ]
         },
         "MockRequest.is_unverifiable": {
+          "lineno": 69,
+          "end_lineno": 70,
           "calls": [],
           "resolved_calls": []
         },
         "MockRequest.has_header": {
+          "lineno": 72,
+          "end_lineno": 73,
           "calls": [],
           "resolved_calls": []
         },
         "MockRequest.get_header": {
+          "lineno": 75,
+          "end_lineno": 76,
           "calls": [
             "get"
           ],
@@ -2321,20 +2484,28 @@
           ]
         },
         "MockRequest.add_header": {
+          "lineno": 78,
+          "end_lineno": 82,
           "calls": [
             "NotImplementedError"
           ],
           "resolved_calls": []
         },
         "MockRequest.add_unredirected_header": {
+          "lineno": 84,
+          "end_lineno": 85,
           "calls": [],
           "resolved_calls": []
         },
         "MockRequest.get_new_headers": {
+          "lineno": 87,
+          "end_lineno": 88,
           "calls": [],
           "resolved_calls": []
         },
         "MockRequest.unverifiable": {
+          "lineno": 91,
+          "end_lineno": 92,
           "calls": [
             "is_unverifiable"
           ],
@@ -2343,6 +2514,8 @@
           ]
         },
         "MockRequest.origin_req_host": {
+          "lineno": 95,
+          "end_lineno": 96,
           "calls": [
             "get_origin_req_host"
           ],
@@ -2351,6 +2524,8 @@
           ]
         },
         "MockRequest.host": {
+          "lineno": 99,
+          "end_lineno": 100,
           "calls": [
             "get_host"
           ],
@@ -2359,14 +2534,20 @@
           ]
         },
         "MockResponse.__init__": {
+          "lineno": 110,
+          "end_lineno": 115,
           "calls": [],
           "resolved_calls": []
         },
         "MockResponse.info": {
+          "lineno": 117,
+          "end_lineno": 118,
           "calls": [],
           "resolved_calls": []
         },
         "MockResponse.getheaders": {
+          "lineno": 120,
+          "end_lineno": 121,
           "calls": [
             "getheaders"
           ],
@@ -2375,6 +2556,8 @@
           ]
         },
         "extract_cookies_to_jar": {
+          "lineno": 124,
+          "end_lineno": 137,
           "calls": [
             "MockRequest",
             "MockResponse",
@@ -2387,6 +2570,8 @@
           ]
         },
         "get_cookie_header": {
+          "lineno": 140,
+          "end_lineno": 148,
           "calls": [
             "MockRequest",
             "add_cookie_header",
@@ -2398,6 +2583,8 @@
           ]
         },
         "remove_cookie_by_name": {
+          "lineno": 151,
+          "end_lineno": 167,
           "calls": [
             "append",
             "clear"
@@ -2405,6 +2592,8 @@
           "resolved_calls": []
         },
         "RequestsCookieJar.get": {
+          "lineno": 194,
+          "end_lineno": 204,
           "calls": [
             "_find_no_duplicates"
           ],
@@ -2413,6 +2602,8 @@
           ]
         },
         "RequestsCookieJar.set": {
+          "lineno": 206,
+          "end_lineno": 223,
           "calls": [
             "create_cookie",
             "get",
@@ -2429,12 +2620,16 @@
           ]
         },
         "RequestsCookieJar.iterkeys": {
+          "lineno": 225,
+          "end_lineno": 232,
           "calls": [
             "iter"
           ],
           "resolved_calls": []
         },
         "RequestsCookieJar.keys": {
+          "lineno": 234,
+          "end_lineno": 240,
           "calls": [
             "iterkeys",
             "list"
@@ -2444,12 +2639,16 @@
           ]
         },
         "RequestsCookieJar.itervalues": {
+          "lineno": 242,
+          "end_lineno": 249,
           "calls": [
             "iter"
           ],
           "resolved_calls": []
         },
         "RequestsCookieJar.values": {
+          "lineno": 251,
+          "end_lineno": 257,
           "calls": [
             "itervalues",
             "list"
@@ -2459,12 +2658,16 @@
           ]
         },
         "RequestsCookieJar.iteritems": {
+          "lineno": 259,
+          "end_lineno": 266,
           "calls": [
             "iter"
           ],
           "resolved_calls": []
         },
         "RequestsCookieJar.items": {
+          "lineno": 268,
+          "end_lineno": 275,
           "calls": [
             "iteritems",
             "list"
@@ -2474,6 +2677,8 @@
           ]
         },
         "RequestsCookieJar.list_domains": {
+          "lineno": 277,
+          "end_lineno": 283,
           "calls": [
             "append",
             "iter"
@@ -2481,6 +2686,8 @@
           "resolved_calls": []
         },
         "RequestsCookieJar.list_paths": {
+          "lineno": 285,
+          "end_lineno": 291,
           "calls": [
             "append",
             "iter"
@@ -2488,6 +2695,8 @@
           "resolved_calls": []
         },
         "RequestsCookieJar.multiple_domains": {
+          "lineno": 293,
+          "end_lineno": 304,
           "calls": [
             "append",
             "iter"
@@ -2495,18 +2704,24 @@
           "resolved_calls": []
         },
         "RequestsCookieJar.get_dict": {
+          "lineno": 306,
+          "end_lineno": 319,
           "calls": [
             "iter"
           ],
           "resolved_calls": []
         },
         "RequestsCookieJar.__contains__": {
+          "lineno": 321,
+          "end_lineno": 325,
           "calls": [
             "super"
           ],
           "resolved_calls": []
         },
         "RequestsCookieJar.__getitem__": {
+          "lineno": 327,
+          "end_lineno": 334,
           "calls": [
             "_find_no_duplicates"
           ],
@@ -2515,6 +2730,8 @@
           ]
         },
         "RequestsCookieJar.__setitem__": {
+          "lineno": 336,
+          "end_lineno": 341,
           "calls": [
             "set"
           ],
@@ -2523,6 +2740,8 @@
           ]
         },
         "RequestsCookieJar.__delitem__": {
+          "lineno": 343,
+          "end_lineno": 347,
           "calls": [
             "remove_cookie_by_name"
           ],
@@ -2531,6 +2750,8 @@
           ]
         },
         "RequestsCookieJar.set_cookie": {
+          "lineno": 349,
+          "end_lineno": 356,
           "calls": [
             "endswith",
             "hasattr",
@@ -2541,6 +2762,8 @@
           "resolved_calls": []
         },
         "RequestsCookieJar.update": {
+          "lineno": 358,
+          "end_lineno": 364,
           "calls": [
             "copy",
             "isinstance",
@@ -2553,6 +2776,8 @@
           ]
         },
         "RequestsCookieJar._find": {
+          "lineno": 366,
+          "end_lineno": 384,
           "calls": [
             "KeyError",
             "iter"
@@ -2560,6 +2785,8 @@
           "resolved_calls": []
         },
         "RequestsCookieJar._find_no_duplicates": {
+          "lineno": 386,
+          "end_lineno": 413,
           "calls": [
             "CookieConflictError",
             "KeyError",
@@ -2570,6 +2797,8 @@
           ]
         },
         "RequestsCookieJar.__getstate__": {
+          "lineno": 415,
+          "end_lineno": 420,
           "calls": [
             "copy",
             "pop"
@@ -2580,6 +2809,8 @@
           ]
         },
         "RequestsCookieJar.__setstate__": {
+          "lineno": 422,
+          "end_lineno": 426,
           "calls": [
             "RLock",
             "update"
@@ -2589,6 +2820,8 @@
           ]
         },
         "RequestsCookieJar.copy": {
+          "lineno": 428,
+          "end_lineno": 433,
           "calls": [
             "RequestsCookieJar",
             "get_policy",
@@ -2603,10 +2836,14 @@
           ]
         },
         "RequestsCookieJar.get_policy": {
+          "lineno": 435,
+          "end_lineno": 437,
           "calls": [],
           "resolved_calls": []
         },
         "_copy_cookie_jar": {
+          "lineno": 440,
+          "end_lineno": 452,
           "calls": [
             "clear",
             "copy",
@@ -2620,6 +2857,8 @@
           ]
         },
         "create_cookie": {
+          "lineno": 455,
+          "end_lineno": 489,
           "calls": [
             "Cookie",
             "TypeError",
@@ -2633,6 +2872,8 @@
           ]
         },
         "morsel_to_cookie": {
+          "lineno": 492,
+          "end_lineno": 518,
           "calls": [
             "TypeError",
             "bool",
@@ -2650,6 +2891,8 @@
           ]
         },
         "cookiejar_from_dict": {
+          "lineno": 521,
+          "end_lineno": 539,
           "calls": [
             "RequestsCookieJar",
             "create_cookie",
@@ -2662,6 +2905,8 @@
           ]
         },
         "merge_cookies": {
+          "lineno": 542,
+          "end_lineno": 561,
           "calls": [
             "ValueError",
             "cookiejar_from_dict",
@@ -2687,8 +2932,112 @@
         "src.requests.compat",
         "urllib3.exceptions"
       ],
+      "classes": {
+        "RequestException": {
+          "lineno": 12,
+          "end_lineno": 24
+        },
+        "InvalidJSONError": {
+          "lineno": 27,
+          "end_lineno": 28
+        },
+        "JSONDecodeError": {
+          "lineno": 31,
+          "end_lineno": 52
+        },
+        "HTTPError": {
+          "lineno": 55,
+          "end_lineno": 56
+        },
+        "ConnectionError": {
+          "lineno": 59,
+          "end_lineno": 60
+        },
+        "ProxyError": {
+          "lineno": 63,
+          "end_lineno": 64
+        },
+        "SSLError": {
+          "lineno": 67,
+          "end_lineno": 68
+        },
+        "Timeout": {
+          "lineno": 71,
+          "end_lineno": 77
+        },
+        "ConnectTimeout": {
+          "lineno": 80,
+          "end_lineno": 84
+        },
+        "ReadTimeout": {
+          "lineno": 87,
+          "end_lineno": 88
+        },
+        "URLRequired": {
+          "lineno": 91,
+          "end_lineno": 92
+        },
+        "TooManyRedirects": {
+          "lineno": 95,
+          "end_lineno": 96
+        },
+        "MissingSchema": {
+          "lineno": 99,
+          "end_lineno": 100
+        },
+        "InvalidSchema": {
+          "lineno": 103,
+          "end_lineno": 104
+        },
+        "InvalidURL": {
+          "lineno": 107,
+          "end_lineno": 108
+        },
+        "InvalidHeader": {
+          "lineno": 111,
+          "end_lineno": 112
+        },
+        "InvalidProxyURL": {
+          "lineno": 115,
+          "end_lineno": 116
+        },
+        "ChunkedEncodingError": {
+          "lineno": 119,
+          "end_lineno": 120
+        },
+        "ContentDecodingError": {
+          "lineno": 123,
+          "end_lineno": 124
+        },
+        "StreamConsumedError": {
+          "lineno": 127,
+          "end_lineno": 128
+        },
+        "RetryError": {
+          "lineno": 131,
+          "end_lineno": 132
+        },
+        "UnrewindableBodyError": {
+          "lineno": 135,
+          "end_lineno": 136
+        },
+        "RequestsWarning": {
+          "lineno": 142,
+          "end_lineno": 143
+        },
+        "FileModeWarning": {
+          "lineno": 146,
+          "end_lineno": 147
+        },
+        "RequestsDependencyWarning": {
+          "lineno": 150,
+          "end_lineno": 151
+        }
+      },
       "functions": {
         "RequestException.__init__": {
+          "lineno": 17,
+          "end_lineno": 24,
           "calls": [
             "hasattr",
             "pop",
@@ -2697,6 +3046,8 @@
           "resolved_calls": []
         },
         "JSONDecodeError.__init__": {
+          "lineno": 34,
+          "end_lineno": 42,
           "calls": [
             "__init__"
           ],
@@ -2705,6 +3056,8 @@
           ]
         },
         "JSONDecodeError.__reduce__": {
+          "lineno": 44,
+          "end_lineno": 52,
           "calls": [
             "__reduce__"
           ],
@@ -2728,8 +3081,11 @@
         "sys",
         "urllib3"
       ],
+      "classes": {},
       "functions": {
         "_implementation": {
+          "lineno": 34,
+          "end_lineno": 66,
           "calls": [
             "python_implementation",
             "python_version"
@@ -2740,6 +3096,8 @@
           ]
         },
         "info": {
+          "lineno": 69,
+          "end_lineno": 125,
           "calls": [
             "_implementation",
             "getattr",
@@ -2753,6 +3111,8 @@
           ]
         },
         "main": {
+          "lineno": 128,
+          "end_lineno": 130,
           "calls": [
             "dumps",
             "info",
@@ -2771,12 +3131,17 @@
     "src/requests/hooks.py": {
       "entry": false,
       "imports": [],
+      "classes": {},
       "functions": {
         "default_hooks": {
+          "lineno": 15,
+          "end_lineno": 16,
           "calls": [],
           "resolved_calls": []
         },
         "dispatch_hook": {
+          "lineno": 22,
+          "end_lineno": 33,
           "calls": [
             "get",
             "hasattr",
@@ -2807,8 +3172,32 @@
         "urllib3.filepost",
         "urllib3.util"
       ],
+      "classes": {
+        "RequestEncodingMixin": {
+          "lineno": 84,
+          "end_lineno": 203
+        },
+        "RequestHooksMixin": {
+          "lineno": 206,
+          "end_lineno": 227
+        },
+        "Request": {
+          "lineno": 230,
+          "end_lineno": 310
+        },
+        "PreparedRequest": {
+          "lineno": 313,
+          "end_lineno": 637
+        },
+        "Response": {
+          "lineno": 640,
+          "end_lineno": 1039
+        }
+      },
       "functions": {
         "RequestEncodingMixin.path_url": {
+          "lineno": 86,
+          "end_lineno": 104,
           "calls": [
             "append",
             "urlsplit"
@@ -2818,6 +3207,8 @@
           ]
         },
         "RequestEncodingMixin._encode_params": {
+          "lineno": 107,
+          "end_lineno": 134,
           "calls": [
             "append",
             "encode",
@@ -2832,6 +3223,8 @@
           ]
         },
         "RequestEncodingMixin._encode_files": {
+          "lineno": 137,
+          "end_lineno": 203,
           "calls": [
             "RequestField",
             "ValueError",
@@ -2857,6 +3250,8 @@
           ]
         },
         "RequestHooksMixin.register_hook": {
+          "lineno": 207,
+          "end_lineno": 216,
           "calls": [
             "ValueError",
             "hasattr",
@@ -2865,10 +3260,14 @@
           "resolved_calls": []
         },
         "RequestHooksMixin.deregister_hook": {
+          "lineno": 218,
+          "end_lineno": 227,
           "calls": [],
           "resolved_calls": []
         },
         "Request.__init__": {
+          "lineno": 258,
+          "end_lineno": 290,
           "calls": [
             "default_hooks",
             "items",
@@ -2881,10 +3280,14 @@
           ]
         },
         "Request.__repr__": {
+          "lineno": 292,
+          "end_lineno": 293,
           "calls": [],
           "resolved_calls": []
         },
         "Request.prepare": {
+          "lineno": 295,
+          "end_lineno": 310,
           "calls": [
             "PreparedRequest",
             "prepare"
@@ -2895,6 +3298,8 @@
           ]
         },
         "PreparedRequest.__init__": {
+          "lineno": 334,
+          "end_lineno": 349,
           "calls": [
             "default_hooks"
           ],
@@ -2903,6 +3308,8 @@
           ]
         },
         "PreparedRequest.prepare": {
+          "lineno": 351,
+          "end_lineno": 377,
           "calls": [
             "prepare_auth",
             "prepare_body",
@@ -2923,10 +3330,14 @@
           ]
         },
         "PreparedRequest.__repr__": {
+          "lineno": 379,
+          "end_lineno": 380,
           "calls": [],
           "resolved_calls": []
         },
         "PreparedRequest.copy": {
+          "lineno": 382,
+          "end_lineno": 391,
           "calls": [
             "PreparedRequest",
             "_copy_cookie_jar",
@@ -2939,6 +3350,8 @@
           ]
         },
         "PreparedRequest.prepare_method": {
+          "lineno": 393,
+          "end_lineno": 397,
           "calls": [
             "to_native_string",
             "upper"
@@ -2949,12 +3362,16 @@
           ]
         },
         "PreparedRequest._get_idna_encoded_host": {
+          "lineno": 400,
+          "end_lineno": 407,
           "calls": [
             "encode"
           ],
           "resolved_calls": []
         },
         "PreparedRequest.prepare_url": {
+          "lineno": 409,
+          "end_lineno": 481,
           "calls": [
             "InvalidURL",
             "MissingSchema",
@@ -2986,6 +3403,8 @@
           ]
         },
         "PreparedRequest.prepare_headers": {
+          "lineno": 483,
+          "end_lineno": 492,
           "calls": [
             "CaseInsensitiveDict",
             "check_header_validity",
@@ -2999,6 +3418,8 @@
           ]
         },
         "PreparedRequest.prepare_body": {
+          "lineno": 494,
+          "end_lineno": 570,
           "calls": [
             "InvalidJSONError",
             "NotImplementedError",
@@ -3029,6 +3450,8 @@
           ]
         },
         "PreparedRequest.prepare_content_length": {
+          "lineno": 572,
+          "end_lineno": 586,
           "calls": [
             "builtin_str",
             "get",
@@ -3041,6 +3464,8 @@
           ]
         },
         "PreparedRequest.prepare_auth": {
+          "lineno": 588,
+          "end_lineno": 608,
           "calls": [
             "HTTPBasicAuth",
             "any",
@@ -3059,6 +3484,8 @@
           ]
         },
         "PreparedRequest.prepare_cookies": {
+          "lineno": 610,
+          "end_lineno": 628,
           "calls": [
             "cookiejar_from_dict",
             "get_cookie_header",
@@ -3070,6 +3497,8 @@
           ]
         },
         "PreparedRequest.prepare_hooks": {
+          "lineno": 630,
+          "end_lineno": 637,
           "calls": [
             "register_hook"
           ],
@@ -3078,6 +3507,8 @@
           ]
         },
         "Response.__init__": {
+          "lineno": 658,
+          "end_lineno": 703,
           "calls": [
             "CaseInsensitiveDict",
             "cookiejar_from_dict",
@@ -3090,10 +3521,14 @@
           ]
         },
         "Response.__enter__": {
+          "lineno": 705,
+          "end_lineno": 706,
           "calls": [],
           "resolved_calls": []
         },
         "Response.__exit__": {
+          "lineno": 708,
+          "end_lineno": 709,
           "calls": [
             "close"
           ],
@@ -3102,12 +3537,16 @@
           ]
         },
         "Response.__getstate__": {
+          "lineno": 711,
+          "end_lineno": 717,
           "calls": [
             "getattr"
           ],
           "resolved_calls": []
         },
         "Response.__setstate__": {
+          "lineno": 719,
+          "end_lineno": 725,
           "calls": [
             "items",
             "setattr"
@@ -3115,18 +3554,26 @@
           "resolved_calls": []
         },
         "Response.__repr__": {
+          "lineno": 727,
+          "end_lineno": 728,
           "calls": [],
           "resolved_calls": []
         },
         "Response.__bool__": {
+          "lineno": 730,
+          "end_lineno": 738,
           "calls": [],
           "resolved_calls": []
         },
         "Response.__nonzero__": {
+          "lineno": 740,
+          "end_lineno": 748,
           "calls": [],
           "resolved_calls": []
         },
         "Response.__iter__": {
+          "lineno": 750,
+          "end_lineno": 752,
           "calls": [
             "iter_content"
           ],
@@ -3135,6 +3582,8 @@
           ]
         },
         "Response.ok": {
+          "lineno": 755,
+          "end_lineno": 767,
           "calls": [
             "raise_for_status"
           ],
@@ -3143,18 +3592,26 @@
           ]
         },
         "Response.is_redirect": {
+          "lineno": 770,
+          "end_lineno": 774,
           "calls": [],
           "resolved_calls": []
         },
         "Response.is_permanent_redirect": {
+          "lineno": 777,
+          "end_lineno": 782,
           "calls": [],
           "resolved_calls": []
         },
         "Response.next": {
+          "lineno": 785,
+          "end_lineno": 787,
           "calls": [],
           "resolved_calls": []
         },
         "Response.apparent_encoding": {
+          "lineno": 790,
+          "end_lineno": 797,
           "calls": [
             "detect"
           ],
@@ -3163,6 +3620,8 @@
           ]
         },
         "Response.iter_content": {
+          "lineno": 799,
+          "end_lineno": 855,
           "calls": [
             "ChunkedEncodingError",
             "ConnectionError",
@@ -3192,6 +3651,8 @@
           ]
         },
         "Response.iter_lines": {
+          "lineno": 857,
+          "end_lineno": 888,
           "calls": [
             "iter_content",
             "pop",
@@ -3203,6 +3664,8 @@
           ]
         },
         "Response.content": {
+          "lineno": 891,
+          "end_lineno": 907,
           "calls": [
             "RuntimeError",
             "iter_content"
@@ -3212,12 +3675,16 @@
           ]
         },
         "Response.text": {
+          "lineno": 910,
+          "end_lineno": 945,
           "calls": [
             "str"
           ],
           "resolved_calls": []
         },
         "Response.json": {
+          "lineno": 947,
+          "end_lineno": 980,
           "calls": [
             "RequestsJSONDecodeError",
             "decode",
@@ -3233,6 +3700,8 @@
           ]
         },
         "Response.links": {
+          "lineno": 983,
+          "end_lineno": 997,
           "calls": [
             "get",
             "parse_header_links"
@@ -3243,6 +3712,8 @@
           ]
         },
         "Response.raise_for_status": {
+          "lineno": 999,
+          "end_lineno": 1026,
           "calls": [
             "HTTPError",
             "decode",
@@ -3254,6 +3725,8 @@
           ]
         },
         "Response.close": {
+          "lineno": 1028,
+          "end_lineno": 1039,
           "calls": [
             "close",
             "getattr",
@@ -3282,6 +3755,7 @@
         "src.requests.compat",
         "sys"
       ],
+      "classes": {},
       "functions": {},
       "depends_on": [
         "src/requests/compat.py"
@@ -3307,8 +3781,20 @@
         "sys",
         "time"
       ],
+      "classes": {
+        "SessionRedirectMixin": {
+          "lineno": 106,
+          "end_lineno": 353
+        },
+        "Session": {
+          "lineno": 356,
+          "end_lineno": 816
+        }
+      },
       "functions": {
         "merge_setting": {
+          "lineno": 61,
+          "end_lineno": 88,
           "calls": [
             "dict_class",
             "isinstance",
@@ -3321,6 +3807,8 @@
           ]
         },
         "merge_hooks": {
+          "lineno": 91,
+          "end_lineno": 103,
           "calls": [
             "get",
             "merge_setting"
@@ -3330,6 +3818,8 @@
           ]
         },
         "SessionRedirectMixin.get_redirect_target": {
+          "lineno": 107,
+          "end_lineno": 125,
           "calls": [
             "encode",
             "to_native_string"
@@ -3339,6 +3829,8 @@
           ]
         },
         "SessionRedirectMixin.should_strip_auth": {
+          "lineno": 127,
+          "end_lineno": 157,
           "calls": [
             "get",
             "urlparse"
@@ -3349,6 +3841,8 @@
           ]
         },
         "SessionRedirectMixin.resolve_redirects": {
+          "lineno": 159,
+          "end_lineno": 280,
           "calls": [
             "TooManyRedirects",
             "_replace",
@@ -3394,6 +3888,8 @@
           ]
         },
         "SessionRedirectMixin.rebuild_auth": {
+          "lineno": 282,
+          "end_lineno": 300,
           "calls": [
             "get_netrc_auth",
             "prepare_auth",
@@ -3405,6 +3901,8 @@
           ]
         },
         "SessionRedirectMixin.rebuild_proxies": {
+          "lineno": 302,
+          "end_lineno": 331,
           "calls": [
             "_basic_auth_str",
             "get_auth_from_url",
@@ -3420,10 +3918,14 @@
           ]
         },
         "SessionRedirectMixin.rebuild_method": {
+          "lineno": 333,
+          "end_lineno": 353,
           "calls": [],
           "resolved_calls": []
         },
         "Session.__init__": {
+          "lineno": 390,
+          "end_lineno": 449,
           "calls": [
             "HTTPAdapter",
             "OrderedDict",
@@ -3442,10 +3944,14 @@
           ]
         },
         "Session.__enter__": {
+          "lineno": 451,
+          "end_lineno": 452,
           "calls": [],
           "resolved_calls": []
         },
         "Session.__exit__": {
+          "lineno": 454,
+          "end_lineno": 455,
           "calls": [
             "close"
           ],
@@ -3454,6 +3960,8 @@
           ]
         },
         "Session.prepare_request": {
+          "lineno": 457,
+          "end_lineno": 498,
           "calls": [
             "PreparedRequest",
             "RequestsCookieJar",
@@ -3478,6 +3986,8 @@
           ]
         },
         "Session.request": {
+          "lineno": 500,
+          "end_lineno": 591,
           "calls": [
             "Request",
             "merge_environment_settings",
@@ -3494,6 +4004,8 @@
           ]
         },
         "Session.get": {
+          "lineno": 593,
+          "end_lineno": 602,
           "calls": [
             "request",
             "setdefault"
@@ -3503,6 +4015,8 @@
           ]
         },
         "Session.options": {
+          "lineno": 604,
+          "end_lineno": 613,
           "calls": [
             "request",
             "setdefault"
@@ -3512,6 +4026,8 @@
           ]
         },
         "Session.head": {
+          "lineno": 615,
+          "end_lineno": 624,
           "calls": [
             "request",
             "setdefault"
@@ -3521,6 +4037,8 @@
           ]
         },
         "Session.post": {
+          "lineno": 626,
+          "end_lineno": 637,
           "calls": [
             "request"
           ],
@@ -3529,6 +4047,8 @@
           ]
         },
         "Session.put": {
+          "lineno": 639,
+          "end_lineno": 649,
           "calls": [
             "request"
           ],
@@ -3537,6 +4057,8 @@
           ]
         },
         "Session.patch": {
+          "lineno": 651,
+          "end_lineno": 661,
           "calls": [
             "request"
           ],
@@ -3545,6 +4067,8 @@
           ]
         },
         "Session.delete": {
+          "lineno": 663,
+          "end_lineno": 671,
           "calls": [
             "request"
           ],
@@ -3553,6 +4077,8 @@
           ]
         },
         "Session.send": {
+          "lineno": 673,
+          "end_lineno": 748,
           "calls": [
             "ValueError",
             "dispatch_hook",
@@ -3581,6 +4107,8 @@
           ]
         },
         "Session.merge_environment_settings": {
+          "lineno": 750,
+          "end_lineno": 779,
           "calls": [
             "get",
             "get_environ_proxies",
@@ -3596,6 +4124,8 @@
           ]
         },
         "Session.get_adapter": {
+          "lineno": 781,
+          "end_lineno": 792,
           "calls": [
             "InvalidSchema",
             "items",
@@ -3607,6 +4137,8 @@
           ]
         },
         "Session.close": {
+          "lineno": 794,
+          "end_lineno": 797,
           "calls": [
             "close",
             "values"
@@ -3616,6 +4148,8 @@
           ]
         },
         "Session.mount": {
+          "lineno": 799,
+          "end_lineno": 808,
           "calls": [
             "len",
             "pop"
@@ -3625,12 +4159,16 @@
           ]
         },
         "Session.__getstate__": {
+          "lineno": 810,
+          "end_lineno": 812,
           "calls": [
             "getattr"
           ],
           "resolved_calls": []
         },
         "Session.__setstate__": {
+          "lineno": 814,
+          "end_lineno": 816,
           "calls": [
             "items",
             "setattr"
@@ -3638,6 +4176,8 @@
           "resolved_calls": []
         },
         "session": {
+          "lineno": 819,
+          "end_lineno": 831,
           "calls": [
             "Session"
           ],
@@ -3665,8 +4205,11 @@
       "imports": [
         "src.requests.structures"
       ],
+      "classes": {},
       "functions": {
         "_init": {
+          "lineno": 109,
+          "end_lineno": 125,
           "calls": [
             "doc",
             "items",
@@ -3688,8 +4231,20 @@
         "collections",
         "src.requests.compat"
       ],
+      "classes": {
+        "CaseInsensitiveDict": {
+          "lineno": 13,
+          "end_lineno": 80
+        },
+        "LookupDict": {
+          "lineno": 83,
+          "end_lineno": 99
+        }
+      },
       "functions": {
         "CaseInsensitiveDict.__init__": {
+          "lineno": 40,
+          "end_lineno": 44,
           "calls": [
             "OrderedDict",
             "update"
@@ -3700,24 +4255,32 @@
           ]
         },
         "CaseInsensitiveDict.__setitem__": {
+          "lineno": 46,
+          "end_lineno": 49,
           "calls": [
             "lower"
           ],
           "resolved_calls": []
         },
         "CaseInsensitiveDict.__getitem__": {
+          "lineno": 51,
+          "end_lineno": 52,
           "calls": [
             "lower"
           ],
           "resolved_calls": []
         },
         "CaseInsensitiveDict.__delitem__": {
+          "lineno": 54,
+          "end_lineno": 55,
           "calls": [
             "lower"
           ],
           "resolved_calls": []
         },
         "CaseInsensitiveDict.__iter__": {
+          "lineno": 57,
+          "end_lineno": 58,
           "calls": [
             "values"
           ],
@@ -3726,12 +4289,16 @@
           ]
         },
         "CaseInsensitiveDict.__len__": {
+          "lineno": 60,
+          "end_lineno": 61,
           "calls": [
             "len"
           ],
           "resolved_calls": []
         },
         "CaseInsensitiveDict.lower_items": {
+          "lineno": 63,
+          "end_lineno": 65,
           "calls": [
             "items"
           ],
@@ -3740,6 +4307,8 @@
           ]
         },
         "CaseInsensitiveDict.__eq__": {
+          "lineno": 67,
+          "end_lineno": 73,
           "calls": [
             "CaseInsensitiveDict",
             "dict",
@@ -3752,6 +4321,8 @@
           ]
         },
         "CaseInsensitiveDict.copy": {
+          "lineno": 76,
+          "end_lineno": 77,
           "calls": [
             "CaseInsensitiveDict",
             "values"
@@ -3762,6 +4333,8 @@
           ]
         },
         "CaseInsensitiveDict.__repr__": {
+          "lineno": 79,
+          "end_lineno": 80,
           "calls": [
             "dict",
             "items",
@@ -3772,16 +4345,22 @@
           ]
         },
         "LookupDict.__init__": {
+          "lineno": 86,
+          "end_lineno": 88,
           "calls": [
             "super"
           ],
           "resolved_calls": []
         },
         "LookupDict.__repr__": {
+          "lineno": 90,
+          "end_lineno": 91,
           "calls": [],
           "resolved_calls": []
         },
         "LookupDict.__getitem__": {
+          "lineno": 93,
+          "end_lineno": 96,
           "calls": [
             "get"
           ],
@@ -3790,6 +4369,8 @@
           ]
         },
         "LookupDict.get": {
+          "lineno": 98,
+          "end_lineno": 99,
           "calls": [
             "get"
           ],
@@ -3826,8 +4407,11 @@
         "warnings",
         "zipfile"
       ],
+      "classes": {},
       "functions": {
         "dict_to_sequence": {
+          "lineno": 127,
+          "end_lineno": 133,
           "calls": [
             "hasattr",
             "items"
@@ -3835,6 +4419,8 @@
           "resolved_calls": []
         },
         "super_len": {
+          "lineno": 136,
+          "end_lineno": 204,
           "calls": [
             "encode",
             "fileno",
@@ -3853,6 +4439,8 @@
           ]
         },
         "get_netrc_auth": {
+          "lineno": 207,
+          "end_lineno": 248,
           "calls": [
             "exists",
             "expanduser",
@@ -3868,6 +4456,8 @@
           ]
         },
         "guess_filename": {
+          "lineno": 251,
+          "end_lineno": 255,
           "calls": [
             "basename",
             "getattr",
@@ -3878,6 +4468,8 @@
           ]
         },
         "extract_zipped_paths": {
+          "lineno": 258,
+          "end_lineno": 292,
           "calls": [
             "ZipFile",
             "atomic_open",
@@ -3904,6 +4496,8 @@
           ]
         },
         "atomic_open": {
+          "lineno": 296,
+          "end_lineno": 305,
           "calls": [
             "dirname",
             "fdopen",
@@ -3920,6 +4514,8 @@
           ]
         },
         "from_key_val_list": {
+          "lineno": 308,
+          "end_lineno": 332,
           "calls": [
             "OrderedDict",
             "ValueError",
@@ -3930,6 +4526,8 @@
           ]
         },
         "to_key_val_list": {
+          "lineno": 335,
+          "end_lineno": 361,
           "calls": [
             "ValueError",
             "isinstance",
@@ -3939,6 +4537,8 @@
           "resolved_calls": []
         },
         "parse_list_header": {
+          "lineno": 365,
+          "end_lineno": 393,
           "calls": [
             "_parse_list_header",
             "append",
@@ -3950,6 +4550,8 @@
           ]
         },
         "parse_dict_header": {
+          "lineno": 397,
+          "end_lineno": 428,
           "calls": [
             "_parse_list_header",
             "split",
@@ -3961,16 +4563,22 @@
           ]
         },
         "unquote_header_value": {
+          "lineno": 432,
+          "end_lineno": 454,
           "calls": [
             "replace"
           ],
           "resolved_calls": []
         },
         "dict_from_cookiejar": {
+          "lineno": 457,
+          "end_lineno": 465,
           "calls": [],
           "resolved_calls": []
         },
         "add_dict_to_cookiejar": {
+          "lineno": 468,
+          "end_lineno": 476,
           "calls": [
             "cookiejar_from_dict"
           ],
@@ -3979,6 +4587,8 @@
           ]
         },
         "get_encodings_from_content": {
+          "lineno": 479,
+          "end_lineno": 501,
           "calls": [
             "compile",
             "findall",
@@ -3991,6 +4601,8 @@
           ]
         },
         "_parse_content_type_header": {
+          "lineno": 504,
+          "end_lineno": 526,
           "calls": [
             "find",
             "lower",
@@ -4000,6 +4612,8 @@
           "resolved_calls": []
         },
         "get_encoding_from_headers": {
+          "lineno": 529,
+          "end_lineno": 551,
           "calls": [
             "_parse_content_type_header",
             "get"
@@ -4009,6 +4623,8 @@
           ]
         },
         "stream_decode_response_unicode": {
+          "lineno": 554,
+          "end_lineno": 568,
           "calls": [
             "decode",
             "getincrementaldecoder"
@@ -4018,12 +4634,16 @@
           ]
         },
         "iter_slices": {
+          "lineno": 571,
+          "end_lineno": 578,
           "calls": [
             "len"
           ],
           "resolved_calls": []
         },
         "get_unicode_from_response": {
+          "lineno": 581,
+          "end_lineno": 617,
           "calls": [
             "append",
             "get_encoding_from_headers",
@@ -4037,6 +4657,8 @@
           ]
         },
         "unquote_unreserved": {
+          "lineno": 626,
+          "end_lineno": 647,
           "calls": [
             "InvalidURL",
             "chr",
@@ -4051,6 +4673,8 @@
           ]
         },
         "requote_uri": {
+          "lineno": 650,
+          "end_lineno": 669,
           "calls": [
             "quote",
             "unquote_unreserved"
@@ -4061,6 +4685,8 @@
           ]
         },
         "address_in_network": {
+          "lineno": 672,
+          "end_lineno": 684,
           "calls": [
             "dotted_netmask",
             "inet_aton",
@@ -4075,6 +4701,8 @@
           ]
         },
         "dotted_netmask": {
+          "lineno": 687,
+          "end_lineno": 695,
           "calls": [
             "inet_ntoa",
             "pack"
@@ -4085,6 +4713,8 @@
           ]
         },
         "is_ipv4_address": {
+          "lineno": 698,
+          "end_lineno": 706,
           "calls": [
             "inet_aton"
           ],
@@ -4093,6 +4723,8 @@
           ]
         },
         "is_valid_cidr": {
+          "lineno": 709,
+          "end_lineno": 730,
           "calls": [
             "count",
             "inet_aton",
@@ -4104,6 +4736,8 @@
           ]
         },
         "set_environ": {
+          "lineno": 734,
+          "end_lineno": 752,
           "calls": [
             "get"
           ],
@@ -4112,6 +4746,8 @@
           ]
         },
         "should_bypass_proxies": {
+          "lineno": 755,
+          "end_lineno": 813,
           "calls": [
             "address_in_network",
             "endswith",
@@ -4137,6 +4773,8 @@
           ]
         },
         "get_environ_proxies": {
+          "lineno": 816,
+          "end_lineno": 825,
           "calls": [
             "getproxies",
             "should_bypass_proxies"
@@ -4147,6 +4785,8 @@
           ]
         },
         "select_proxy": {
+          "lineno": 828,
+          "end_lineno": 851,
           "calls": [
             "get",
             "urlparse"
@@ -4156,6 +4796,8 @@
           ]
         },
         "resolve_proxies": {
+          "lineno": 854,
+          "end_lineno": 878,
           "calls": [
             "copy",
             "get",
@@ -4172,10 +4814,14 @@
           ]
         },
         "default_user_agent": {
+          "lineno": 881,
+          "end_lineno": 887,
           "calls": [],
           "resolved_calls": []
         },
         "default_headers": {
+          "lineno": 890,
+          "end_lineno": 901,
           "calls": [
             "CaseInsensitiveDict",
             "default_user_agent"
@@ -4186,6 +4832,8 @@
           ]
         },
         "parse_header_links": {
+          "lineno": 904,
+          "end_lineno": 938,
           "calls": [
             "append",
             "split",
@@ -4196,12 +4844,16 @@
           ]
         },
         "guess_json_utf": {
+          "lineno": 947,
+          "end_lineno": 976,
           "calls": [
             "count"
           ],
           "resolved_calls": []
         },
         "prepend_scheme_if_needed": {
+          "lineno": 979,
+          "end_lineno": 1005,
           "calls": [
             "parse_url",
             "urlunparse"
@@ -4212,6 +4864,8 @@
           ]
         },
         "get_auth_from_url": {
+          "lineno": 1008,
+          "end_lineno": 1021,
           "calls": [
             "unquote",
             "urlparse"
@@ -4222,6 +4876,8 @@
           ]
         },
         "check_header_validity": {
+          "lineno": 1024,
+          "end_lineno": 1032,
           "calls": [
             "_validate_header_part"
           ],
@@ -4230,6 +4886,8 @@
           ]
         },
         "_validate_header_part": {
+          "lineno": 1035,
+          "end_lineno": 1051,
           "calls": [
             "InvalidHeader",
             "isinstance",
@@ -4241,6 +4899,8 @@
           ]
         },
         "urldefragauth": {
+          "lineno": 1054,
+          "end_lineno": 1068,
           "calls": [
             "rsplit",
             "urlparse",
@@ -4252,6 +4912,8 @@
           ]
         },
         "rewind_body": {
+          "lineno": 1071,
+          "end_lineno": 1086,
           "calls": [
             "UnrewindableBodyError",
             "body_seek",

@@ -14,7 +14,7 @@ The hosted web platform, API service, and editor integrations described below re
 ## Table of Contents
 
 - [CODE Sherpa](#code-sherpa)
-  - [ðŸ“‘ Table of Contents](#-table-of-contents)
+  - [Table of Contents](#-table-of-contents)
   - [Mission Statement](#mission-statement)
   - [Problem Statement](#problem-statement)
   - [The Solution: CODE-Sherpa Platform](#the-solution-code-sherpa-platform)

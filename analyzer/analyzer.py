@@ -207,6 +207,7 @@ def analyze_file(file_path: Path, rel_path: str, module_alias_map: Dict[str, str
         return {
             "entry": False,
             "imports": [],
+            "classes": {},
             "functions": {},
             "parse_error": parse_error
         }
@@ -281,7 +282,8 @@ def analyze_file(file_path: Path, rel_path: str, module_alias_map: Dict[str, str
                     ):
                         has_main_guard = True
 
-    functions_out: Dict[str, Dict[str, List[str]]] = {}
+    functions_out: Dict[str, Dict[str, Any]] = {}
+    classes_out: Dict[str, Dict[str, Any]] = {}
 
     for node in tree.body:
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
@@ -296,10 +298,16 @@ def analyze_file(file_path: Path, rel_path: str, module_alias_map: Dict[str, str
             for body_node in node.body:
                 resolver.visit(body_node)
             functions_out[node.name] = {
+                "lineno": getattr(node, "lineno", -1),
+                "end_lineno": getattr(node, "end_lineno", -1),
                 "calls": sorted(resolver.raw_calls),
                 "resolved_calls": sorted(resolver.resolved_calls)
             }
         elif isinstance(node, ast.ClassDef):
+            classes_out[node.name] = {
+                "lineno": getattr(node, "lineno", -1),
+                "end_lineno": getattr(node, "end_lineno", -1)
+            }
             for child in node.body:
                 if isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef)):
                     resolver = FunctionBodyResolver(
@@ -314,6 +322,8 @@ def analyze_file(file_path: Path, rel_path: str, module_alias_map: Dict[str, str
                         resolver.visit(body_node)
                     key = f"{node.name}.{child.name}"
                     functions_out[key] = {
+                        "lineno": getattr(child, "lineno", -1),
+                        "end_lineno": getattr(child, "end_lineno", -1),
                         "calls": sorted(resolver.raw_calls),
                         "resolved_calls": sorted(resolver.resolved_calls)
                     }
@@ -321,6 +331,7 @@ def analyze_file(file_path: Path, rel_path: str, module_alias_map: Dict[str, str
     return {
         "entry": has_main_guard,
         "imports": sorted(imports),
+        "classes": classes_out,
         "functions": functions_out,
         "parse_error": None
     }
@@ -361,6 +372,7 @@ def build_unified_model(repo_path: str) -> Dict:
         unified["files"][file_path] = {
             "entry": file_data["entry"],
             "imports": file_data["imports"],
+            "classes": file_data.get("classes", {}),
             "functions": file_data["functions"],
             "depends_on": dependency_graph.get(file_path, [])
         }
