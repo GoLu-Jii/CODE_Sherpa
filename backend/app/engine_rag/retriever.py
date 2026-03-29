@@ -6,39 +6,36 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class GraphRetriever:
-    def __init__(self, qdrant_db):
-        """Accepts the instantiated QdrantGraphDB instance."""
-        self.db = qdrant_db
-        self.client = qdrant_db.client
-        self.collection_name = qdrant_db.collection_name
+    def __init__(self, chroma_db):
+        """Accepts the instantiated ChromaCloudDB instance."""
+        self.collection = chroma_db.collection
 
-    def retrieve_with_graph_context(self, query: str, limit: int = 2) -> Dict[str, Any]:
+    def retrieve_with_graph_context(self, query: str, n_results: int = 2) -> Dict[str, Any]:
         """
         Executes Semantic Search -> AST Graph Traversal -> Dependency Context Retrieval
         """
-        logger.info(f"Executing Qdrant Graph-RAG for query: '{query}'")
+        logger.info(f"Executing Chroma Graph-RAG for query: '{query}'")
         
         # Step 1: Semantic Search for the primary target
-        search_results = self.client.query(
-            collection_name=self.collection_name,
-            query_text=query,
-            limit=limit
+        search_results = self.collection.query(
+            query_texts=[query],
+            n_results=n_results
         )
 
-        if not search_results:
+        if not search_results or not search_results['ids'][0]:
             return {"primary_nodes": [], "downstream_context": []}
 
         primary_nodes = []
         downstream_ids_to_fetch = set()
 
         # Step 2: Extract primary nodes and identify dependencies
-        for point in search_results:
-            # Safely extract Qdrant payload (metadata + document text)
-            payload = point.metadata if hasattr(point, 'metadata') else getattr(point, 'payload', {})
-            code = getattr(point, 'document', payload.get('document', ''))
+        for i in range(len(search_results['ids'][0])):
+            node_id = search_results['ids'][0][i]
+            code = search_results['documents'][0][i]
+            metadata = search_results['metadatas'][0][i]
             
-            node_id = payload.get("node_id", "Unknown")
-            resolved_calls_str = payload.get("resolved_calls", "[]")
+            # Parse the stringified graph data
+            resolved_calls_str = metadata.get("resolved_calls", "[]")
             resolved_calls = json.loads(resolved_calls_str)
             
             primary_nodes.append({
@@ -53,23 +50,19 @@ class GraphRetriever:
 
         downstream_context = []
         
-        # Step 3: Graph Traversal (Fetch explicitly dependent functions by UUID)
+        # Step 3: Graph Traversal (Fetch explicitly dependent functions by String ID)
         if downstream_ids_to_fetch:
-            # Convert string IDs to Qdrant UUIDs using our deterministic method
-            uuid_list = [self.db.generate_deterministic_uuid(nid) for nid in downstream_ids_to_fetch]
-            
             logger.info(f"Fetching downstream dependencies: {downstream_ids_to_fetch}")
-            graph_results = self.client.retrieve(
-                collection_name=self.collection_name,
-                ids=uuid_list
+            
+            # Direct database lookup by ID (No semantic search needed)
+            graph_results = self.collection.get(
+                ids=list(downstream_ids_to_fetch)
             )
             
-            for record in graph_results:
-                payload = getattr(record, 'payload', {})
-                code = payload.get('document', '')
+            for i in range(len(graph_results['ids'])):
                 downstream_context.append({
-                    "node_id": payload.get("node_id", "Unknown"),
-                    "code": code
+                    "node_id": graph_results['ids'][i],
+                    "code": graph_results['documents'][i]
                 })
 
         return {

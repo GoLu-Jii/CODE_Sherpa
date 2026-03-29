@@ -1,38 +1,41 @@
 import os
-import uuid
 import logging
 from typing import List, Dict, Any
-from qdrant_client import QdrantClient
+import chromadb
+from chromadb.config import Settings
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-class QdrantGraphDB:
+class ChromaCloudDB:
     def __init__(self, collection_name: str = "codesherpa_ast"):
         self.collection_name = collection_name
         
         # Pull credentials from environment variables (.env)
-        qdrant_url = os.getenv("QDRANT_URL")
-        qdrant_api_key = os.getenv("QDRANT_API_KEY")
+        chroma_host = os.getenv("CHROMA_HOST") # e.g., "api.chroma.cloud" or your custom URL
+        chroma_port = os.getenv("CHROMA_PORT", "443")
+        chroma_api_key = os.getenv("CHROMA_API_KEY")
 
-        if not qdrant_url or not qdrant_api_key:
-            logger.warning("QDRANT_URL or API_KEY missing. Defaulting to local memory DB for testing.")
-            self.client = QdrantClient(":memory:")
+        if not chroma_host:
+            logger.warning("CHROMA_HOST missing. Defaulting to local persistent DB for testing.")
+            self.client = chromadb.PersistentClient(path="./chroma_local_data")
         else:
-            self.client = QdrantClient(
-                url=qdrant_url,
-                api_key=qdrant_api_key
+            # Connect to Chroma Cloud / Remote Hosted Chroma
+            self.client = chromadb.HttpClient(
+                host=chroma_host,
+                port=chroma_port,
+                headers={"X-Chroma-Token": chroma_api_key} if chroma_api_key else {},
+                settings=Settings(chroma_client_auth_provider="chromadb.auth.token.TokenAuthClientProvider") if chroma_api_key else Settings()
             )
             
-        # Initializes the fastembed local model automatically
-        self.client.set_model("BAAI/bge-small-en-v1.5") 
-
-    def generate_deterministic_uuid(self, node_id: str) -> str:
-        """Converts string IDs (src.api.get) into Qdrant-compliant UUIDs deterministically."""
-        return str(uuid.uuid5(uuid.NAMESPACE_DNS, node_id))
+        # Get or create the collection
+        self.collection = self.client.get_or_create_collection(
+            name=self.collection_name,
+            metadata={"hnsw:space": "cosine"} # Cosine similarity is best for code
+        )
 
     def ingest_chunks(self, chunks: List[Dict[str, Any]]):
-        """Ingests AST chunks into Qdrant Cloud."""
+        """Ingests AST chunks into Chroma Cloud using native String IDs."""
         if not chunks:
             logger.warning("No chunks provided for ingestion.")
             return
@@ -44,15 +47,14 @@ class QdrantGraphDB:
         for chunk in chunks:
             documents.append(chunk["text"])
             metadatas.append(chunk["metadata"])
-            ids.append(self.generate_deterministic_uuid(chunk["id"]))
+            ids.append(chunk["id"]) # Chroma natively supports your AST string IDs!
 
-        logger.info(f"Uploading {len(chunks)} nodes to Qdrant Cloud...")
+        logger.info(f"Uploading {len(chunks)} nodes to Chroma Cloud...")
         
-        # Qdrant's high-level API handles the embedding generation automatically
-        self.client.add(
-            collection_name=self.collection_name,
+        # Upsert automatically handles embeddings if no custom embedding function is passed
+        self.collection.upsert(
             documents=documents,
-            metadata=metadatas,
+            metadatas=metadatas,
             ids=ids
         )
-        logger.info("Qdrant ingestion completed successfully.")
+        logger.info("Chroma Cloud ingestion completed successfully.")

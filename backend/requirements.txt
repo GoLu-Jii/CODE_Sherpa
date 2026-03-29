@@ -6,5 +6,8 @@
 # Optional enrichment layer is currently frozen/disabled.
 
 
-qdrant-client
+fastapi
 fastembed
+chromadb
+python-dotenv
+uvicorn
