@@ -6,3 +6,5 @@
 # Optional enrichment layer is currently frozen/disabled.
 
 
+qdrant-client
+fastembed
