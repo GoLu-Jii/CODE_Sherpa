@@ -16,11 +16,13 @@ class GraphRetriever:
         """
         logger.info(f"Executing Chroma Graph-RAG for query: '{query}'")
         
-        # Step 1: Semantic Search for the primary target
+        # semantic search 
         search_results = self.collection.query(
             query_texts=[query],
             n_results=n_results
         )
+        ### it can answer conceptual queries like "how are HTTP connections managed?" but 
+        # it is failing for exact lookups like "what does _urllib3_request_context do"
 
         if not search_results or not search_results['ids'][0]:
             return {"primary_nodes": [], "downstream_context": []}

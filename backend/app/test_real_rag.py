@@ -17,51 +17,61 @@ from engine_rag.chunker import SmartChunker
 from engine_rag.vector_db import ChromaCloudDB
 from engine_rag.retriever import GraphRetriever
 
+# Import the generation function from your new generation directory
+from generation.chat import generate_answer
+
 # Mute chromadb's internal logs to keep your terminal clean
 logging.getLogger("chromadb").setLevel(logging.WARNING)
 
-def run_retrieval_test():
+def run_full_pipeline_test():
     print("\n" + "="*60)
-    print("🔍 TESTING GRAPH-RAG RETRIEVAL (NO LLM)")
+    print("🧠 TESTING FULL GRAPH-RAG PIPELINE (WITH GROQ LLM)")
     print("="*60 + "\n")
 
-    # 1. Chunk and Ingest (Skip if you already ingested successfully before)
-    print("⚙️  Chunking and Ingesting Data...")
-    chunker = SmartChunker(analysis_file_path=ANALYSIS_PATH, repo_base_path=REPO_PATH)
-    chunks = chunker.extract_chunks()
-    
+    # 1. Initialize DB (Skipping re-ingestion since it is already in the cloud)
+    print("⚙️  Connecting to Chroma Cloud Database...")
     db = ChromaCloudDB(collection_name="codesherpa_real_repo")
-    db.ingest_chunks(chunks)
-
-    # 2. Retrieve
-    retriever = GraphRetriever(db)
-    user_query = "What happens when I call api.get() and what functions does it depend on?"
     
-    print(f"\n🎯 Querying: '{user_query}'")
+    # UNCOMMENT the below 3 lines ONLY if you change the sample_repo code and need to re-upload
+    # chunker = SmartChunker(analysis_file_path=ANALYSIS_PATH, repo_base_path=REPO_PATH)
+    # chunks = chunker.extract_chunks()
+    # db.ingest_chunks(chunks)
+
+    # 2. Retrieve Data
+    retriever = GraphRetriever(db)
+    user_query = "how are HTTP connections managed?"
+    
+    print(f"\n🎯 Querying Chroma: '{user_query}'")
     retrieval_data = retriever.retrieve_with_graph_context(query=user_query, n_results=1)
 
-    # 3. Print the raw data to verify the engine works
-    print("\n" + "-"*30)
-    print("📍 1. PRIMARY NODES FOUND (Semantic Search)")
-    print("-"*30)
-    for node in retrieval_data["primary_nodes"]:
-        print(f"Node ID:  {node['node_id']}")
-        print(f"Calls:    {node['calls']}")
-        print(f"Code Snippet (First 3 lines):\n{chr(10).join(node['code'].split(chr(10))[:3])}...")
+    print(f"   -> Found {len(retrieval_data.get('primary_nodes', []))} primary nodes.")
+    print(f"   -> Found {len(retrieval_data.get('downstream_context', []))} downstream dependencies.")
 
-    print("\n" + "-"*30)
-    print("🔗 2. DOWNSTREAM CONTEXT FETCHED (Graph Traversal)")
-    print("-"*30)
-    if not retrieval_data["downstream_context"]:
-        print("No downstream dependencies found.")
-    else:
-        for dep in retrieval_data["downstream_context"]:
-            print(f"Node ID:  {dep['node_id']}")
-            print(f"Code Snippet (First 3 lines):\n{chr(10).join(dep['code'].split(chr(10))[:3])}...\n")
+    # 3. Generate Answer via LLM
+    print("\n🤖 Sending structured graph context to Groq (Llama-3)...")
+    try:
+        llm_result = generate_answer(query=user_query, retrieved_chunk=retrieval_data)
+        
+        print("\n" + "-"*50)
+        print("📝 FINAL CODE SHERPA ANSWER:")
+        print("-" *50)
+        print(llm_result["answer"])
+        
+        print("\n" + "-"*50)
+        print("🔗 ACCURATE CITED SOURCES (AST Nodes):")
+        print("-" *50)
+        if not llm_result.get("sources"):
+            print("No explicit sources cited.")
+        else:
+            for source in llm_result["sources"]:
+                print(f" - [{source['node_id']}]")
+            
+    except Exception as e:
+        print(f"\n❌ LLM Generation Failed: {e}")
 
     print("\n" + "="*60)
-    print("✅ ENGINE TEST COMPLETE")
+    print("✅ FULL PIPELINE TEST COMPLETE")
     print("="*60 + "\n")
 
 if __name__ == "__main__":
-    run_retrieval_test()
+    run_full_pipeline_test()
