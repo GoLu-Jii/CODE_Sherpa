@@ -58,7 +58,7 @@ def run_full_pipeline_test():
             print(f"   -> Primary node: {retrieval_data['primary_nodes'][0]['node_id']}")
 
     # Use the exact symbol query for the full pipeline test
-    user_query = "what does the function _urllib3_request_context do?"
+    user_query = "what does the function _basic_auth_str do?"
     retrieval_data = retriever.retrieve_with_graph_context(query=user_query, n_results=1)
 
     # 3. Generate Answer via LLM
