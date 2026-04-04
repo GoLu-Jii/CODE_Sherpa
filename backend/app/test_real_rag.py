@@ -39,16 +39,36 @@ def run_full_pipeline_test():
 
     # 2. Retrieve Data
     retriever = GraphRetriever(db)
-    user_query = "how are HTTP connections managed?"
     
-    print(f"\n🎯 Querying Chroma: '{user_query}'")
-    retrieval_data = retriever.retrieve_with_graph_context(query=user_query, n_results=1)
+    # Test both exact symbol lookup and conceptual query
+    test_queries = [
+        "what does src.requests.api.get do",  # Exact qualified symbol lookup
+        "what does get_connection do",  # Partial symbol lookup
+        "how are HTTP connections managed?"  # Conceptual query
+    ]
+    
+    for user_query in test_queries:
+        print(f"\n🎯 Querying Chroma: '{user_query}'")
+        retrieval_data = retriever.retrieve_with_graph_context(query=user_query, n_results=1)
 
-    print(f"   -> Found {len(retrieval_data.get('primary_nodes', []))} primary nodes.")
-    print(f"   -> Found {len(retrieval_data.get('downstream_context', []))} downstream dependencies.")
+        print(f"   -> Found {len(retrieval_data.get('primary_nodes', []))} primary nodes.")
+        print(f"   -> Found {len(retrieval_data.get('downstream_context', []))} downstream dependencies.")
+        
+        if retrieval_data.get('primary_nodes'):
+            print(f"   -> Primary node: {retrieval_data['primary_nodes'][0]['node_id']}")
+
+    # Use the exact symbol query for the full pipeline test
+    user_query = "what does the function _urllib3_request_context do?"
+    retrieval_data = retriever.retrieve_with_graph_context(query=user_query, n_results=1)
 
     # 3. Generate Answer via LLM
     print("\n🤖 Sending structured graph context to Groq (Llama-3)...")
+    print(f"\n🎯 Querying Chroma for final symbol query: '{user_query}'")
+    print(f"   -> Found {len(retrieval_data.get('primary_nodes', []))} primary nodes.")
+    print(f"   -> Found {len(retrieval_data.get('downstream_context', []))} downstream dependencies.")
+    if retrieval_data.get('primary_nodes'):
+        print(f"   -> Primary node: {retrieval_data['primary_nodes'][0]['node_id']}")
+
     try:
         llm_result = generate_answer(query=user_query, retrieved_chunk=retrieval_data)
         

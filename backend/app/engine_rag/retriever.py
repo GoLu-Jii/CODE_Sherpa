@@ -10,45 +10,140 @@ class GraphRetriever:
         """Accepts the instantiated ChromaCloudDB instance."""
         self.collection = chroma_db.collection
 
+    def _detect_symbol_query(self, query: str) -> str:
+        """
+        Detect if the query is asking about a specific code symbol.
+        Returns the extracted symbol name if detected, empty string otherwise.
+        """
+        import re
+        
+        # Patterns for symbol lookup queries
+        patterns = [
+            r"what does (?:the function |function )?([\w\.]+) do\??",
+            r"what is (?:the function |function )?([\w\.]+)\??",
+            r"explain (?:the function |function )?([\w\.]+)",
+            r"tell me about (?:the function |function )?([\w\.]+)",
+            r"([\w\.]+) function",
+            r"([\w\.]+) method",
+        ]
+        
+        query_lower = query.lower()
+        for pattern in patterns:
+            match = re.search(pattern, query_lower)
+            if match:
+                return match.group(1)
+        
+        return ""
+
+    def _find_exact_symbol(self, symbol: str) -> List[str]:
+        """
+        Find exact matches for a symbol in the database.
+        Returns list of matching node_ids.
+        """
+        matching_ids = []
+        
+        try:
+            # Try exact match on qualified_name first
+            results = self.collection.get(
+                where={"qualified_name": symbol}
+            )
+            if results and results['ids']:
+                matching_ids.extend(results['ids'])
+            
+            # If no qualified match, try function_name
+            if not matching_ids:
+                results = self.collection.get(
+                    where={"function_name": symbol}
+                )
+                if results and results['ids']:
+                    matching_ids.extend(results['ids'])
+            
+            # If still no match and symbol contains dots, try partial matches
+            if not matching_ids and '.' in symbol:
+                parts = symbol.split('.')
+                function_name = parts[-1]
+                results = self.collection.get(
+                    where={"function_name": function_name}
+                )
+                if results and results['ids']:
+                    # Filter to only those that end with the full symbol
+                    for node_id in results['ids']:
+                        if node_id.endswith(symbol):
+                            matching_ids.append(node_id)
+        
+        except Exception as e:
+            logger.warning(f"Error during exact symbol lookup: {e}")
+        
+        return list(set(matching_ids))  # Remove duplicates
+
     def retrieve_with_graph_context(self, query: str, n_results: int = 2) -> Dict[str, Any]:
         """
-        Executes Semantic Search -> AST Graph Traversal -> Dependency Context Retrieval
+        Executes Hybrid Search: Exact Symbol Lookup -> Semantic Search -> AST Graph Traversal -> Dependency Context Retrieval
         """
-        logger.info(f"Executing Chroma Graph-RAG for query: '{query}'")
+        logger.info(f"Executing Hybrid Graph-RAG for query: '{query}'")
         
-        # semantic search 
-        search_results = self.collection.query(
-            query_texts=[query],
-            n_results=n_results
-        )
-        ### it can answer conceptual queries like "how are HTTP connections managed?" but 
-        # it is failing for exact lookups like "what does _urllib3_request_context do"
-
-        if not search_results or not search_results['ids'][0]:
-            return {"primary_nodes": [], "downstream_context": []}
-
         primary_nodes = []
         downstream_ids_to_fetch = set()
-
-        # Step 2: Extract primary nodes and identify dependencies
-        for i in range(len(search_results['ids'][0])):
-            node_id = search_results['ids'][0][i]
-            code = search_results['documents'][0][i]
-            metadata = search_results['metadatas'][0][i]
+        
+        # Step 1: Try exact symbol lookup first
+        symbol = self._detect_symbol_query(query)
+        if symbol:
+            logger.info(f"Detected symbol query for: '{symbol}'")
+            exact_matches = self._find_exact_symbol(symbol)
             
-            # Parse the stringified graph data
-            resolved_calls_str = metadata.get("resolved_calls", "[]")
-            resolved_calls = json.loads(resolved_calls_str)
+            if exact_matches:
+                logger.info(f"Found {len(exact_matches)} exact matches: {exact_matches}")
+                
+                # Fetch the exact match details
+                exact_results = self.collection.get(ids=exact_matches)
+                
+                for i in range(len(exact_results['ids'])):
+                    node_id = exact_results['ids'][i]
+                    code = exact_results['documents'][i]
+                    metadata = exact_results['metadatas'][i]
+                    
+                    resolved_calls_str = metadata.get("resolved_calls", "[]")
+                    resolved_calls = json.loads(resolved_calls_str)
+                    
+                    primary_nodes.append({
+                        "node_id": node_id,
+                        "code": code,
+                        "calls": resolved_calls
+                    })
+                    
+                    # Queue downstream dependencies
+                    for call_id in resolved_calls:
+                        downstream_ids_to_fetch.add(call_id)
+        
+        # Step 2: If no exact matches or not a symbol query, fall back to semantic search
+        if not primary_nodes:
+            logger.info("No exact matches found, falling back to semantic search")
+            search_results = self.collection.query(
+                query_texts=[query],
+                n_results=n_results
+            )
             
-            primary_nodes.append({
-                "node_id": node_id,
-                "code": code,
-                "calls": resolved_calls
-            })
+            if not search_results or not search_results['ids'][0]:
+                return {"primary_nodes": [], "downstream_context": []}
             
-            # Queue the downstream dependencies for the secondary lookup
-            for call_id in resolved_calls:
-                downstream_ids_to_fetch.add(call_id)
+            # Process semantic search results
+            for i in range(len(search_results['ids'][0])):
+                node_id = search_results['ids'][0][i]
+                code = search_results['documents'][0][i]
+                metadata = search_results['metadatas'][0][i]
+                
+                resolved_calls_str = metadata.get("resolved_calls", "[]")
+                resolved_calls = json.loads(resolved_calls_str)
+                
+                primary_nodes.append({
+                    "node_id": node_id,
+                    "code": code,
+                    "calls": resolved_calls
+                })
+                
+                # Queue downstream dependencies
+                for call_id in resolved_calls:
+                    downstream_ids_to_fetch.add(call_id)
 
         downstream_context = []
         

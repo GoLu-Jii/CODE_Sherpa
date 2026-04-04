@@ -54,6 +54,8 @@ class SmartChunker:
                 metadata = {
                     "file_path": file_path,
                     "node_id": node_id,
+                    "function_name": func_name,  # Plain function name for exact matching
+                    "qualified_name": node_id,  # Full qualified name (same as node_id)
                     "type": "function",
                     "start_line": start_line + 1,
                     "end_line": end_line,
