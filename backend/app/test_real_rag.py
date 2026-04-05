@@ -13,12 +13,12 @@ REPO_PATH = os.path.join(ROOT_DIR, "sample_repo")
 
 load_dotenv(dotenv_path=ENV_PATH)
 
-from engine_rag.chunker import SmartChunker
-from engine_rag.vector_db import ChromaCloudDB
-from engine_rag.retriever import GraphRetriever
+from backend.app.engine_rag.chunker import SmartChunker
+from backend.app.engine_rag.vector_db import ChromaCloudDB
+from backend.app.engine_rag.retriever import GraphRetriever
 
 # Import the generation function from your new generation directory
-from generation.chat import generate_answer
+from backend.app.generation.chat import generate_answer
 
 # Mute chromadb's internal logs to keep your terminal clean
 logging.getLogger("chromadb").setLevel(logging.WARNING)

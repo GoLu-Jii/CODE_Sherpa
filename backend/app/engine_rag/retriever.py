@@ -76,7 +76,7 @@ class GraphRetriever:
         
         return list(set(matching_ids))  # Remove duplicates
 
-    def retrieve_with_graph_context(self, query: str, n_results: int = 2) -> Dict[str, Any]:
+    def retrieve_with_graph_context(self, query: str, n_results: int) -> Dict[str, Any]:
         """
         Executes Hybrid Search: Exact Symbol Lookup -> Semantic Search -> AST Graph Traversal -> Dependency Context Retrieval
         """

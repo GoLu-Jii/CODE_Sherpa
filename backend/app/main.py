@@ -17,9 +17,9 @@ import argparse
 # Add project root to Python path
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-from app.engine_ast.analyzer import build_unified_model
-from app.engine_ast.flowchart.flow_builder import build_simple_file_graph
-from app.engine_ast.flowchart.exporter import export_mermaid
+from backend.app.engine_ast.analyzer import build_unified_model
+from backend.app.engine_ast.flowchart.flow_builder import build_simple_file_graph
+from backend.app.engine_ast.flowchart.exporter import export_mermaid
 
 
 # ============================================================

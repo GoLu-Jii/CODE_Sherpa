@@ -82,9 +82,14 @@ def extract_graph_sources(answer: str, retrieval_data: Dict[str, Any]) -> List[D
 def generate_answer(
         query: str,
         retrieved_chunk: Dict[str, Any],
+        history: List[Dict[str, str]] = None # <-- 1. Added history parameter
 ) -> Dict:
+    
+    # Safely handle the case where history isn't provided (e.g., the very first message)
+    if history is None:
+        history = []
 
-    # 3. FIX: Check if the primary_nodes array is actually empty
+    # Check if the primary_nodes array is actually empty
     if not retrieved_chunk.get("primary_nodes"):
         return {
             "answer": "I could not find relevant code in the repository to answer this query.",
@@ -96,13 +101,19 @@ def generate_answer(
     context = format_graph_chunks(retrieved_chunk)
     user_prompt = build_user_prompt(query, context)
 
+    # --- 2. ASSEMBLE THE CONVERSATION MEMORY ---
+    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+    
+    # Inject the previous back-and-forth conversation right here
+    messages.extend(history)
+    
+    # Append the newest question wrapped in the RAG context at the very end
+    messages.append({"role": "user", "content": user_prompt})
+
     try:
         response = groq_client.chat.completions.create(
             model="llama-3.3-70b-versatile",
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": user_prompt},
-            ],
+            messages=messages, # <-- 3. Pass the assembled messages array here!
             temperature=0.1, 
             max_tokens=1024,
         )
