@@ -338,7 +338,7 @@ def analyze_file(file_path: Path, rel_path: str, module_alias_map: Dict[str, str
 
 
 def analyze_repo_files(repo_path: str) -> Dict[str, Dict]:
-    from app.engine_ast.parser import get_python_files
+    from backend.app.engine_ast.parser import get_python_files
 
     results: Dict[str, Dict] = {}
     files = get_python_files(repo_path)
@@ -353,7 +353,7 @@ def analyze_repo_files(repo_path: str) -> Dict[str, Dict]:
 def build_unified_model(repo_path: str) -> Dict:
     analysis_results = analyze_repo_files(repo_path)
 
-    from app.engine_ast.dependency import build_file_dependency_graph, identify_entry_point
+    from backend.app.engine_ast.dependency import build_file_dependency_graph, identify_entry_point
 
     dependency_graph = build_file_dependency_graph(analysis_results)
     entry_point = identify_entry_point(analysis_results)
