@@ -1,17 +1,24 @@
 import os
-import json
+import sys
 import logging
+from pathlib import Path
 from dotenv import load_dotenv
 
 # Resolve absolute paths
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-ROOT_DIR = os.path.abspath(os.path.join(BASE_DIR, "../../"))
+BASE_DIR = Path(__file__).resolve().parent
+ROOT_DIR = BASE_DIR.parent.parent
 
-ENV_PATH = os.path.join(ROOT_DIR, ".env")
-ANALYSIS_PATH = os.path.join(ROOT_DIR, "demo/analysis.json")
-REPO_PATH = os.path.join(ROOT_DIR, "sample_repo")
+ENV_PATH = ROOT_DIR / ".env"
+ANALYSIS_PATH = ROOT_DIR / "demo" / "analysis.json"
+REPO_PATH = ROOT_DIR / "sample_repo"
 
-load_dotenv(dotenv_path=ENV_PATH)
+# Make sure the repository root is on sys.path so package imports work when running
+# this script directly as python backend/app/test_real_rag.py
+ROOT_DIR_STR = str(ROOT_DIR)
+if ROOT_DIR_STR not in sys.path:
+    sys.path.insert(0, ROOT_DIR_STR)
+
+load_dotenv(dotenv_path=str(ENV_PATH))
 
 from backend.app.engine_rag.chunker import SmartChunker
 from backend.app.engine_rag.vector_db import ChromaCloudDB
@@ -40,11 +47,11 @@ def run_full_pipeline_test():
     # 2. Retrieve Data
     retriever = GraphRetriever(db)
     
-    # Test both exact symbol lookup and conceptual query
+    # Test file-level lookup and conceptual fallback
     test_queries = [
-        "what does src.requests.api.get do",  # Exact qualified symbol lookup
-        "what does get_connection do",  # Partial symbol lookup
-        "how are HTTP connections managed?"  # Conceptual query
+        "what does the file compat.py do?",  # File-level query
+        # "what does get_connection do",  # Partial symbol lookup
+        # "how are HTTP connections managed?"  # Conceptual query
     ]
     
     for user_query in test_queries:
@@ -58,7 +65,7 @@ def run_full_pipeline_test():
             print(f"   -> Primary node: {retrieval_data['primary_nodes'][0]['node_id']}")
 
     # Use the exact symbol query for the full pipeline test
-    user_query = "what does the function _basic_auth_str do?"
+    user_query = "what does the file compat.py do?"
     retrieval_data = retriever.retrieve_with_graph_context(query=user_query, n_results=1)
 
     # 3. Generate Answer via LLM

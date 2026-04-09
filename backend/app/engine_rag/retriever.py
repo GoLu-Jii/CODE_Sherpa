@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 from typing import List, Dict, Any
 
 logging.basicConfig(level=logging.INFO)
@@ -10,13 +11,36 @@ class GraphRetriever:
         """Accepts the instantiated ChromaCloudDB instance."""
         self.collection = chroma_db.collection
 
+    def _detect_file_query(self, query: str) -> str:
+        """
+        Detect if the query is asking about a file-level target.
+        Returns the extracted file path/name if detected, empty string otherwise.
+        """
+        patterns = [
+            r"what does (?:the file )?([\w/\\\.\-]+\.py) do\??",
+            r"what is (?:the )?purpose of (?:the file )?([\w/\\\.\-]+\.py)\??",
+            r"what is (?:the )?purpose of file ([\w/\\\.\-]+\.py)\??",
+            r"what is (?:the )?purpose of (?:the file )?([\w/\\\.\-]+\.py)",
+            r"explain (?:the file )?([\w/\\\.\-]+\.py)",
+            r"tell me about (?:the file )?([\w/\\\.\-]+\.py)",
+            r"purpose of (?:the file )?([\w/\\\.\-]+\.py)",
+            r"file ([\w/\\\.\-]+\.py)",
+            r"([\w/\\\.\-]+\.py)",
+        ]
+
+        query_lower = query.lower().strip()
+        for pattern in patterns:
+            match = re.search(pattern, query_lower)
+            if match:
+                return match.group(1).strip()
+
+        return ""
+
     def _detect_symbol_query(self, query: str) -> str:
         """
         Detect if the query is asking about a specific code symbol.
         Returns the extracted symbol name if detected, empty string otherwise.
         """
-        import re
-        
         # Patterns for symbol lookup queries
         patterns = [
             r"what does (?:the function |function )?([\w\.]+) do\??",
@@ -34,6 +58,39 @@ class GraphRetriever:
                 return match.group(1)
         
         return ""
+
+    def _find_exact_file(self, file_path: str) -> List[str]:
+        """
+        Find exact matches for a file path in the database.
+        Returns list of matching node_ids.
+        """
+        matching_ids = []
+        basename = file_path.replace("\\", "/").split("/")[-1]
+
+        try:
+            results = self.collection.get(where={"file_path": file_path})
+            if results and results.get('ids'):
+                matching_ids.extend(results['ids'])
+        except Exception:
+            pass
+
+        if not matching_ids and basename != file_path:
+            try:
+                results = self.collection.get(where={"file_path": basename})
+                if results and results.get('ids'):
+                    matching_ids.extend(results['ids'])
+            except Exception:
+                pass
+
+        if not matching_ids:
+            try:
+                results = self.collection.get(where={"file_path": {"$contains": basename}})
+                if results and results.get('ids'):
+                    matching_ids.extend(results['ids'])
+            except Exception:
+                pass
+
+        return list(set(matching_ids))  # Remove duplicates
 
     def _find_exact_symbol(self, symbol: str) -> List[str]:
         """
@@ -85,37 +142,64 @@ class GraphRetriever:
         primary_nodes = []
         downstream_ids_to_fetch = set()
         
-        # Step 1: Try exact symbol lookup first
-        symbol = self._detect_symbol_query(query)
-        if symbol:
-            logger.info(f"Detected symbol query for: '{symbol}'")
-            exact_matches = self._find_exact_symbol(symbol)
-            
+        # Step 1: Try file-level lookup first
+        file_query = self._detect_file_query(query)
+        if file_query:
+            logger.info(f"Detected file query for: '{file_query}'")
+            exact_matches = self._find_exact_file(file_query)
             if exact_matches:
-                logger.info(f"Found {len(exact_matches)} exact matches: {exact_matches}")
-                
-                # Fetch the exact match details
+                logger.info(f"Found {len(exact_matches)} exact file matches: {exact_matches}")
                 exact_results = self.collection.get(ids=exact_matches)
-                
+
                 for i in range(len(exact_results['ids'])):
                     node_id = exact_results['ids'][i]
                     code = exact_results['documents'][i]
                     metadata = exact_results['metadatas'][i]
-                    
+
                     resolved_calls_str = metadata.get("resolved_calls", "[]")
                     resolved_calls = json.loads(resolved_calls_str)
-                    
+
                     primary_nodes.append({
                         "node_id": node_id,
                         "code": code,
                         "calls": resolved_calls
                     })
-                    
-                    # Queue downstream dependencies
+
                     for call_id in resolved_calls:
                         downstream_ids_to_fetch.add(call_id)
-        
-        # Step 2: If no exact matches or not a symbol query, fall back to semantic search
+
+        # Step 2: Try exact symbol lookup next
+        if not primary_nodes:
+            symbol = self._detect_symbol_query(query)
+            if symbol:
+                logger.info(f"Detected symbol query for: '{symbol}'")
+                exact_matches = self._find_exact_symbol(symbol)
+                
+                if exact_matches:
+                    logger.info(f"Found {len(exact_matches)} exact matches: {exact_matches}")
+                    
+                    # Fetch the exact match details
+                    exact_results = self.collection.get(ids=exact_matches)
+                    
+                    for i in range(len(exact_results['ids'])):
+                        node_id = exact_results['ids'][i]
+                        code = exact_results['documents'][i]
+                        metadata = exact_results['metadatas'][i]
+                        
+                        resolved_calls_str = metadata.get("resolved_calls", "[]")
+                        resolved_calls = json.loads(resolved_calls_str)
+                        
+                        primary_nodes.append({
+                            "node_id": node_id,
+                            "code": code,
+                            "calls": resolved_calls
+                        })
+                        
+                        # Queue downstream dependencies
+                        for call_id in resolved_calls:
+                            downstream_ids_to_fetch.add(call_id)
+
+        # Step 3: If no exact matches, fall back to semantic search
         if not primary_nodes:
             logger.info("No exact matches found, falling back to semantic search")
             search_results = self.collection.query(
