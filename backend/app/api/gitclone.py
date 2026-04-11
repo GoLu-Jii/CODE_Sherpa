@@ -50,11 +50,16 @@ def ingest_github_repo(repo_url: str) -> dict:
             
         print("🧹 Ingestion completed. Wiping temporary files from server.")
             
-    # 6. Send the raw Mermaid text straight to the frontend
+    # 6. Send Mermaid text + raw AST data to the frontend
     return {
         "status": "success",
         "message": "Repository fully mapped and ingested.",
-        "mermaid_chart": mermaid_string
+        "mermaid_chart": mermaid_string,
+        "raw_ast": {
+            "entry_point": analysis_result.get("entry_point"),
+            "files": analysis_result.get("files", {}),
+            "graph": graph  # nodes + edges already computed for Mermaid
+        }
     }
 
 
