@@ -51,7 +51,7 @@ const QueryInput = () => {
         <textarea
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Query the codebase..."
+          placeholder="Ask about a specific file or function (e.g. 'what does vector_db.py do?')..."
           className="w-full bg-transparent border border-[var(--color-telemetry-border)] rounded-none text-[var(--color-telemetry-text)] px-4 py-3 pr-12 focus:outline-none focus:border-[var(--color-telemetry-accent)] transition-colors min-h-[50px] max-h-[200px] resize-y placeholder-[var(--color-telemetry-muted)] font-[var(--font-inter)]"
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
@@ -68,8 +68,9 @@ const QueryInput = () => {
           <Send size={18} />
         </button>
       </div>
-      <div className="text-xs text-[var(--color-telemetry-muted)] mt-2 font-[var(--font-jetbrains)]">
-        Press Enter to send, Shift+Enter for new line
+      <div className="text-xs text-[var(--color-telemetry-muted)] mt-2 font-[var(--font-jetbrains)] flex flex-col sm:flex-row justify-between gap-1 items-start sm:items-center">
+        <span>Press Enter to send, Shift+Enter for new line</span>
+        <span className="text-yellow-500/80 italic">Note: Please include the exact file or function name in your query.</span>
       </div>
     </form>
   );
