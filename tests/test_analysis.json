@@ -1,0 +1,343 @@
+{
+  "entry_point": null,
+  "metadata": {
+    "parse_errors": [],
+    "resolved_call_edges": [
+      {
+        "from": "chunker.SmartChunker.__init__",
+        "to": "json.load"
+      },
+      {
+        "from": "chunker.SmartChunker.extract_chunks",
+        "to": "chunker.SmartChunker.ast_data.get"
+      },
+      {
+        "from": "chunker.SmartChunker.extract_chunks",
+        "to": "chunker.SmartChunker.ast_data.get.items"
+      },
+      {
+        "from": "chunker.SmartChunker.extract_chunks",
+        "to": "json.dumps"
+      },
+      {
+        "from": "chunker.SmartChunker.extract_chunks",
+        "to": "os.path.exists"
+      },
+      {
+        "from": "chunker.SmartChunker.extract_chunks",
+        "to": "os.path.join"
+      },
+      {
+        "from": "retriever.GraphRetriever._detect_file_query",
+        "to": "re.search"
+      },
+      {
+        "from": "retriever.GraphRetriever._detect_file_query",
+        "to": "re.search.group"
+      },
+      {
+        "from": "retriever.GraphRetriever._detect_symbol_query",
+        "to": "re.search"
+      },
+      {
+        "from": "retriever.GraphRetriever._detect_symbol_query",
+        "to": "re.search.group"
+      },
+      {
+        "from": "retriever.GraphRetriever._find_exact_file",
+        "to": "retriever.GraphRetriever.collection.get"
+      },
+      {
+        "from": "retriever.GraphRetriever._find_exact_file",
+        "to": "retriever.GraphRetriever.collection.get.get"
+      },
+      {
+        "from": "retriever.GraphRetriever._find_exact_symbol",
+        "to": "retriever.GraphRetriever.collection.get"
+      },
+      {
+        "from": "retriever.GraphRetriever.retrieve_with_graph_context",
+        "to": "json.loads"
+      },
+      {
+        "from": "retriever.GraphRetriever.retrieve_with_graph_context",
+        "to": "retriever.GraphRetriever._detect_file_query"
+      },
+      {
+        "from": "retriever.GraphRetriever.retrieve_with_graph_context",
+        "to": "retriever.GraphRetriever._detect_symbol_query"
+      },
+      {
+        "from": "retriever.GraphRetriever.retrieve_with_graph_context",
+        "to": "retriever.GraphRetriever._find_exact_file"
+      },
+      {
+        "from": "retriever.GraphRetriever.retrieve_with_graph_context",
+        "to": "retriever.GraphRetriever._find_exact_symbol"
+      },
+      {
+        "from": "retriever.GraphRetriever.retrieve_with_graph_context",
+        "to": "retriever.GraphRetriever.collection.get"
+      },
+      {
+        "from": "retriever.GraphRetriever.retrieve_with_graph_context",
+        "to": "retriever.GraphRetriever.collection.query"
+      },
+      {
+        "from": "vector_db.ChromaCloudDB.__init__",
+        "to": "chromadb.CloudClient"
+      },
+      {
+        "from": "vector_db.ChromaCloudDB.__init__",
+        "to": "chromadb.PersistentClient"
+      },
+      {
+        "from": "vector_db.ChromaCloudDB.__init__",
+        "to": "os.getenv"
+      },
+      {
+        "from": "vector_db.ChromaCloudDB.__init__",
+        "to": "vector_db.ChromaCloudDB.client.get_or_create_collection"
+      },
+      {
+        "from": "vector_db.ChromaCloudDB.ingest_chunks",
+        "to": "vector_db.ChromaCloudDB.collection.upsert"
+      }
+    ]
+  },
+  "files": {
+    "__init__.py": {
+      "entry": false,
+      "imports": [],
+      "classes": {},
+      "functions": {},
+      "depends_on": []
+    },
+    "chunker.py": {
+      "entry": false,
+      "imports": [
+        "json",
+        "logging",
+        "os",
+        "typing"
+      ],
+      "classes": {
+        "SmartChunker": {
+          "lineno": 9,
+          "end_lineno": 112
+        }
+      },
+      "functions": {
+        "SmartChunker.__init__": {
+          "lineno": 10,
+          "end_lineno": 19,
+          "calls": [
+            "error",
+            "load",
+            "open"
+          ],
+          "resolved_calls": [
+            "json.load"
+          ]
+        },
+        "SmartChunker.extract_chunks": {
+          "lineno": 21,
+          "end_lineno": 112,
+          "calls": [
+            "append",
+            "dumps",
+            "exists",
+            "get",
+            "info",
+            "items",
+            "join",
+            "len",
+            "list",
+            "max",
+            "min",
+            "open",
+            "readlines",
+            "replace",
+            "warning"
+          ],
+          "resolved_calls": [
+            "chunker.SmartChunker.ast_data.get",
+            "chunker.SmartChunker.ast_data.get.items",
+            "json.dumps",
+            "os.path.exists",
+            "os.path.join"
+          ]
+        }
+      },
+      "depends_on": []
+    },
+    "retriever.py": {
+      "entry": false,
+      "imports": [
+        "json",
+        "logging",
+        "re",
+        "typing"
+      ],
+      "classes": {
+        "GraphRetriever": {
+          "lineno": 9,
+          "end_lineno": 273
+        }
+      },
+      "functions": {
+        "GraphRetriever.__init__": {
+          "lineno": 10,
+          "end_lineno": 12,
+          "calls": [],
+          "resolved_calls": []
+        },
+        "GraphRetriever._detect_file_query": {
+          "lineno": 14,
+          "end_lineno": 37,
+          "calls": [
+            "group",
+            "lower",
+            "search"
+          ],
+          "resolved_calls": [
+            "re.search",
+            "re.search.group"
+          ]
+        },
+        "GraphRetriever._detect_symbol_query": {
+          "lineno": 39,
+          "end_lineno": 60,
+          "calls": [
+            "group",
+            "lower",
+            "search"
+          ],
+          "resolved_calls": [
+            "re.search",
+            "re.search.group"
+          ]
+        },
+        "GraphRetriever._find_exact_file": {
+          "lineno": 62,
+          "end_lineno": 93,
+          "calls": [
+            "extend",
+            "get",
+            "get_file_type_ids",
+            "list",
+            "replace",
+            "set"
+          ],
+          "resolved_calls": [
+            "retriever.GraphRetriever.collection.get",
+            "retriever.GraphRetriever.collection.get.get"
+          ]
+        },
+        "GraphRetriever._find_exact_symbol": {
+          "lineno": 95,
+          "end_lineno": 134,
+          "calls": [
+            "append",
+            "endswith",
+            "extend",
+            "get",
+            "list",
+            "set",
+            "split",
+            "warning"
+          ],
+          "resolved_calls": [
+            "retriever.GraphRetriever.collection.get"
+          ]
+        },
+        "GraphRetriever.retrieve_with_graph_context": {
+          "lineno": 136,
+          "end_lineno": 252,
+          "calls": [
+            "_detect_file_query",
+            "_detect_symbol_query",
+            "_find_exact_file",
+            "_find_exact_symbol",
+            "add",
+            "append",
+            "get",
+            "info",
+            "len",
+            "list",
+            "loads",
+            "query",
+            "range",
+            "set"
+          ],
+          "resolved_calls": [
+            "json.loads",
+            "retriever.GraphRetriever._detect_file_query",
+            "retriever.GraphRetriever._detect_symbol_query",
+            "retriever.GraphRetriever._find_exact_file",
+            "retriever.GraphRetriever._find_exact_symbol",
+            "retriever.GraphRetriever.collection.get",
+            "retriever.GraphRetriever.collection.query"
+          ]
+        },
+        "GraphRetriever.format_llm_prompt": {
+          "lineno": 254,
+          "end_lineno": 273,
+          "calls": [],
+          "resolved_calls": []
+        }
+      },
+      "depends_on": []
+    },
+    "vector_db.py": {
+      "entry": false,
+      "imports": [
+        "chromadb",
+        "logging",
+        "os",
+        "typing"
+      ],
+      "classes": {
+        "ChromaCloudDB": {
+          "lineno": 9,
+          "end_lineno": 58
+        }
+      },
+      "functions": {
+        "ChromaCloudDB.__init__": {
+          "lineno": 10,
+          "end_lineno": 34,
+          "calls": [
+            "CloudClient",
+            "PersistentClient",
+            "get_or_create_collection",
+            "getenv",
+            "info",
+            "warning"
+          ],
+          "resolved_calls": [
+            "chromadb.CloudClient",
+            "chromadb.PersistentClient",
+            "os.getenv",
+            "vector_db.ChromaCloudDB.client.get_or_create_collection"
+          ]
+        },
+        "ChromaCloudDB.ingest_chunks": {
+          "lineno": 36,
+          "end_lineno": 58,
+          "calls": [
+            "append",
+            "info",
+            "len",
+            "upsert",
+            "warning"
+          ],
+          "resolved_calls": [
+            "vector_db.ChromaCloudDB.collection.upsert"
+          ]
+        }
+      },
+      "depends_on": []
+    }
+  }
+}

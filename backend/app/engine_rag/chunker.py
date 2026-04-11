@@ -36,6 +36,40 @@ class SmartChunker:
             with open(full_path, "r", encoding="utf-8") as f:
                 lines = f.readlines()
 
+            module_path = file_path.replace("\\", "/").replace(".py", "").replace("/", ".")
+
+            # --- Add File-Level Chunk ---
+            classes_list = list(file_info.get("classes", {}).keys())
+            functions_list = list(file_info.get("functions", {}).keys())
+            imports_list = file_info.get("imports", [])
+            
+            file_summary = (
+                f"File Path: {file_path}\n"
+                f"Architecture Node: {module_path}\n"
+                f"Module Type: Python File\n"
+                f"Contains Classes: {classes_list}\n"
+                f"Contains Functions: {functions_list}\n"
+                f"Imports: {imports_list}\n"
+                f"\n--- Top Level Code / Docstring ---\n"
+                f"{''.join(lines[:max(15, min(len(lines), 30))])}"
+            )
+
+            file_node_id = f"{module_path}__file__"
+            chunks.append({
+                "id": file_node_id,
+                "text": file_summary,
+                "metadata": {
+                    "file_path": file_path,
+                    "node_id": module_path,
+                    "function_name": "", 
+                    "qualified_name": module_path,
+                    "type": "file",
+                    "start_line": 1,
+                    "end_line": len(lines),
+                    "resolved_calls": "[]"
+                }
+            })
+
             # Process Functions
             for func_name, func_details in file_info.get("functions", {}).items():
                 start_line = func_details.get("lineno", 1) - 1  # 0-indexed
@@ -44,10 +78,16 @@ class SmartChunker:
                 # Slice the exact code block mathematically
                 code_snippet = "".join(lines[start_line:end_line])
                 
-                # Construct the Unique ID to match 'resolved_calls' format 
-                # e.g., 'src/requests/api.py' + 'get' -> 'src.requests.api.get'
-                module_path = file_path.replace("\\", "/").replace(".py", "").replace("/", ".")
                 node_id = f"{module_path}.{func_name}"
+
+                # Contextualize textual embedding!!!
+                enriched_text = (
+                    f"File: {file_path}\n"
+                    f"Function Name: {func_name}\n"
+                    f"Module: {module_path}\n"
+                    f"---\n"
+                    f"{code_snippet}"
+                )
 
                 # Inject Graph-RAG Metadata (Must be strings/ints for ChromaDB)
                 resolved_calls = func_details.get("resolved_calls", [])
@@ -64,7 +104,7 @@ class SmartChunker:
 
                 chunks.append({
                     "id": node_id,
-                    "text": code_snippet,
+                    "text": enriched_text,
                     "metadata": metadata
                 })
 

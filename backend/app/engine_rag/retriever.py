@@ -67,28 +67,28 @@ class GraphRetriever:
         matching_ids = []
         basename = file_path.replace("\\", "/").split("/")[-1]
 
-        try:
-            results = self.collection.get(where={"file_path": file_path})
-            if results and results.get('ids'):
-                matching_ids.extend(results['ids'])
-        except Exception:
-            pass
+        def get_file_type_ids(condition):
+            try:
+                results = self.collection.get(where={"$and": [condition, {"type": "file"}]})
+                if results and results.get('ids'):
+                    return results['ids']
+            except Exception:
+                pass
+            return []
+
+        ids = get_file_type_ids({"file_path": file_path})
+        if ids:
+            matching_ids.extend(ids)
 
         if not matching_ids and basename != file_path:
-            try:
-                results = self.collection.get(where={"file_path": basename})
-                if results and results.get('ids'):
-                    matching_ids.extend(results['ids'])
-            except Exception:
-                pass
+            ids = get_file_type_ids({"file_path": basename})
+            if ids:
+                matching_ids.extend(ids)
 
         if not matching_ids:
-            try:
-                results = self.collection.get(where={"file_path": {"$contains": basename}})
-                if results and results.get('ids'):
-                    matching_ids.extend(results['ids'])
-            except Exception:
-                pass
+            ids = get_file_type_ids({"file_path": {"$contains": basename}})
+            if ids:
+                matching_ids.extend(ids)
 
         return list(set(matching_ids))  # Remove duplicates
 
@@ -261,7 +261,7 @@ class GraphRetriever:
         )
 
         for node in retrieval_data["primary_nodes"]:
-            prompt += f"Function [{node['node_id']}] explicitly calls -> {node['calls']}:\n"
+            prompt += f"Node [{node['node_id']}] context -> {node['calls']}:\n"
             prompt += f"```python\n{node['code']}\n```\n\n"
 
         if retrieval_data["downstream_context"]:
