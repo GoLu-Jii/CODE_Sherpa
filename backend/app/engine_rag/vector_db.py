@@ -56,3 +56,11 @@ class ChromaCloudDB:
             ids=ids
         )
         logger.info("Chroma Cloud ingestion completed successfully.")
+
+    def clear_collection(self):
+        """Deletes the current collection from Chroma DB to free up space/reset state."""
+        try:
+            self.client.delete_collection(name=self.collection_name)
+            logger.info(f"Successfully deleted collection: {self.collection_name}")
+        except Exception as e:
+            logger.error(f"Failed to delete collection {self.collection_name}. It might not exist. Error: {e}")

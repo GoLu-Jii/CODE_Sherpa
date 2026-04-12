@@ -1,3 +1,6 @@
+from contextlib import asynccontextmanager
+import logging
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
@@ -8,8 +11,29 @@ load_dotenv()
 # Import your separated routers
 from backend.app.api.sherpachat import router as chat_router
 from backend.app.api.gitclone import router as clone_router
+from backend.app.engine_rag.vector_db import ChromaCloudDB
 
-app = FastAPI(title="CODE Sherpa API", version="1.0")
+logger = logging.getLogger(__name__)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup logic
+    yield
+    # Shutdown logic: wipe out the temporary vector data
+    logger.info("Server is shutting down. Clearing ChromaDB collections...")
+    try:
+        db = ChromaCloudDB(collection_name="codesherpa_real_repo")
+        db.clear_collection()
+    except Exception as e:
+        logger.error(f"Error while cleaning collection 'codesherpa_real_repo': {e}")
+        
+    try:
+        db_ast = ChromaCloudDB(collection_name="codesherpa_ast")
+        db_ast.clear_collection()
+    except Exception as e:
+        logger.error(f"Error while cleaning collection 'codesherpa_ast': {e}")
+
+app = FastAPI(title="CODE Sherpa API", version="1.0", lifespan=lifespan)
 
 # -------------------------------------------------------------------
 # CORS — Allow the Vite frontend (and any origin in dev) to talk to us

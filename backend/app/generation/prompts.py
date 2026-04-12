@@ -15,6 +15,8 @@ Response format:
 3. Key Details: Mention important behaviors (edge cases, warnings, encoding, etc.).
 4. Example (if applicable): Show a simple input → output transformation.
 
+important note(write the 2 3 and 4 in respomse only if you find answer to 1. if not then do not write anything for 2 3 and 4)
+
 Citations:
 - Cite relevant chunk IDs like [chunk_id].
 - Keep citations short and relevant.
