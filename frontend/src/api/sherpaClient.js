@@ -34,4 +34,14 @@ export const sendChatMessage = async (query, history = []) => {
   }
 };
 
+export const resetSession = async () => {
+  try {
+    const response = await client.post('/api/v1/ingest/reset');
+    return response.data;
+  } catch (error) {
+    console.error('Error resetting session:', error);
+    throw error;
+  }
+};
+
 export default client;

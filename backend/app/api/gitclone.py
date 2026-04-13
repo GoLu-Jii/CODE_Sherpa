@@ -78,3 +78,17 @@ async def ingest_github_repo_endpoint(request: IngestRequest):
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to ingest repository: {str(e)}")
+
+@router.post("/reset")
+async def reset_session_endpoint():
+    """Wipes the ChromaDB collections when the user refreshes or starts a new session."""
+    try:
+        db = ChromaCloudDB(collection_name="codesherpa_real_repo")
+        db.clear_collection()
+        
+        db_ast = ChromaCloudDB(collection_name="codesherpa_ast")
+        db_ast.clear_collection()
+        
+        return {"status": "success", "message": "Chroma DB collections cleared."}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to clear collections: {str(e)}")

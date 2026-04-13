@@ -48,13 +48,24 @@ class ChromaCloudDB:
             metadatas.append(chunk["metadata"])
             ids.append(chunk["id"]) # Natively supports your AST string IDs
 
-        logger.info(f"Uploading {len(chunks)} nodes to Chroma Cloud...")
+        logger.info(f"Uploading {len(chunks)} nodes to Chroma Cloud in batches...")
         
-        self.collection.upsert(
-            documents=documents,
-            metadatas=metadatas,
-            ids=ids
-        )
+        # Chroma Cloud has a limit of 300 records per API call
+        batch_size = 300
+        total_batches = (len(documents) + batch_size - 1) // batch_size
+        
+        for i in range(0, len(documents), batch_size):
+            batch_docs = documents[i:i + batch_size]
+            batch_metas = metadatas[i:i + batch_size]
+            batch_ids = ids[i:i + batch_size]
+            
+            self.collection.upsert(
+                documents=batch_docs,
+                metadatas=batch_metas,
+                ids=batch_ids
+            )
+            logger.info(f"Uploaded batch {i//batch_size + 1} of {total_batches}")
+            
         logger.info("Chroma Cloud ingestion completed successfully.")
 
     def clear_collection(self):

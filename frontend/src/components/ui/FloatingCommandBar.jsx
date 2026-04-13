@@ -231,6 +231,16 @@ const FloatingCommandBar = () => {
             </div>
           )}
         </div>
+
+        {/* System Notice */}
+        {repo.status !== 'ready' && (
+          <div className="mt-8 flex flex-col items-center justify-center gap-2 pointer-events-none select-none">
+            <div className="font-[var(--font-jetbrains)] text-[10px] md:text-xs text-[var(--color-telemetry-muted)] uppercase tracking-[0.15em] opacity-80 flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-telemetry-accent)] animate-pulse" />
+              Code Sherpa v1 — Limited explicitly to Python language
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
