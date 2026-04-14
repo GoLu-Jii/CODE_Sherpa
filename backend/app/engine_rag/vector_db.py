@@ -69,9 +69,24 @@ class ChromaCloudDB:
         logger.info("Chroma Cloud ingestion completed successfully.")
 
     def clear_collection(self):
-        """Deletes the current collection from Chroma DB to free up space/reset state."""
+        """Deletes all items from the current collection to reset state without triggering 'soft deleted' errors in Chroma Cloud."""
         try:
-            self.client.delete_collection(name=self.collection_name)
-            logger.info(f"Successfully deleted collection: {self.collection_name}")
+            # Fetch only the IDs of all existing records to minimize payload size
+            existing_data = self.collection.get(include=[])
+            ids_to_delete = existing_data.get("ids", [])
+            
+            if ids_to_delete:
+                # Delete in batches to respect rate limits / size limits
+                batch_size = 300
+                total_batches = (len(ids_to_delete) + batch_size - 1) // batch_size
+                
+                for i in range(0, len(ids_to_delete), batch_size):
+                    batch_ids = ids_to_delete[i:i + batch_size]
+                    self.collection.delete(ids=batch_ids)
+                    
+                logger.info(f"Successfully cleared {len(ids_to_delete)} documents from {self.collection_name}")
+            else:
+                logger.info(f"Collection {self.collection_name} is already empty.")
+                
         except Exception as e:
-            logger.error(f"Failed to delete collection {self.collection_name}. It might not exist. Error: {e}")
+            logger.error(f"Failed to clear documents from collection {self.collection_name}. Error: {e}")
