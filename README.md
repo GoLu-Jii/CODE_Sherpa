@@ -72,7 +72,7 @@ python -m venv .venv
 # source .venv/bin/activate
 
 # Install requirements
-pip install -r backend/requirements.txt
+pip install -r requirements.txt
 ```
 
 Set up your required environment variables:
