@@ -1,0 +1,7 @@
+fastapi
+pydantic
+fastembed
+chromadb
+python-dotenv
+uvicorn
+groq
