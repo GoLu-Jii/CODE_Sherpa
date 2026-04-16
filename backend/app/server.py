@@ -9,9 +9,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Import your separated routers
-from backend.app.api.sherpachat import router as chat_router
-from backend.app.api.gitclone import router as clone_router
-from backend.app.engine_rag.vector_db import ChromaCloudDB
+from app.api.sherpachat import router as chat_router
+from app.api.gitclone import router as clone_router
+from app.engine_rag.vector_db import ChromaCloudDB
 
 logger = logging.getLogger(__name__)
 

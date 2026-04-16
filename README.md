@@ -108,7 +108,8 @@ Start both systems to experience the full CODE Sherpa interface.
 
 ```bash
 # Ensure .venv is activated
-python backend/app/main.py server
+cd backend
+python -m uvicorn app.server:app --reload
 ```
 *The API will be available at: http://localhost:8000*
 
@@ -131,7 +132,8 @@ If your integrations require headless interactions, you can use the REST API or 
 Quickly analyze a local codebase directly from your terminal:
 
 ```bash
-python backend/app/main.py analyze <absolute_path_to_local_repo>
+cd backend
+python app/main.py analyze <absolute_path_to_local_repo>
 ```
 
 **Outputs generated:**
@@ -159,7 +161,7 @@ curl -X POST http://localhost:8000/chat \
 ## 🚧 Troubleshooting
 
 * **Backend Port Conflicts:** If port 8000 is occupied, launch the server on an alternative port:
-  `python backend/app/main.py server --port 8001`
+  `cd backend && python -m uvicorn app.server:app --port 8001`
 * **Local ChromaDB Issues:** Ensure the `chroma_local_data` directory is not corrupted or locked by another process. For a clean slate, you can wipe it between sessions.
 * **CLI Pathing:** If the CLI fails to resolve a file tree, make sure you are passing the absolute file system path (e.g., `C:\Projects\target-repo`).
 

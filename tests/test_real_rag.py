@@ -14,18 +14,18 @@ REPO_PATH = ROOT_DIR / "sample_repo"
 
 # Make sure the repository root is on sys.path so package imports work when running
 # this script directly as python backend/app/test_real_rag.py
-ROOT_DIR_STR = str(ROOT_DIR)
-if ROOT_DIR_STR not in sys.path:
-    sys.path.insert(0, ROOT_DIR_STR)
+BACKEND_DIR_STR = str(ROOT_DIR / "backend")
+if BACKEND_DIR_STR not in sys.path:
+    sys.path.insert(0, BACKEND_DIR_STR)
 
 load_dotenv(dotenv_path=str(ENV_PATH))
 
-from backend.app.engine_rag.chunker import SmartChunker
-from backend.app.engine_rag.vector_db import ChromaCloudDB
-from backend.app.engine_rag.retriever import GraphRetriever
+from app.engine_rag.chunker import SmartChunker
+from app.engine_rag.vector_db import ChromaCloudDB
+from app.engine_rag.retriever import GraphRetriever
 
 # Import the generation function from your new generation directory
-from backend.app.generation.chat import generate_answer
+from app.generation.chat import generate_answer
 
 # Mute chromadb's internal logs to keep your terminal clean
 logging.getLogger("chromadb").setLevel(logging.WARNING)

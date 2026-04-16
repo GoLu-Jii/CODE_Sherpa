@@ -1,5 +1,8 @@
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../backend')))
 import unittest
-from backend.app.engine_rag.retriever import GraphRetriever
+from app.engine_rag.retriever import GraphRetriever
 
 
 class DummyCollection:

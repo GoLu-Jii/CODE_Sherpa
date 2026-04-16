@@ -11,7 +11,7 @@ from typing import Dict, List, Any
 # Add project root to Python path so imports work
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-from backend.app.engine_ast.flowchart.exporter import export_mermaid
+from app.engine_ast.flowchart.exporter import export_mermaid
 
 
 def node_group(file_path: str) -> str:

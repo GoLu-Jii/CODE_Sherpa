@@ -1,9 +1,10 @@
 import sys
-sys.path.append("d:/CODE Sherpa/CODE_Sherpa")
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../backend')))
 import json
-from backend.app.engine_ast.analyzer import build_unified_model
-from backend.app.engine_rag.chunker import SmartChunker
-from backend.app.engine_rag.retriever import GraphRetriever
+from app.engine_ast.analyzer import build_unified_model
+from app.engine_rag.chunker import SmartChunker
+from app.engine_rag.retriever import GraphRetriever
 
 print("Building unified model...")
 analysis_result = build_unified_model("d:/CODE Sherpa/CODE_Sherpa/backend/app/engine_rag")

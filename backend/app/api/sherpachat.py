@@ -4,11 +4,11 @@ from pydantic import BaseModel, Field
 from typing import List, Optional
 
 # Import your core RAG engine tools
-from backend.app.engine_rag.vector_db import ChromaCloudDB
-from backend.app.engine_rag.retriever import GraphRetriever
+from app.engine_rag.vector_db import ChromaCloudDB
+from app.engine_rag.retriever import GraphRetriever
 
 # Import your Groq generation logic
-from backend.app.generation.chat import generate_answer
+from app.generation.chat import generate_answer
 
 # Set up logging for cloud deployment
 logging.basicConfig(level=logging.INFO)

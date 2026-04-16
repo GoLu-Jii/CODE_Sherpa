@@ -3,12 +3,12 @@ import subprocess
 import os
 import json
 
-from backend.app.engine_rag.chunker import SmartChunker
-from backend.app.engine_rag.vector_db import ChromaCloudDB
+from app.engine_rag.chunker import SmartChunker
+from app.engine_rag.vector_db import ChromaCloudDB
 
-from backend.app.engine_ast.analyzer import build_unified_model
-from backend.app.engine_ast.flowchart.flow_builder import build_simple_file_graph
-from backend.app.engine_ast.flowchart.exporter import export_mermaid
+from app.engine_ast.analyzer import build_unified_model
+from app.engine_ast.flowchart.flow_builder import build_simple_file_graph
+from app.engine_ast.flowchart.exporter import export_mermaid
 
 
 # temporary clone the github repo 

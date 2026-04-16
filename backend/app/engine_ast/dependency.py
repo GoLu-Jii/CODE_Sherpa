@@ -220,7 +220,7 @@ if __name__ == "__main__":
     
     try:
         # Import analyzer
-        from backend.app.engine_ast.analyzer import analyze_repo_files
+        from app.engine_ast.analyzer import analyze_repo_files
         
         # Run analysis
         print(f"Analyzing repository: {repo_path}")
