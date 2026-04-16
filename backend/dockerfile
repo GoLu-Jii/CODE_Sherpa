@@ -1,0 +1,27 @@
+# 1. Use the stable Python 3.11 image
+FROM python:3.11-slim
+
+# 2. Hugging Face Spaces security requirement: Run as a non-root user
+RUN useradd -m -u 1000 user
+USER user
+
+# 3. Set up the environment variables and working directory
+ENV HOME=/home/user \
+    PATH=/home/user/.local/bin:$PATH
+WORKDIR $HOME/app
+
+# 4. Copy ONLY the requirements first (This makes future rebuilds 10x faster)
+COPY --chown=user requirements.txt .
+
+# 5. Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 6. Pre-download the FastEmbed model directly into the Docker image
+# This ensures the server doesn't freeze for 15 seconds on the very first query
+RUN python -c "from fastembed import TextEmbedding; TextEmbedding()"
+
+# 7. Copy the rest of your backend code (the 'app' folder) into the container
+COPY --chown=user . .
+
+# 8. Start the FastAPI server on port 7860 (The only port Hugging Face allows)
+CMD ["uvicorn", "app.server:app", "--host", "0.0.0.0", "--port", "7860"]
