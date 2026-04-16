@@ -43,7 +43,8 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",   # Vite dev server
         "http://127.0.0.1:5173",
-        "http://localhost:3000",   # in case of CRA / other setups
+        "https://code-sherpa-gauravj121232-5882s-projects.vercel.app",
+        "https://code-sherpa.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
