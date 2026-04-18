@@ -12,124 +12,138 @@ class GraphRetriever:
         self.collection = chroma_db.collection
 
     def _detect_file_query(self, query: str) -> str:
-        """
-        Detect if the query is asking about a file-level target.
-        Returns the extracted file path/name if detected, empty string otherwise.
-        """
-        patterns = [
-            r"what does (?:the file )?([\w/\\\.\-]+\.py) do\??",
-            r"what is (?:the )?purpose of (?:the file )?([\w/\\\.\-]+\.py)\??",
-            r"what is (?:the )?purpose of file ([\w/\\\.\-]+\.py)\??",
-            r"what is (?:the )?purpose of (?:the file )?([\w/\\\.\-]+\.py)",
-            r"explain (?:the file )?([\w/\\\.\-]+\.py)",
-            r"tell me about (?:the file )?([\w/\\\.\-]+\.py)",
-            r"purpose of (?:the file )?([\w/\\\.\-]+\.py)",
-            r"file ([\w/\\\.\-]+\.py)",
-            r"([\w/\\\.\-]+\.py)",
-        ]
+        # scan for .py
+        match = re.search(r"([\w/\\\.\-]+\.py)", query.lower())
+        
+        return match.group(1).strip() if match else ""
 
-        query_lower = query.lower().strip()
-        for pattern in patterns:
-            match = re.search(pattern, query_lower)
-            if match:
-                return match.group(1).strip()
-
-        return ""
+    import re
 
     def _detect_symbol_query(self, query: str) -> str:
-        """
-        Detect if the query is asking about a specific code symbol.
-        Returns the extracted symbol name if detected, empty string otherwise.
-        """
-        # Patterns for symbol lookup queries
+
         patterns = [
-            r"what does (?:the function |function )?([\w\.]+) do\??",
-            r"what is (?:the function |function )?([\w\.]+)\??",
-            r"explain (?:the function |function )?([\w\.]+)",
-            r"tell me about (?:the function |function )?([\w\.]+)",
-            r"([\w\.]+) function",
-            r"([\w\.]+) method",
+            # 1. Backticks (The universal dev standard): `process_data` or `UserAuth`
+            r"`([\w\.]+)`",
+            
+            # 2. Function execution syntax: init_db() or app.run()
+            r"([\w\.]+)\(\)",
+            
+            # 3. Explicit prefix keywords: "function my_func", "class UserAuth", "method process"
+            # It also catches optional quotes like: function 'my_func'
+            r"(?:function|method|class|module|variable|symbol)\s+['\"]?([\w\.]+)['\"]?",
+            
+            # 4. Explicit suffix keywords: "my_func function", "UserAuth class"
+            r"['\"]?([\w\.]+)['\"]?\s+(?:function|method|class|module)"
         ]
         
-        query_lower = query.lower()
         for pattern in patterns:
-            match = re.search(pattern, query_lower)
+            match = re.search(pattern, query, re.IGNORECASE)
             if match:
-                return match.group(1)
-        
+                return match.group(1).strip()
+                
         return ""
 
     def _find_exact_file(self, file_path: str) -> List[str]:
         """
-        Find exact matches for a file path in the database.
-        Returns list of matching node_ids.
+        Find exact file matches by file_path and normalized basename.
+        First tries full path, then basename, then searches all files for basename match.
         """
         matching_ids = []
         basename = file_path.replace("\\", "/").split("/")[-1]
 
-        def get_file_type_ids(condition):
+        # Try exact full path match first
+        try:
+            results = self.collection.get(
+                where={"$and": [{"file_path": file_path}, {"type": "file"}]},
+                include=["metadatas"]
+            )
+            if results and results.get('ids'):
+                matching_ids.extend(results['ids'])
+                logger.info(f"Found exact file match for '{file_path}': {results['ids']}")
+                return list(set(matching_ids))
+        except Exception as e:
+            logger.debug(f"Exact path query failed: {e}")
+
+        # Try basename match if full path didn't work
+        if basename != file_path:
             try:
-                results = self.collection.get(where={"$and": [condition, {"type": "file"}]})
+                results = self.collection.get(
+                    where={"$and": [{"file_path": basename}, {"type": "file"}]},
+                    include=["metadatas"]
+                )
                 if results and results.get('ids'):
-                    return results['ids']
-            except Exception:
-                pass
-            return []
+                    matching_ids.extend(results['ids'])
+                    logger.info(f"Found basename match for '{basename}': {results['ids']}")
+                    return list(set(matching_ids))
+            except Exception as e:
+                logger.debug(f"Basename query failed: {e}")
 
-        ids = get_file_type_ids({"file_path": file_path})
-        if ids:
-            matching_ids.extend(ids)
-
-        if not matching_ids and basename != file_path:
-            ids = get_file_type_ids({"file_path": basename})
-            if ids:
-                matching_ids.extend(ids)
-
-        if not matching_ids:
-            ids = get_file_type_ids({"file_path": {"$contains": basename}})
-            if ids:
-                matching_ids.extend(ids)
+        # Fall back to manual search through all file metadata
+        # (Chroma's $contains doesn't work reliably for this use case)
+        try:
+            all_files = self.collection.get(
+                where={"type": "file"},
+                include=["metadatas"]
+            )
+            for i, file_id in enumerate(all_files.get('ids', [])):
+                metadata = all_files.get('metadatas', [])[i]
+                stored_path = metadata.get('file_path', '')
+                # Check if stored path contains the basename
+                if basename.lower() in stored_path.lower():
+                    # Prefer exact basename endings
+                    if stored_path.endswith(basename) or f"/{basename}" in stored_path:
+                        matching_ids.append(file_id)
+                        logger.info(f"Found file matching basename '{basename}' via manual search: {file_id}")
+        except Exception as e:
+            logger.debug(f"Manual file search failed: {e}")
 
         return list(set(matching_ids))  # Remove duplicates
 
     def _find_exact_symbol(self, symbol: str) -> List[str]:
         """
         Find exact matches for a symbol in the database.
-        Returns list of matching node_ids.
+        Returns list of matching node_ids with proper filtering.
         """
         matching_ids = []
         
         try:
             # Try exact match on qualified_name first
             results = self.collection.get(
-                where={"qualified_name": symbol}
+                where={"qualified_name": symbol},
+                include=["metadatas", "documents"]
             )
             if results and results['ids']:
                 matching_ids.extend(results['ids'])
+                logger.info(f"Found exact qualified_name match for '{symbol}': {results['ids']}")
             
             # If no qualified match, try function_name
             if not matching_ids:
                 results = self.collection.get(
-                    where={"function_name": symbol}
+                    where={"function_name": symbol},
+                    include=["metadatas", "documents"]
                 )
                 if results and results['ids']:
                     matching_ids.extend(results['ids'])
+                    logger.info(f"Found exact function_name match for '{symbol}': {results['ids']}")
             
             # If still no match and symbol contains dots, try partial matches
             if not matching_ids and '.' in symbol:
                 parts = symbol.split('.')
                 function_name = parts[-1]
                 results = self.collection.get(
-                    where={"function_name": function_name}
+                    where={"function_name": function_name},
+                    include=["metadatas", "documents"]
                 )
                 if results and results['ids']:
                     # Filter to only those that end with the full symbol
                     for node_id in results['ids']:
                         if node_id.endswith(symbol):
                             matching_ids.append(node_id)
+                    if matching_ids:
+                        logger.info(f"Found partial match for '{symbol}': {matching_ids}")
         
         except Exception as e:
-            logger.warning(f"Error during exact symbol lookup: {e}")
+            logger.warning(f"Error during exact symbol lookup for '{symbol}': {e}")
         
         return list(set(matching_ids))  # Remove duplicates
 

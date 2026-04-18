@@ -22,6 +22,7 @@ class SmartChunker:
         """
         Slices files into intact function chunks based on AST coordinates
         and injects deterministic dependency metadata.
+        For files without functions/classes (like main.py), saves the complete file content.
         """
         chunks = []
         files_data = self.ast_data.get("files", {})
@@ -42,17 +43,30 @@ class SmartChunker:
             classes_list = list(file_info.get("classes", {}).keys())
             functions_list = list(file_info.get("functions", {}).keys())
             imports_list = file_info.get("imports", [])
+            full_content = "".join(lines)
             
-            file_summary = (
-                f"File Path: {file_path}\n"
-                f"Architecture Node: {module_path}\n"
-                f"Module Type: Python File\n"
-                f"Contains Classes: {classes_list}\n"
-                f"Contains Functions: {functions_list}\n"
-                f"Imports: {imports_list}\n"
-                f"\n--- Top Level Code / Docstring ---\n"
-                f"{''.join(lines[:max(15, min(len(lines), 30))])}"
-            )
+            # For files without functions/classes, include complete file content
+            # Otherwise just show summary with preview
+            if not functions_list and not classes_list:
+                file_summary = (
+                    f"File Path: {file_path}\n"
+                    f"Architecture Node: {module_path}\n"
+                    f"Module Type: Top-Level Python Module (no classes or functions)\n"
+                    f"Imports: {imports_list}\n"
+                    f"\n--- Complete File Content ---\n"
+                    f"{full_content}"
+                )
+            else:
+                file_summary = (
+                    f"File Path: {file_path}\n"
+                    f"Architecture Node: {module_path}\n"
+                    f"Module Type: Python File\n"
+                    f"Contains Classes: {classes_list}\n"
+                    f"Contains Functions: {functions_list}\n"
+                    f"Imports: {imports_list}\n"
+                    f"\n--- Top Level Code / Docstring ---\n"
+                    f"{''.join(lines[:max(15, min(len(lines), 30))])}"
+                )
 
             file_node_id = f"{module_path}__file__"
             chunks.append({
