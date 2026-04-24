@@ -8,7 +8,6 @@ pinned: false
 license: mit
 ---
 
-Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
 
 
 # CODE Sherpa 🏔️
@@ -67,34 +66,61 @@ Before you begin, ensure you have the following installed and set up on your mac
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-org/CODE_Sherpa.git
+git clone https://github.com/GoLu-Jii/CODE_Sherpa
 cd CODE_Sherpa
 ```
 
-### 2. Backend Environment (API & Engine)
+### 2️⃣ Backend Setup (API & Engine)
 
-Navigate to the project root and set up your virtual environment:
+Set up the Python environment from the project root:
 
 ```bash
-# Create and activate virtual environment
+# Create virtual environment
 python -m venv .venv
 
-# On Windows:
+# Activate environment
+
+# Windows (PowerShell)
 .venv\Scripts\Activate.ps1
-# On macOS/Linux:
-# source .venv/bin/activate
 
-# Install requirements
+# macOS/Linux
+source .venv/bin/activate
+
+# Install dependencies
 pip install -r requirements.txt
-```
 
-Set up your required environment variables:
+
+## Set up your required environment variables:
 
 ```bash
-# Windows PowerShell
-$env:GROQ_API_KEY="your_groq_key_here"
-$env:CHROMA_TOKEN="your_chroma_token_here"
+GROQ_API_KEY=your_groq_api_key
+
+CHROMA_API_KEY=your_chroma_api_key
+CHROMA_TENANT=your_chroma_tenant
+CHROMA_DATABASE=your_chroma_database
 ```
+
+### 🔑 How to Get Chroma Credentials
+
+Follow these steps to obtain your Chroma credentials:
+
+1. Go to [https://www.trychroma.com](https://www.trychroma.com)
+2. Create an account and set up a database
+3. Navigate to **Settings**
+4. Click **Create API & Copy Code**
+5. You will receive something like:
+
+```python
+api_key='YOUR_API_KEY',
+tenant='your_tenant',
+database='your_db_name'
+
+# Chroma environment variables
+CHROMA_API_KEY=YOUR_API_KEY
+CHROMA_TENANT=your_tenant
+CHROMA_DATABASE=your_db_name
+```
+
 
 ### 3. Frontend Environment (Telemetry Dashboard)
 
@@ -136,40 +162,7 @@ npm run dev
 
 ---
 
-## 🔌 API & CLI Usage Guide
 
-If your integrations require headless interactions, you can use the REST API or the provided CLI.
-
-### CLI Analysis
-
-Quickly analyze a local codebase directly from your terminal:
-
-```bash
-cd backend
-python app/main.py analyze <absolute_path_to_local_repo>
-```
-
-**Outputs generated:**
-* `demo/analysis.json` - Comprehensive structural graph data.
-* `demo/flowchart.md` - Mermaid diagram mapping the repository's architecture.
-
-### API Reference Examples
-
-**1. Ingest a Repository:**
-```bash
-curl -X POST http://localhost:8000/ingest \
-  -H "Content-Type: application/json" \
-  -d '{"github_url": "https://github.com/psf/requests"}'
-```
-
-**2. Query via Graph-RAG:**
-```bash
-curl -X POST http://localhost:8000/chat \
-  -H "Content-Type: application/json" \
-  -d '{"collection_id": "repo_id", "query": "Explain how the session object is initialized."}'
-```
-
----
 
 ## 🚧 Troubleshooting
 
