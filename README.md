@@ -1,54 +1,47 @@
----
-title: Code Sherpa Api
-emoji: 👀
-colorFrom: pink
-colorTo: red
-sdk: docker
-pinned: false
-license: mit
----
-
-
-
 # CODE Sherpa 🏔️
 
 <div align="center">
   <img src="https://img.shields.io/badge/version-v0.1.0-blue.svg" alt="Version">
   <img src="https://img.shields.io/badge/python-3.8+-green.svg" alt="Python Version">
-  <img src="https://img.shields.io/badge/react-19-blue.svg" alt="React Setup">
+  <img src="https://img.shields.io/badge/react-vite-blue.svg" alt="React Setup">
   <img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="License">
 </div>
 
 <br/>
 
-**CODE Sherpa** is a deterministic code intelligence engine designed to provide advanced **Graph-RAG** retrieval, combining file, symbol, and semantic search models to analyze and understand entire repositories.
+**CODE Sherpa** is a deterministic code understanding engine that helps developers **learn and navigate unfamiliar codebases with confidence — without relying on hallucinating AI.**
 
-Featuring a high-performance Python FastAPI backend and a sleek, developer-first React telemetry dashboard UI, CODE Sherpa turns raw codebases into interactively navigable architectures. In version 0.1, the engine is optimized exclusively for Python repositories.
 
----
+Unlike traditional “chat-with-code” tools, CODE Sherpa separates:
 
-## 🚀 Key Features
+- **Structure (AST)** → Ground truth (100% deterministic)  
+- **Explanation (LLM)** → Human-readable guidance  
 
-- **Graph-RAG Retrieval Engine:** Seamlessly combines abstract syntax tree (AST) graph data with semantic embeddings, enabling complex code structure queries.
-- **Developer-centric Telemetry Dashboard:** A state-of-the-art UI featuring cipher-scrambled elements, responsive command bars, and a floating interactive architecture map using `@xyflow/react`.
-- **Intelligent Repository Ingestion:** Simply provide a GitHub URL, and the engine automatically clones and generates deterministic structural maps alongside vector-based representations via **ChromaDB**.
-- **Dual Interfaces:** Fully functional REST API paired with a standalone CLI tool for automation and continuous integration pipelines.
-- **Built-in Session Cleanup:** Effortless management of ChromaDB sessions, keeping your local data clean across restarts.
+> 🧠 *The AST is the Judge. The AI is the Narrator.*
 
-## 🛠️ Technology Stack
-
-**Frontend Interface (`/frontend`)**
-* **Framework:** React 19 + Vite
-* **State Management:** Zustand
-* **Graph Visualization:** React Flow (`@xyflow/react`)
-* **Styling:** TailwindCSS 4 + Lucide React
-
-**Intelligence Engine (`/backend`)**
-* **Core:** Python 3.8+ & FastAPI
-* **NLP / LLM:** Groq API
-* **Vector Store:** ChromaDB (Local persistence)
+Every explanation is:
+- Traceable to real code  
+- Reproducible across runs  
+- Grounded in verified structure  
 
 ---
+
+CODE Sherpa transforms raw repositories into:
+
+- 📊 Interactive architecture graphs  
+- 🧭 Guided learning paths  
+- 🔍 Graph-aware semantic search  
+
+Powered by a FastAPI backend and a developer-first React telemetry UI, the system is optimized for **deep codebase understanding**, not just surface-level querying.
+
+> ⚠️ Version 01 supports Python repositories only.
+
+![UI Screenshot](./assets/logo.png)
+
+## ❗ Why CODE Sherpa?
+
+Understanding existing codebases is one of the hardest problems in software engineering.  
+CODE Sherpa solves this by turning code into a structured, guided learning experience.
 
 ## ⚙️ Prerequisites
 
@@ -57,7 +50,7 @@ Before you begin, ensure you have the following installed and set up on your mac
 1. **Python 3.8 or higher**
 2. **Node.js (LTS recommended) & npm**
 3. **Groq API Key:** Required for Large Language Model processing. Grab one from the [Groq Console](https://console.groq.com).
-4. **Chroma Token:** Required for ChromaDB authentication if hosted, though local configurations are handled automatically.
+4. **Chroma Cloud Credentials:** API Key, Tenant, Database
 
 ---
 
@@ -88,6 +81,7 @@ source .venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
+```
 
 
 ## Set up your required environment variables:
@@ -122,7 +116,7 @@ CHROMA_DATABASE=your_db_name
 ```
 
 
-### 3. Frontend Environment (Telemetry Dashboard)
+### 3. Frontend Environment
 
 Open a new terminal window, navigate to the frontend directory, and install dependencies:
 
@@ -134,7 +128,14 @@ npm install
 Configure your local environment variables:
 ```bash
 cp .env.example .env
-# Ensure VITE_API_URL is pointing to your local backend (e.g., http://localhost:8000)
+
+# Or manually create 
+frontend/.env
+
+# With
+VITE_API_BASE_URL=http://localhost:8000
+
+# Ensure VITE_API_BASE_URL is pointing to your local backend (e.g., http://localhost:8000)
 ```
 
 ---
@@ -162,17 +163,24 @@ npm run dev
 
 ---
 
+## 🧪 How to Use
 
+![UI Screenshot](./assets/main_view.png)
 
-## 🚧 Troubleshooting
+1. Start backend and frontend
+2. Open http://localhost:5173
+3. Paste a GitHub repository URL
+4. Click "Ingest"
+5. Ask questions like:
+   - "How is authentication implemented?"
+   - "What does compat.py do?"
 
-* **Backend Port Conflicts:** If port 8000 is occupied, launch the server on an alternative port:
-  `cd backend && python -m uvicorn app.server:app --port 8001`
-* **Local ChromaDB Issues:** Ensure the `chroma_local_data` directory is not corrupted or locked by another process. For a clean slate, you can wipe it between sessions.
-* **CLI Pathing:** If the CLI fails to resolve a file tree, make sure you are passing the absolute file system path (e.g., `C:\Projects\target-repo`).
+You will see:
+- Graph visualization
+- File relationships
+- Grounded explanations
 
----
 
 ## 📄 License
 
-This project is licensed under the terms of the MIT License. See the [LICENSE](LICENSE) file for more information.
+This project is licensed under the terms of the Apache License. See the [LICENSE](LICENSE) file for more information.
