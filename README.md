@@ -25,6 +25,8 @@ Every explanation is:
 - Grounded in verified structure  
 
 ---
+![UI Screenshot](./assets/logo.png)
+---
 
 CODE Sherpa transforms raw repositories into:
 
@@ -36,7 +38,8 @@ Powered by a FastAPI backend and a developer-first React telemetry UI, the syste
 
 > ⚠️ Version 01 supports Python repositories only.
 
-![UI Screenshot](./assets/logo.png)
+![UI Screenshot](./assets/main_view.png)
+
 
 ## ❗ Why CODE Sherpa?
 
@@ -165,7 +168,6 @@ npm run dev
 
 ## 🧪 How to Use
 
-![UI Screenshot](./assets/main_view.png)
 
 1. Start backend and frontend
 2. Open http://localhost:5173
