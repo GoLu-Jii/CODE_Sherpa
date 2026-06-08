@@ -5,7 +5,8 @@ def export_mermaid(graph, out_file="flowchart.md"):
         "source": "Source",
         "project": "Project",
         "tests": "Tests",
-        "docs": "Docs"
+        "docs": "Docs",
+        "unknown":"Unknown"
     }
 
     nodes_by_group = {k: [] for k in groups.keys()}

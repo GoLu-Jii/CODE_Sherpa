@@ -10,21 +10,14 @@ from app.engine_rag.retriever import GraphRetriever
 # Import your Groq generation logic
 from app.generation.chat import generate_answer
 
+import app.server as state
+
 # Set up logging for cloud deployment
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
-# --- INITIALIZE GLOBAL ENGINE ---
-# We initialize the database connection outside the route.
-# This prevents FastAPI from opening a new DB connection every time a user sends a message.
-try:
-    db = ChromaCloudDB(collection_name="codesherpa_real_repo")
-    retriever = GraphRetriever(db)
-    logger.info("✅ SherpaChat Router connected to Chroma Cloud successfully.")
-except Exception as e:
-    logger.error(f"❌ SherpaChat Router failed to connect to Chroma: {e}")
 
 # --- PYDANTIC SCHEMAS ---
 class Message(BaseModel):
@@ -39,24 +32,23 @@ class ChatRequest(BaseModel):
 
 @router.post("/chat")
 async def chat_with_engine(req: ChatRequest):
+    if state.retriever is None:
+        raise HTTPException(status_code=503, detail="Database not ready. Please ingest a repository first.")
     try:
         logger.info(f"Incoming SherpaChat query: '{req.query}'")
 
-        # retrieve from chroma 
-        retrieved_data = retriever.retrieve_with_graph_context(query=req.query, n_results=1)
+        retrieved_data = state.retriever.retrieve_with_graph_context(query=req.query, n_results=4)
 
         formatted_history = [{"role": msg.role, "content": msg.content} for msg in req.history]
 
-        # llm output
-        ans = generate_answer(query=req.query, retrieved_chunk= retrieved_data, history=formatted_history)
+        ans = generate_answer(query=req.query, retrieved_chunk=retrieved_data, history=formatted_history)
 
-        return{
+        return {
             "status": "success",
             "data": ans
         }
 
-        
     except Exception as e:
-        logger.error(f"sherpachat execution failed..!")
+        logger.error(f"sherpachat execution failed: {str(e)}")
         raise HTTPException(status_code=500, detail=f"chat generation failed: {str(e)}")
     

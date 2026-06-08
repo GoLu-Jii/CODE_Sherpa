@@ -1,13 +1,5 @@
-#
-# CODE_Sherpa Backend Requirements
-#
-# Deterministic core engine uses Python standard library only.
-# Optional enrichment layer is currently frozen/disabled.
-#
-
 fastapi
 pydantic
-fastembed
 chromadb
 python-dotenv
 uvicorn

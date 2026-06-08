@@ -16,8 +16,7 @@ class ChromaCloudDB:
         chroma_database = os.getenv("CHROMA_DATABASE")
 
         if not chroma_api_key or not chroma_tenant or not chroma_database:
-            logger.warning("Chroma Cloud credentials missing. Defaulting to local persistent DB for testing.")
-            self.client = chromadb.PersistentClient(path="./chroma_local_data")
+            raise ValueError("Missing Chroma credentials: CHROMA_API_KEY, CHROMA_TENANT, and CHROMA_DATABASE must all be set as environment variables.")
         else:
             # Connect to Chroma Cloud using the official CloudClient
             logger.info(f"Connecting to Chroma Cloud Database: {chroma_database}...")

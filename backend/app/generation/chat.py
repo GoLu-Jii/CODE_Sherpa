@@ -1,15 +1,3 @@
-# import os
-# import requests
-# from typing import List, Dict, Any
-# from dotenv import load_dotenv
-# from groq import Groq
-
-# from .prompts import SYSTEM_PROMPT, build_user_prompt
-
-# load_dotenv()
-# groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-
-
 import os
 import requests
 from typing import List, Dict, Any
@@ -18,26 +6,12 @@ from groq import Groq
 
 from .prompts import SYSTEM_PROMPT, build_user_prompt
 
-# --- BULLETPROOF .ENV LOADING ---
-# 1. Get the directory of this current file (generation/chat.py)
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-# 2. Go up three levels to the CODE_SHERPA root folder
-ROOT_DIR = os.path.abspath(os.path.join(BASE_DIR, "../../../"))
-
-# 3. Target the .env file explicitly
-ENV_PATH = os.path.join(ROOT_DIR, ".env")
-
-# 4. Load it!
-load_dotenv(dotenv_path=ENV_PATH)
-
-# Retrieve the key to verify it actually loaded
 api_key = os.getenv("GROQ_API_KEY")
 
 if not api_key:
     raise ValueError(f"❌ CRITICAL: Groq API key not found! I looked exactly here: {ENV_PATH}")
 else:
-    print(f"✅ Groq Key Loaded Successfully: {api_key[:4]}...{api_key[-4:]}")
+    print(f"✅ Groq Key Loaded Successfully")
 
 groq_client = Groq(api_key=api_key)
 
