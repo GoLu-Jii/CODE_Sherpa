@@ -20,7 +20,6 @@ def ingest_github_repo(repo_url: str) -> dict:
         print(f"📥 Cloning the repo into temporary directory: {temp_dir}")
         subprocess.run(["git", "clone", repo_url, temp_dir], check=True)
         
-        # 1. Run AST analysis
         print("🔍 Running AST analysis...")
         analysis_result = build_unified_model(temp_dir)
         
