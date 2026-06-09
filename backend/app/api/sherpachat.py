@@ -3,10 +3,6 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import List, Optional
 
-# Import your core RAG engine tools
-from app.engine_rag.vector_db import ChromaCloudDB
-from app.engine_rag.retriever import GraphRetriever
-
 # Import your Groq generation logic
 from app.generation.chat import generate_answer
 

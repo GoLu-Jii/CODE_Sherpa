@@ -1,7 +1,5 @@
 import os
-import requests
 from typing import List, Dict, Any
-from dotenv import load_dotenv
 from groq import Groq
 
 from .prompts import SYSTEM_PROMPT, build_user_prompt
@@ -9,7 +7,7 @@ from .prompts import SYSTEM_PROMPT, build_user_prompt
 api_key = os.getenv("GROQ_API_KEY")
 
 if not api_key:
-    raise ValueError(f"❌ CRITICAL: Groq API key not found! I looked exactly here: {ENV_PATH}")
+    raise ValueError(f"❌ CRITICAL: Groq API key environment variable is not set!!!")
 else:
     print(f"✅ Groq Key Loaded Successfully")
 

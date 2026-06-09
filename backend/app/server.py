@@ -71,7 +71,6 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "http://localhost:3000",
         "https://code-sherpa.vercel.app",
         "https://code-sherpa-gauravj121232-5882s-projects.vercel.app",
     ],
