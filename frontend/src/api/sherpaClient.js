@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
 const client = axios.create({
   baseURL: BASE_URL,
@@ -17,6 +17,16 @@ export const ingestRepository = async (repoUrl) => {
     return response.data;
   } catch (error) {
     console.error('Error ingesting repository:', error);
+    throw error;
+  }
+};
+
+export const getIngestStatus = async (jobId) => {
+  try {
+    const response = await client.get(`/api/v1/ingest/status/${jobId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching ingest status:', error);
     throw error;
   }
 };

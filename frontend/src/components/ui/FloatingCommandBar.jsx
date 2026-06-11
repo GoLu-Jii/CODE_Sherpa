@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, ChevronRight, GitBranch, X } from 'lucide-react';
 import useAppStore from '../../store/useAppStore';
-import { ingestRepository } from '../../api/sherpaClient';
+import { ingestRepository, getIngestStatus } from '../../api/sherpaClient';
 
 const STAGES = [
   '📥  Cloning repository...',
@@ -33,6 +33,24 @@ const FloatingCommandBar = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [scrambleText, setScrambleText] = useState(INITIAL_SCRAMBLE);
   const [bootIndex, setBootIndex] = useState(0);
+
+  const statusToStageIndex = (status) => {
+    switch (status) {
+      case 'queued':
+      case 'cloning':
+        return 0;
+      case 'analyzing':
+        return 1;
+      case 'ingesting':
+        return 2;
+      case 'charting':
+        return 3;
+      case 'complete':
+        return STAGES.length - 1;
+      default:
+        return 0;
+    }
+  };
 
   // Cipher Scramble Effect
   useEffect(() => {
@@ -83,14 +101,51 @@ const FloatingCommandBar = () => {
     setStageIndex(0);
 
     const stopAnimation = startStageAnimation();
+    let pollingInterval = null;
+
+    const stopPolling = () => {
+      if (pollingInterval) {
+        clearInterval(pollingInterval);
+        pollingInterval = null;
+      }
+    };
 
     try {
-      const data = await ingestRepository(inputValue.trim());
-      stopAnimation();
-      setStageIndex(STAGES.length - 1); // "Ready"
-      setRepoData(data);
-      setTimeout(() => setMinimised(true), 1200);
+      const queuedResponse = await ingestRepository(inputValue.trim());
+      const jobId = queuedResponse?.job_id;
+      if (!jobId) {
+        throw new Error('No ingest job ID returned by backend.');
+      }
+
+      setStageIndex(statusToStageIndex(queuedResponse.status || 'queued'));
+
+      const checkJob = async () => {
+        try {
+          const statusResponse = await getIngestStatus(jobId);
+          setStageIndex(statusToStageIndex(statusResponse.status));
+
+          if (statusResponse.status === 'complete') {
+            stopPolling();
+            stopAnimation();
+            setRepoData(statusResponse);
+            setTimeout(() => setMinimised(true), 1200);
+          } else if (statusResponse.status === 'failed') {
+            stopPolling();
+            stopAnimation();
+            setRepoStatus('error', statusResponse.message || 'Repository ingest failed.');
+          }
+        } catch (statusErr) {
+          stopPolling();
+          stopAnimation();
+          console.error('Error polling ingest status:', statusErr);
+          setRepoStatus('error', statusErr.message || 'Unable to retrieve ingest status.');
+        }
+      };
+
+      await checkJob();
+      pollingInterval = setInterval(checkJob, 3000);
     } catch (err) {
+      stopPolling();
       stopAnimation();
       const errMsg =
         err?.response?.status === 403

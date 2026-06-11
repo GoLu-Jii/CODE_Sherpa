@@ -1,84 +1,73 @@
 import React from 'react';
 import useAppStore from '../../store/useAppStore';
 
-/**
- * CitationChip renders a clickable [node_id] citation inline in chat.
- *
- * The LLM cites nodes by their module-path IDs like:
- *   backend.app.api.gitclone.ingest_github_repo
- *
- * The React Flow graph uses sanitised IDs like:
- *   backend__app__api__gitclone_py   (from flow_builder.node_id())
- *
- * We try to match by:
- *   1. Checking the nodeId against file paths stored in raw_ast.files (exact)
- *   2. Stripping the last dot-segment (function name) to get the module/file
- *   3. Falling back to just highlighting by nodeId as-is
- */
+// Shorten node ID to last 2 parts for display
+// src.backend.app.engine_rag.vector_db.ChromaCloudDB.__init__ → ChromaCloudDB.__init__
+const shortenNodeId = (nodeId) => {
+  const parts = nodeId.split('.');
+  if (parts.length <= 2) return nodeId;
+  return parts.slice(-2).join('.');
+};
+
+// Map citation dot-notation to a React Flow node id (underscore notation)
+// src.requests.hooks.default_hooks → find node whose label converted matches
+const findGraphNodeId = (nodeId, rawAst) => {
+  if (!rawAst?.graph?.nodes) return null;
+  const nodes = rawAst.graph.nodes;
+
+  // Try to match by converting node label to module path
+  for (const node of nodes) {
+    const modulePath = node.label
+      .replace(/\\/g, '/')
+      .replace('.py', '')
+      .replace(/\//g, '.');
+    if (nodeId.startsWith(modulePath)) return node.id;
+  }
+  return null;
+};
+
 const CitationChip = ({ nodeId }) => {
-  const { setSelectedNode, repo } = useAppStore();
+  const { repo, setSelectedNode } = useAppStore();
+  const displayLabel = shortenNodeId(nodeId);
 
   const handleClick = () => {
-    const files = repo.raw_ast?.files || {};
-    const graphNodes = repo.raw_ast?.graph?.nodes || [];
-
-    // --- Try to find the matching graph node ---
-    let matchedNode = null;
-
-    // 1. Check if nodeId matches a file path key in files dict directly
-    if (files[nodeId]) {
-      // Find graph node whose label equals this file path
-      matchedNode = graphNodes.find(n => n.label === nodeId);
-    }
-
-    // 2. nodeId is a function id like "backend.app.api.gitclone.ingest_github_repo"
-    //    Convert it to a file path guess: drop last segment, replace . with /
-    if (!matchedNode) {
-      const parts = nodeId.split('.');
-      // Try progressively shorter paths (to handle package depth)
-      for (let len = parts.length - 1; len >= 1; len--) {
-        const candidate = parts.slice(0, len).join('/') + '.py';
-        if (files[candidate]) {
-          matchedNode = graphNodes.find(n => n.label === candidate);
-          if (matchedNode) break;
-        }
-        // Also try without .py (for __init__ packages)
-        const candidatePkg = parts.slice(0, len).join('/') + '/__init__.py';
-        if (files[candidatePkg]) {
-          matchedNode = graphNodes.find(n => n.label === candidatePkg);
-          if (matchedNode) break;
-        }
-      }
-    }
-
-    // 3. Fall back — just set selectedNode with the raw nodeId so the graph does its best
-    if (matchedNode) {
-      setSelectedNode({ id: matchedNode.id, label: matchedNode.label });
-    } else {
-      setSelectedNode({ id: nodeId, label: nodeId });
+    if (!repo.raw_ast) return;
+    const graphNodeId = findGraphNodeId(nodeId, repo.raw_ast);
+    if (graphNodeId) {
+      const node = repo.raw_ast.graph.nodes.find((n) => n.id === graphNodeId);
+      if (node) setSelectedNode(node);
     }
   };
 
   return (
     <span
       onClick={handleClick}
-      title={`Jump to ${nodeId} in the architecture graph`}
-      className="inline-flex items-center mx-0.5 px-1.5 py-0.5 text-[11px] font-[var(--font-jetbrains)] rounded-none cursor-pointer transition-all"
+      title={nodeId}
       style={{
-        background: 'rgba(255,123,75,0.08)',
-        border: '1px solid rgba(255,123,75,0.35)',
-        color: '#FF7B4B',
+        fontFamily: 'JetBrains Mono, monospace',
+        fontSize: '10px',
+        padding: '2px 6px',
+        background: '#1C2035',
+        border: '1px solid #FF6240',
+        color: '#FF6240',
+        cursor: 'pointer',
+        display: 'inline-block',
+        margin: '0 2px',
+        borderRadius: 0,
+        verticalAlign: 'middle',
+        lineHeight: '1.4',
+        transition: 'background 0.15s, color 0.15s',
       }}
-      onMouseEnter={e => {
-        e.currentTarget.style.background = '#FF7B4B';
-        e.currentTarget.style.color = '#090A0F';
+      onMouseEnter={(e) => {
+        e.currentTarget.style.background = '#FF6240';
+        e.currentTarget.style.color = '#07080F';
       }}
-      onMouseLeave={e => {
-        e.currentTarget.style.background = 'rgba(255,123,75,0.08)';
-        e.currentTarget.style.color = '#FF7B4B';
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = '#1C2035';
+        e.currentTarget.style.color = '#FF6240';
       }}
     >
-      [{nodeId}]
+      {displayLabel}
     </span>
   );
 };
