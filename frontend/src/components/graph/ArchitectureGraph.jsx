@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
+import { forceCollide, forceX, forceY } from 'd3-force';
 import useAppStore from '../../store/useAppStore';
 
 // Folder colors — translucent, distinct but not dominating
@@ -28,12 +29,13 @@ const FOLDER_BORDER_COLORS = [
  * Structure: folder nodes → file nodes → function nodes
  * Expanded state controls which children are visible.
  */
-function buildGraphData(raw_ast, expandedFolders, expandedFiles) {
+function buildGraphData(raw_ast, expandedFolders, expandedFiles, expandedAll, dimensions) {
   if (!raw_ast?.files) return { nodes: [], links: [] };
 
   const nodes = [];
   const links = [];
   const folderColorMap = {};
+  const folderCenters = {};
   let folderColorIndex = 0;
 
   const files = raw_ast.files;
@@ -42,16 +44,39 @@ function buildGraphData(raw_ast, expandedFolders, expandedFiles) {
   const folderMap = {};
   Object.keys(files).forEach((filePath) => {
     const parts = filePath.split('/');
-    const folder = parts.length > 1 ? parts[0] : '__root__';
+    const folder = parts.length > 2
+      ? parts.slice(0, -1).join('/')   // use full parent path e.g. "src/requests"
+      : parts.length > 1
+        ? parts[0]                      // single level e.g. "src"
+        : '__root__';
     if (!folderMap[folder]) folderMap[folder] = [];
     folderMap[folder].push(filePath);
   });
 
+  // Build folder anchor positions
+  const folderList = Object.keys(folderMap);
+  const folderCount = folderList.length;
+  const columns = Math.min(4, Math.max(1, folderCount));
+  const rows = Math.ceil(folderCount / columns);
+  const gridPadding = 140;
+  const gridWidth = Math.max(1, dimensions.width - gridPadding * 2);
+  const gridHeight = Math.max(1, dimensions.height - gridPadding * 2);
+
+  folderList.forEach((folder, index) => {
+    const col = index % columns;
+    const row = Math.floor(index / columns);
+    folderCenters[folder] = {
+      x: gridPadding + (col + 0.5) * (gridWidth / columns),
+      y: gridPadding + (row + 0.5) * (gridHeight / Math.max(1, rows)),
+    };
+  });
+
   // Build folder nodes
-  Object.keys(folderMap).forEach((folder) => {
+  folderList.forEach((folder) => {
     const colorIdx = folderColorIndex % FOLDER_COLORS.length;
     folderColorMap[folder] = colorIdx;
     folderColorIndex++;
+    const center = folderCenters[folder];
 
     nodes.push({
       id: `folder::${folder}`,
@@ -60,11 +85,19 @@ function buildGraphData(raw_ast, expandedFolders, expandedFiles) {
       colorIdx,
       expanded: expandedFolders.has(folder),
       childCount: folderMap[folder].length,
+      fx: center.x,
+      fy: center.y,
+      groupX: center.x,
+      groupY: center.y,
     });
 
     // Build file nodes if folder is expanded
     if (expandedFolders.has(folder)) {
-      folderMap[folder].forEach((filePath) => {
+      const capLimit = expandedAll.has(folder) ? folderMap[folder].length : 8;
+      const visibleFiles = folderMap[folder].slice(0, capLimit);
+      const hiddenCount = folderMap[folder].length - visibleFiles.length;
+
+      visibleFiles.forEach((filePath) => {
         const fileName = filePath.split('/').pop();
         const fileData = files[filePath];
         const isEntry = raw_ast.entry_point === filePath;
@@ -78,6 +111,8 @@ function buildGraphData(raw_ast, expandedFolders, expandedFiles) {
           expanded: expandedFiles.has(filePath),
           isEntry,
           functionCount: Object.keys(fileData?.functions || {}).length,
+          groupX: folderCenters[folder].x,
+          groupY: folderCenters[folder].y,
         });
 
         links.push({
@@ -95,6 +130,8 @@ function buildGraphData(raw_ast, expandedFolders, expandedFiles) {
               filePath,
               type: 'function',
               colorIdx: folderColorMap[folder],
+              groupX: folderCenters[folder].x,
+              groupY: folderCenters[folder].y,
             });
 
             links.push({
@@ -105,6 +142,19 @@ function buildGraphData(raw_ast, expandedFolders, expandedFiles) {
           });
         }
       });
+      if (hiddenCount > 0) {
+        nodes.push({
+          id: `more::${folder}`,
+          label: `+${hiddenCount} more`,
+          type: 'more',
+          colorIdx: folderColorMap[folder],
+        });
+        links.push({
+          source: `folder::${folder}`,
+          target: `more::${folder}`,
+          type: 'contains',
+        });
+      }
     }
   });
 
@@ -144,6 +194,7 @@ const ArchitectureGraph = () => {
   const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
   const [hoveredNode, setHoveredNode] = useState(null);
   const [clickedNode, setClickedNode] = useState(null); // for Ask About This popup
+  const [expandedAll, setExpandedAll] = useState(new Set()); 
 
   // Track container size
   useEffect(() => {
@@ -156,13 +207,49 @@ const ArchitectureGraph = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Rebuild graph data when expansion state changes
+  // Rebuild graph data when expansion state or container size changes
   useEffect(() => {
     if (repo.raw_ast) {
-      const data = buildGraphData(repo.raw_ast, expandedFolders, expandedFiles);
+      const data = buildGraphData(repo.raw_ast, expandedFolders, expandedFiles, expandedAll, dimensions);
       setGraphData(data);
     }
-  }, [repo.raw_ast, expandedFolders, expandedFiles]);
+  }, [repo.raw_ast, expandedFolders, expandedFiles, expandedAll, dimensions]);
+
+  useEffect(() => {
+    if (graphRef.current) {
+      graphRef.current.d3Force('charge').strength((node) => {
+        if (node.type === 'folder') return -450;
+        if (node.type === 'file') return -160;
+        return -40;
+      });
+
+      graphRef.current.d3Force('link').distance((link) =>
+        link.type === 'contains' ? 90 : 180
+      );
+
+      graphRef.current.d3Force(
+        'x',
+        forceX((node) => node.groupX ?? dimensions.width / 2).strength((node) =>
+          node.type === 'folder' ? 0.4 : node.type === 'file' ? 0.12 : 0.05
+        )
+      );
+      graphRef.current.d3Force(
+        'y',
+        forceY((node) => node.groupY ?? dimensions.height / 2).strength((node) =>
+          node.type === 'folder' ? 0.4 : node.type === 'file' ? 0.12 : 0.05
+        )
+      );
+
+      graphRef.current.d3Force(
+        'collision',
+        forceCollide((node) => {
+          if (node.type === 'folder') return 42;
+          if (node.type === 'file') return 48;
+          return 24;
+        }).strength(0.95)
+      );
+    }
+  }, [graphData, dimensions]);
 
   const handleNodeClick = useCallback(
     (node) => {
@@ -174,6 +261,14 @@ const ArchitectureGraph = () => {
           } else {
             next.add(node.label === '/ (root)' ? '__root__' : node.label);
           }
+          return next;
+        });
+        setClickedNode(null);
+      } else if (node.type === 'more') {
+        const folderKey = node.id.replace('more::', '');
+        setExpandedAll(prev => {
+          const next = new Set(prev);
+          next.add(folderKey);
           return next;
         });
         setClickedNode(null);
@@ -238,6 +333,20 @@ const ArchitectureGraph = () => {
           ctx.fillStyle = borderColor;
           ctx.fillText(`+${node.childCount}`, node.x, node.y + 14);
         }
+      } else if (node.type === 'more') {
+        const r = 16;
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, r, 0, 2 * Math.PI);
+        ctx.fillStyle = 'rgba(14,16,24,0.8)';
+        ctx.fill();
+        ctx.strokeStyle = '#1C2035';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.font = `${Math.max(7, 8 / globalScale)}px JetBrains Mono, monospace`;
+        ctx.fillStyle = '#454B66';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(node.label, node.x, node.y);
       } else if (node.type === 'file') {
         const w = 90;
         const h = 32;
