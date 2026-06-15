@@ -1,518 +1,374 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import ForceGraph2D from 'react-force-graph-2d';
-import { forceCollide, forceX, forceY } from 'd3-force';
+﻿import React, { useEffect, useRef, useState, useMemo } from 'react';
+import hljs from 'highlight.js/lib/core';
+import python from 'highlight.js/lib/languages/python';
+import javascript from 'highlight.js/lib/languages/javascript';
+import typescript from 'highlight.js/lib/languages/typescript';
+import 'highlight.js/styles/github-dark.css';
 import useAppStore from '../../store/useAppStore';
 
-// Folder colors — translucent, distinct but not dominating
-const FOLDER_COLORS = [
-  'rgba(255, 98, 64, 0.15)',   // orange
-  'rgba(77, 158, 255, 0.15)',  // blue
-  'rgba(61, 214, 140, 0.15)',  // green
-  'rgba(168, 100, 255, 0.15)', // purple
-  'rgba(255, 200, 60, 0.15)',  // yellow
-  'rgba(255, 100, 160, 0.15)', // pink
-  'rgba(60, 200, 220, 0.15)',  // cyan
-];
+hljs.registerLanguage('python', python);
+hljs.registerLanguage('javascript', javascript);
+hljs.registerLanguage('typescript', typescript);
 
-const FOLDER_BORDER_COLORS = [
-  'rgba(255, 98, 64, 0.5)',
-  'rgba(77, 158, 255, 0.5)',
-  'rgba(61, 214, 140, 0.5)',
-  'rgba(168, 100, 255, 0.5)',
-  'rgba(255, 200, 60, 0.5)',
-  'rgba(255, 100, 160, 0.5)',
-  'rgba(60, 200, 220, 0.5)',
-];
+const mono = { fontFamily: 'JetBrains Mono, monospace' };
 
-/**
- * Builds the force graph data from raw_ast.
- * Structure: folder nodes → file nodes → function nodes
- * Expanded state controls which children are visible.
- */
-function buildGraphData(raw_ast, expandedFolders, expandedFiles, expandedAll, dimensions) {
-  if (!raw_ast?.files) return { nodes: [], links: [] };
+// ─── helpers ────────────────────────────────────────────────────────────────
 
-  const nodes = [];
-  const links = [];
-  const folderColorMap = {};
-  const folderCenters = {};
-  let folderColorIndex = 0;
+const getLanguage = (path = '') => {
+  if (path.endsWith('.py')) return 'python';
+  if (path.endsWith('.ts')) return 'typescript';
+  return 'javascript';
+};
 
-  const files = raw_ast.files;
+const highlight = (code, lang) => {
+  try { return hljs.highlight(code, { language: lang }).value; }
+  catch { return hljs.highlightAuto(code).value; }
+};
 
-  // Group files by their top-level folder
-  const folderMap = {};
-  Object.keys(files).forEach((filePath) => {
-    const parts = filePath.split('/');
-    const folder = parts.length > 2
-      ? parts.slice(0, -1).join('/')   // use full parent path e.g. "src/requests"
-      : parts.length > 1
-        ? parts[0]                      // single level e.g. "src"
-        : '__root__';
-    if (!folderMap[folder]) folderMap[folder] = [];
-    folderMap[folder].push(filePath);
+const truncate = (s = '', n = 20) => s.length > n ? s.slice(0, n) + '…' : s;
+
+// Node type label derived from file path
+const nodeTypeLabel = (label = '') => {
+  if (label.startsWith('src/')) return 'SOURCE';
+  if (label.startsWith('tests/') || label.startsWith('test/')) return 'TESTS';
+  return 'PROJECT';
+};
+
+const typeColor = (label = '') => {
+  if (label.startsWith('src/')) return '#FF6240';
+  if (label.startsWith('tests/') || label.startsWith('test/')) return '#3DD68C';
+  return '#4D9EFF';
+};
+
+// ─── Dagre-style layout using a simple topological sort ─────────────────────
+// We don't want to add dagre as a dependency — instead we rank nodes by
+// how many incoming edges they have (files depended upon rank lower/higher)
+// and lay them out in rows.
+
+function computeLayout(nodes, edges, containerWidth) {
+  const NODE_W = 190;
+  const NODE_H = 60;
+  const H_GAP = 240;
+  const V_GAP = 110;
+  const COLS = Math.max(1, Math.floor((containerWidth - 60) / H_GAP));
+
+  // Build incoming edge count
+  const inDegree = {};
+  nodes.forEach(n => { inDegree[n.id] = 0; });
+  edges.forEach(e => {
+    const t = typeof e.target === 'object' ? e.target.id : e.target;
+    if (inDegree[t] !== undefined) inDegree[t]++;
   });
 
-  // Build folder anchor positions
-  const folderList = Object.keys(folderMap);
-  const folderCount = folderList.length;
-  const columns = Math.min(4, Math.max(1, folderCount));
-  const rows = Math.ceil(folderCount / columns);
-  const gridPadding = 140;
-  const gridWidth = Math.max(1, dimensions.width - gridPadding * 2);
-  const gridHeight = Math.max(1, dimensions.height - gridPadding * 2);
+  // Sort: entry points first (lowest in-degree), then alphabetical
+  const sorted = [...nodes].sort((a, b) => (inDegree[a.id] || 0) - (inDegree[b.id] || 0) || a.id.localeCompare(b.id));
 
-  folderList.forEach((folder, index) => {
-    const col = index % columns;
-    const row = Math.floor(index / columns);
-    folderCenters[folder] = {
-      x: gridPadding + (col + 0.5) * (gridWidth / columns),
-      y: gridPadding + (row + 0.5) * (gridHeight / Math.max(1, rows)),
+  const positions = {};
+  sorted.forEach((node, i) => {
+    const col = i % COLS;
+    const row = Math.floor(i / COLS);
+    positions[node.id] = {
+      x: 30 + col * H_GAP,
+      y: 30 + row * V_GAP,
     };
   });
 
-  // Build folder nodes
-  folderList.forEach((folder) => {
-    const colorIdx = folderColorIndex % FOLDER_COLORS.length;
-    folderColorMap[folder] = colorIdx;
-    folderColorIndex++;
-    const center = folderCenters[folder];
-
-    nodes.push({
-      id: `folder::${folder}`,
-      label: folder === '__root__' ? '/ (root)' : folder,
-      type: 'folder',
-      colorIdx,
-      expanded: expandedFolders.has(folder),
-      childCount: folderMap[folder].length,
-      fx: center.x,
-      fy: center.y,
-      groupX: center.x,
-      groupY: center.y,
-    });
-
-    // Build file nodes if folder is expanded
-    if (expandedFolders.has(folder)) {
-      const capLimit = expandedAll.has(folder) ? folderMap[folder].length : 8;
-      const visibleFiles = folderMap[folder].slice(0, capLimit);
-      const hiddenCount = folderMap[folder].length - visibleFiles.length;
-
-      visibleFiles.forEach((filePath) => {
-        const fileName = filePath.split('/').pop();
-        const fileData = files[filePath];
-        const isEntry = raw_ast.entry_point === filePath;
-
-        nodes.push({
-          id: `file::${filePath}`,
-          label: fileName,
-          fullPath: filePath,
-          type: 'file',
-          colorIdx: folderColorMap[folder],
-          expanded: expandedFiles.has(filePath),
-          isEntry,
-          functionCount: Object.keys(fileData?.functions || {}).length,
-          groupX: folderCenters[folder].x,
-          groupY: folderCenters[folder].y,
-        });
-
-        links.push({
-          source: `folder::${folder}`,
-          target: `file::${filePath}`,
-          type: 'contains',
-        });
-
-        // Build function nodes if file is expanded
-        if (expandedFiles.has(filePath)) {
-          Object.keys(fileData?.functions || {}).forEach((funcName) => {
-            nodes.push({
-              id: `func::${filePath}::${funcName}`,
-              label: funcName,
-              filePath,
-              type: 'function',
-              colorIdx: folderColorMap[folder],
-              groupX: folderCenters[folder].x,
-              groupY: folderCenters[folder].y,
-            });
-
-            links.push({
-              source: `file::${filePath}`,
-              target: `func::${filePath}::${funcName}`,
-              type: 'contains',
-            });
-          });
-        }
-      });
-      if (hiddenCount > 0) {
-        nodes.push({
-          id: `more::${folder}`,
-          label: `+${hiddenCount} more`,
-          type: 'more',
-          colorIdx: folderColorMap[folder],
-        });
-        links.push({
-          source: `folder::${folder}`,
-          target: `more::${folder}`,
-          type: 'contains',
-        });
-      }
-    }
-  });
-
-  // Add dependency edges between files (only if both are visible)
-  const visibleFileIds = new Set(
-    nodes.filter((n) => n.type === 'file').map((n) => n.id)
-  );
-
-  Object.keys(files).forEach((filePath) => {
-    const fileData = files[filePath];
-    const srcId = `file::${filePath}`;
-    if (!visibleFileIds.has(srcId)) return;
-
-    (fileData.depends_on || []).forEach((dep) => {
-      const dstId = `file::${dep}`;
-      if (visibleFileIds.has(dstId)) {
-        links.push({
-          source: srcId,
-          target: dstId,
-          type: 'imports',
-        });
-      }
-    });
-  });
-
-  return { nodes, links };
+  const totalRows = Math.ceil(nodes.length / COLS);
+  return {
+    positions,
+    width: Math.max(containerWidth, COLS * H_GAP + 60),
+    height: totalRows * V_GAP + 60,
+    nodeW: NODE_W,
+    nodeH: NODE_H,
+  };
 }
 
-const ArchitectureGraph = () => {
-  const { repo, sendNodeQuery } = useAppStore();
-  const graphRef = useRef(null);
+// ─── Graph renderer ──────────────────────────────────────────────────────────
+
+const DependencyGraph = ({ raw_ast, onNodeClick, highlightedNodeId }) => {
   const containerRef = useRef(null);
+  const [containerWidth, setContainerWidth] = useState(900);
+  const [hoveredId, setHoveredId] = useState(null);
 
-  const [expandedFolders, setExpandedFolders] = useState(new Set());
-  const [expandedFiles, setExpandedFiles] = useState(new Set());
-  const [graphData, setGraphData] = useState({ nodes: [], links: [] });
-  const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
-  const [hoveredNode, setHoveredNode] = useState(null);
-  const [clickedNode, setClickedNode] = useState(null); // for Ask About This popup
-  const [expandedAll, setExpandedAll] = useState(new Set()); 
-
-  // Track container size
   useEffect(() => {
     if (!containerRef.current) return;
-    const observer = new ResizeObserver((entries) => {
-      const { width, height } = entries[0].contentRect;
-      setDimensions({ width, height });
+    const ro = new ResizeObserver(entries => {
+      setContainerWidth(entries[0].contentRect.width);
     });
-    observer.observe(containerRef.current);
-    return () => observer.disconnect();
+    ro.observe(containerRef.current);
+    return () => ro.disconnect();
   }, []);
 
-  // Rebuild graph data when expansion state or container size changes
-  useEffect(() => {
-    if (repo.raw_ast) {
-      const data = buildGraphData(repo.raw_ast, expandedFolders, expandedFiles, expandedAll, dimensions);
-      setGraphData(data);
-    }
-  }, [repo.raw_ast, expandedFolders, expandedFiles, expandedAll, dimensions]);
+  const graphNodes = raw_ast?.graph?.nodes || [];
+  const graphEdges = raw_ast?.graph?.edges || [];
 
-  useEffect(() => {
-    if (graphRef.current) {
-      graphRef.current.d3Force('charge').strength((node) => {
-        if (node.type === 'folder') return -450;
-        if (node.type === 'file') return -160;
-        return -40;
-      });
-
-      graphRef.current.d3Force('link').distance((link) =>
-        link.type === 'contains' ? 90 : 180
-      );
-
-      graphRef.current.d3Force(
-        'x',
-        forceX((node) => node.groupX ?? dimensions.width / 2).strength((node) =>
-          node.type === 'folder' ? 0.4 : node.type === 'file' ? 0.12 : 0.05
-        )
-      );
-      graphRef.current.d3Force(
-        'y',
-        forceY((node) => node.groupY ?? dimensions.height / 2).strength((node) =>
-          node.type === 'folder' ? 0.4 : node.type === 'file' ? 0.12 : 0.05
-        )
-      );
-
-      graphRef.current.d3Force(
-        'collision',
-        forceCollide((node) => {
-          if (node.type === 'folder') return 42;
-          if (node.type === 'file') return 48;
-          return 24;
-        }).strength(0.95)
-      );
-    }
-  }, [graphData, dimensions]);
-
-  const handleNodeClick = useCallback(
-    (node) => {
-      if (node.type === 'folder') {
-        setExpandedFolders((prev) => {
-          const next = new Set(prev);
-          if (next.has(node.label === '/ (root)' ? '__root__' : node.label)) {
-            next.delete(node.label === '/ (root)' ? '__root__' : node.label);
-          } else {
-            next.add(node.label === '/ (root)' ? '__root__' : node.label);
-          }
-          return next;
-        });
-        setClickedNode(null);
-      } else if (node.type === 'more') {
-        const folderKey = node.id.replace('more::', '');
-        setExpandedAll(prev => {
-          const next = new Set(prev);
-          next.add(folderKey);
-          return next;
-        });
-        setClickedNode(null);
-      } else if (node.type === 'file') {
-        setExpandedFiles((prev) => {
-          const next = new Set(prev);
-          if (next.has(node.fullPath)) {
-            next.delete(node.fullPath);
-          } else {
-            next.add(node.fullPath);
-          }
-          return next;
-        });
-        setClickedNode(node);
-      } else if (node.type === 'function') {
-        setClickedNode(node);
-      }
-    },
-    []
+  const { positions, width, height, nodeW, nodeH } = useMemo(
+    () => computeLayout(graphNodes, graphEdges, containerWidth),
+    [graphNodes, graphEdges, containerWidth]
   );
 
-  const handleAskAboutThis = useCallback(() => {
-    if (!clickedNode) return;
-    const label =
-      clickedNode.type === 'function' ? clickedNode.label : clickedNode.label;
-    sendNodeQuery(label, clickedNode.type);
-    setClickedNode(null);
-  }, [clickedNode, sendNodeQuery]);
+  if (!graphNodes.length) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', ...mono, color: '#454B66', fontSize: 12 }}>
+        No graph data available.
+      </div>
+    );
+  }
 
-  // Canvas node painter
-  const paintNode = useCallback(
-    (node, ctx, globalScale) => {
-      const isHovered = hoveredNode?.id === node.id;
-      const isClicked = clickedNode?.id === node.id;
-      const color = FOLDER_COLORS[node.colorIdx ?? 0];
-      const borderColor = FOLDER_BORDER_COLORS[node.colorIdx ?? 0];
+  // Build edge paths between node centers
+  const edgePaths = graphEdges.map((edge, i) => {
+    const srcId = typeof edge.source === 'object' ? edge.source.id : edge.source;
+    const dstId = typeof edge.target === 'object' ? edge.target.id : edge.target;
+    const s = positions[srcId];
+    const d = positions[dstId];
+    if (!s || !d) return null;
 
-      if (node.type === 'folder') {
-        const r = 28;
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, r, 0, 2 * Math.PI);
-        ctx.fillStyle = isHovered ? color.replace('0.15', '0.28') : color;
-        ctx.fill();
-        ctx.strokeStyle = isClicked ? '#ffffff' : borderColor;
-        ctx.lineWidth = isHovered ? 1.5 : 1;
-        ctx.stroke();
+    const sx = s.x + nodeW / 2;
+    const sy = s.y + nodeH;
+    const dx = d.x + nodeW / 2;
+    const dy = d.y;
+    const cy = (sy + dy) / 2;
 
-        // Label
-        ctx.font = `${Math.max(8, 10 / globalScale)}px JetBrains Mono, monospace`;
-        ctx.fillStyle = '#E8EAF2';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        const shortLabel =
-          node.label.length > 10
-            ? node.label.slice(0, 9) + '…'
-            : node.label;
-        ctx.fillText(shortLabel, node.x, node.y);
-
-        // Child count badge
-        if (!node.expanded) {
-          ctx.font = `${Math.max(6, 8 / globalScale)}px JetBrains Mono, monospace`;
-          ctx.fillStyle = borderColor;
-          ctx.fillText(`+${node.childCount}`, node.x, node.y + 14);
-        }
-      } else if (node.type === 'more') {
-        const r = 16;
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, r, 0, 2 * Math.PI);
-        ctx.fillStyle = 'rgba(14,16,24,0.8)';
-        ctx.fill();
-        ctx.strokeStyle = '#1C2035';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-        ctx.font = `${Math.max(7, 8 / globalScale)}px JetBrains Mono, monospace`;
-        ctx.fillStyle = '#454B66';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(node.label, node.x, node.y);
-      } else if (node.type === 'file') {
-        const w = 90;
-        const h = 32;
-        // Matte rectangle
-        ctx.fillStyle = isHovered
-          ? 'rgba(14,16,24,0.95)'
-          : 'rgba(14,16,24,0.85)';
-        ctx.fillRect(node.x - w / 2, node.y - h / 2, w, h);
-
-        // Left color strip
-        ctx.fillStyle = borderColor;
-        ctx.fillRect(node.x - w / 2, node.y - h / 2, 3, h);
-
-        // Border
-        ctx.strokeStyle = isClicked ? '#ffffff' : isHovered ? borderColor : '#1C2035';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(node.x - w / 2, node.y - h / 2, w, h);
-
-        // Entry point indicator
-        if (node.isEntry) {
-          ctx.strokeStyle = '#E8EAF2';
-          ctx.lineWidth = 1.5;
-          ctx.strokeRect(node.x - w / 2 - 2, node.y - h / 2 - 2, w + 4, h + 4);
-        }
-
-        // Filename
-        ctx.font = `${Math.max(7, 9 / globalScale)}px JetBrains Mono, monospace`;
-        ctx.fillStyle = '#E8EAF2';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        const shortName =
-          node.label.length > 14 ? node.label.slice(0, 13) + '…' : node.label;
-        ctx.fillText(shortName, node.x + 2, node.y - 5);
-
-        // Function count
-        if (node.functionCount > 0) {
-          ctx.font = `${Math.max(6, 7 / globalScale)}px JetBrains Mono, monospace`;
-          ctx.fillStyle = '#454B66';
-          ctx.fillText(
-            node.expanded ? '▾ collapse' : `▸ ${node.functionCount} fn`,
-            node.x + 2,
-            node.y + 8
-          );
-        }
-      } else if (node.type === 'function') {
-        const r = 14;
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, r, 0, 2 * Math.PI);
-        ctx.fillStyle = isHovered
-          ? color.replace('0.15', '0.25')
-          : 'rgba(14,16,24,0.9)';
-        ctx.fill();
-        ctx.strokeStyle = isClicked ? '#ffffff' : borderColor;
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        ctx.font = `${Math.max(6, 8 / globalScale)}px JetBrains Mono, monospace`;
-        ctx.fillStyle = '#E8EAF2';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        const shortFn =
-          node.label.length > 10 ? node.label.slice(0, 9) + '…' : node.label;
-        ctx.fillText(shortFn, node.x, node.y);
-      }
-    },
-    [hoveredNode, clickedNode]
-  );
-
-  // Link painter
-  const paintLink = useCallback((link, ctx) => {
-    if (link.type === 'contains') {
-      ctx.strokeStyle = 'rgba(28, 32, 53, 0.6)';
-      ctx.lineWidth = 0.5;
-    } else if (link.type === 'imports') {
-      ctx.strokeStyle = 'rgba(77, 158, 255, 0.3)';
-      ctx.lineWidth = 1;
-      ctx.setLineDash([3, 3]);
-    }
-    ctx.stroke();
-    ctx.setLineDash([]);
-  }, []);
-
-  if (repo.status !== 'ready') return null;
+    return (
+      <g key={i}>
+        <path
+          d={`M ${sx} ${sy} C ${sx} ${cy}, ${dx} ${cy}, ${dx} ${dy}`}
+          fill="none"
+          stroke={edge.type === 'calls' ? 'rgba(255,98,64,0.4)' : 'rgba(77,158,255,0.25)'}
+          strokeWidth={1}
+          strokeDasharray={edge.type === 'calls' ? '4 3' : undefined}
+          markerEnd="url(#arrowhead)"
+        />
+      </g>
+    );
+  });
 
   return (
-    <div ref={containerRef} className="w-full h-full relative" style={{ background: '#07080F' }}>
-      {/* Label */}
-      <div className="absolute top-4 left-4 z-10 text-[10px] tracking-widest text-[#454B66] pointer-events-none"
-        style={{ fontFamily: 'JetBrains Mono, monospace' }}>
-        VIEW::ARCHITECTURE_GRAPH
+    <div
+      ref={containerRef}
+      style={{ width: '100%', height: '100%', overflow: 'auto', position: 'relative', background: '#07080F' }}
+    >
+      <svg
+        width={width}
+        height={height}
+        style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }}
+      >
+        <defs>
+          <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 z" fill="rgba(77,158,255,0.4)" />
+          </marker>
+        </defs>
+        {edgePaths}
+      </svg>
+
+      {/* Nodes rendered as DOM for crisp text and interaction */}
+      <div style={{ position: 'relative', width, height }}>
+        {graphNodes.map(node => {
+          const pos = positions[node.id];
+          if (!pos) return null;
+          const isHovered = hoveredId === node.id;
+          const isHighlighted = highlightedNodeId === node.id;
+          const color = typeColor(node.label);
+          const label = nodeTypeLabel(node.label);
+          const fileName = (node.label || '').split('/').pop();
+          const dirPath = (node.label || '').split('/').slice(0, -1).join('/');
+
+          return (
+            <div
+              key={node.id}
+              onClick={() => onNodeClick?.(node)}
+              onMouseEnter={() => setHoveredId(node.id)}
+              onMouseLeave={() => setHoveredId(null)}
+              style={{
+                position: 'absolute',
+                left: pos.x,
+                top: pos.y,
+                width: nodeW,
+                height: nodeH,
+                background: isHighlighted ? 'rgba(255,98,64,0.12)' : 'rgba(13,15,23,0.95)',
+                border: isHighlighted
+                  ? '1px solid #FF6240'
+                  : isHovered
+                  ? `1px solid ${color}`
+                  : '1px solid #1C2035',
+                borderLeft: `3px solid ${color}`,
+                cursor: 'pointer',
+                boxSizing: 'border-box',
+                padding: '8px 10px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                gap: 3,
+                transition: 'border-color 0.12s',
+              }}
+            >
+              <div style={{ ...mono, fontSize: 9, color, letterSpacing: '0.12em' }}>{label}</div>
+              <div style={{ ...mono, fontSize: 12, color: '#E8EAF2', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {fileName}
+              </div>
+              {dirPath && (
+                <div style={{ ...mono, fontSize: 10, color: '#454B66', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {dirPath}/
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
 
       {/* Legend */}
-      <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-1 text-[10px] text-[#454B66]"
-        style={{ fontFamily: 'JetBrains Mono, monospace' }}>
-        <div className="flex items-center gap-2">
-          <span className="w-4 h-px" style={{ background: 'rgba(28,32,53,0.8)', display: 'inline-block' }} />
-          contains
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-4 h-px" style={{ background: 'rgba(77,158,255,0.5)', display: 'inline-block' }} />
-          imports
-        </div>
+      <div style={{ position: 'fixed', bottom: 16, left: 16, display: 'flex', flexDirection: 'column', gap: 4, pointerEvents: 'none' }}>
+        {[
+          { color: 'rgba(77,158,255,0.5)', label: 'imports', dash: false },
+          { color: 'rgba(255,98,64,0.5)', label: 'calls', dash: true },
+        ].map(item => (
+          <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: 6, ...mono, fontSize: 10, color: '#454B66' }}>
+            <svg width={20} height={2}>
+              <line x1={0} y1={1} x2={20} y2={1} stroke={item.color} strokeWidth={1.5} strokeDasharray={item.dash ? '3 2' : undefined} />
+            </svg>
+            {item.label}
+          </div>
+        ))}
       </div>
+    </div>
+  );
+};
 
-      {/* Hint when no folders expanded */}
-      {expandedFolders.size === 0 && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-          <span className="text-[11px] text-[#454B66]" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
-            Click a folder node to expand
-          </span>
+// ─── Function code view ──────────────────────────────────────────────────────
+
+const FunctionView = ({ selectedFunction, fileMap, onAsk }) => {
+  const functionFile = fileMap[selectedFunction?.filePath] || null;
+  if (!selectedFunction || !functionFile) return null;
+
+  const meta = functionFile.functions?.[selectedFunction.functionName];
+  const source = functionFile.source || '';
+  const lines = source.split('\n');
+  const start = Math.max(0, (meta?.lineno || 1) - 1);
+  const end = Math.min(lines.length, meta?.end_lineno || start + 1);
+  const snippet = lines.slice(start, end).join('\n') || 'Source unavailable.';
+  const highlighted = highlight(snippet, getLanguage(functionFile.path));
+
+  return (
+    <div style={{ width: '100%', height: '100%', overflow: 'auto', background: '#07080F', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
+        <div>
+          <div style={{ ...mono, fontSize: 10, color: '#454B66', letterSpacing: '0.12em', marginBottom: 6 }}>FUNCTION VIEW</div>
+          <div style={{ ...mono, fontSize: 16, color: '#E8EAF2' }}>{selectedFunction.functionName}</div>
+          <div style={{ ...mono, fontSize: 11, color: '#454B66', marginTop: 4 }}>{functionFile.path}</div>
         </div>
-      )}
-
-      {/* Ask About This popup */}
-      {clickedNode && (clickedNode.type === 'file' || clickedNode.type === 'function') && (
-        <div
-          className="absolute z-20 flex flex-col"
+        <button
+          type="button"
+          onClick={() => onAsk?.('FUNCTION', selectedFunction.functionName)}
           style={{
-            top: 60,
-            right: 16,
-            background: 'rgba(14,16,24,0.95)',
-            border: '1px solid #1C2035',
-            backdropFilter: 'blur(12px)',
-            fontFamily: 'JetBrains Mono, monospace',
+            ...mono, fontSize: 11, padding: '8px 14px',
+            border: '1px solid rgba(255,98,64,0.4)',
+            background: 'rgba(255,98,64,0.08)',
+            color: '#FF6240', cursor: 'pointer',
           }}
         >
-          <div className="px-3 py-2 text-[10px] text-[#454B66] border-b border-[#1C2035]">
-            {clickedNode.type === 'file' ? clickedNode.label : clickedNode.label}
-          </div>
-          <button
-            onClick={handleAskAboutThis}
-            className="px-3 py-2 text-[11px] text-[#FF6240] hover:bg-[#FF6240] hover:text-[#07080F] transition-colors text-left"
-          >
-            ▸ ASK ABOUT THIS
-          </button>
-          <button
-            onClick={() => setClickedNode(null)}
-            className="px-3 py-2 text-[11px] text-[#454B66] hover:text-[#E8EAF2] transition-colors text-left"
-          >
-            ✕ CLOSE
-          </button>
-        </div>
-      )}
+          Ask ↗
+        </button>
+      </div>
 
-      <ForceGraph2D
-        ref={graphRef}
-        width={dimensions.width}
-        height={dimensions.height}
-        graphData={graphData}
-        nodeCanvasObject={paintNode}
-        nodeCanvasObjectMode={() => 'replace'}
-        linkCanvasObject={paintLink}
-        linkCanvasObjectMode={() => 'replace'}
-        onNodeClick={handleNodeClick}
-        onNodeHover={(node) => setHoveredNode(node)}
-        nodeRelSize={6}
-        linkDirectionalArrowLength={3}
-        linkDirectionalArrowRelPos={1}
-        linkDirectionalArrowColor={() => 'rgba(77,158,255,0.4)'}
-        cooldownTicks={120}
-        d3AlphaDecay={0.02}
-        d3VelocityDecay={0.3}
-        backgroundColor="#07080F"
-      />
+      <div style={{ display: 'grid', gridTemplateColumns: '44px 1fr' }}>
+        <pre style={{ ...mono, margin: 0, padding: '14px 8px 14px 0', color: '#454B66', textAlign: 'right', userSelect: 'none', lineHeight: 1.6, fontSize: 12 }}>
+          {snippet.split('\n').map((_, i) => <div key={i}>{start + i + 1}</div>)}
+        </pre>
+        <pre style={{ margin: 0, padding: 14, overflowX: 'auto', background: '#0D0F17', lineHeight: 1.6, border: '1px solid #1C2035' }}>
+          <code className="hljs" dangerouslySetInnerHTML={{ __html: highlighted }} />
+        </pre>
+      </div>
     </div>
+  );
+};
+
+// ─── Main component ──────────────────────────────────────────────────────────
+
+export const buildFolderData = (raw_ast) => {
+  if (!raw_ast?.files) return [];
+  const folderMap = {};
+  Object.entries(raw_ast.files).forEach(([filePath, fileData]) => {
+    const parts = filePath.split('/');
+    const folderKey = parts.length > 1 ? parts[0] : '__root__';
+    if (!folderMap[folderKey]) {
+      folderMap[folderKey] = {
+        key: folderKey,
+        label: folderKey === '__root__' ? '/ (root)' : folderKey,
+        shortLabel: folderKey === '__root__' ? 'root' : folderKey,
+        files: [],
+      };
+    }
+    const functions = fileData?.functions || {};
+    folderMap[folderKey].files.push({
+      path: filePath,
+      name: parts[parts.length - 1],
+      functions,
+      functionCount: Object.keys(functions).length,
+      dependsOn: fileData.depends_on || [],
+      isEntry: raw_ast.entry_point === filePath,
+    });
+  });
+  return Object.values(folderMap).sort((a, b) => a.label.localeCompare(b.label));
+};
+
+export const buildFileData = (raw_ast) => {
+  if (!raw_ast?.files) return [];
+  return Object.entries(raw_ast.files).map(([filePath, fileData]) => {
+    const parts = filePath.split('/');
+    return {
+      path: filePath,
+      name: parts[parts.length - 1],
+      folderKey: parts.length > 1 ? parts[0] : '__root__',
+      functions: fileData?.functions || {},
+      functionCount: Object.keys(fileData?.functions || {}).length,
+      dependsOn: fileData?.depends_on || [],
+      imports: fileData?.imports || [],
+      entry: fileData?.entry || false,
+      source: fileData?.source || '',
+    };
+  });
+};
+
+const ArchitectureGraph = ({ selectedFunction, onAsk }) => {
+  const { repo } = useAppStore();
+
+  const files = useMemo(() => buildFileData(repo.raw_ast), [repo.raw_ast]);
+  const fileMap = useMemo(() => Object.fromEntries(files.map(f => [f.path, f])), [files]);
+
+  // Find highlighted node from selected function's file
+  const highlightedNodeId = useMemo(() => {
+    if (!selectedFunction?.filePath || !repo.raw_ast?.graph?.nodes) return null;
+    const node = repo.raw_ast.graph.nodes.find(n => n.label === selectedFunction.filePath);
+    return node?.id || null;
+  }, [selectedFunction, repo.raw_ast]);
+
+  if (repo.status !== 'ready') return null;
+
+  // Function selected → show code, graph stays in background via CSS
+  if (selectedFunction) {
+    return (
+      <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+        {/* Graph faded in background */}
+        <div style={{ position: 'absolute', inset: 0, opacity: 0.15, pointerEvents: 'none' }}>
+          <DependencyGraph raw_ast={repo.raw_ast} highlightedNodeId={highlightedNodeId} />
+        </div>
+        {/* Function code on top */}
+        <div style={{ position: 'absolute', inset: 0 }}>
+          <FunctionView selectedFunction={selectedFunction} fileMap={fileMap} onAsk={onAsk} />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <DependencyGraph
+      raw_ast={repo.raw_ast}
+      highlightedNodeId={highlightedNodeId}
+      onNodeClick={(node) => {
+        // clicking a graph node asks about that file
+        onAsk?.('FILE', node.label?.split('/').pop());
+      }}
+    />
   );
 };
 

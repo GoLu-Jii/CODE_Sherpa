@@ -40,6 +40,15 @@ def ingest_github_repo(job_id: str, repo_url: str):
             jobs[job_id] = {"status": "analyzing", "message": "Running AST analysis..."}
             analysis_result = build_unified_model(temp_dir)
 
+            # Attach file source text so frontend can render code tabs and function bodies.
+            for file_path, file_meta in analysis_result.get("files", {}).items():
+                source_path = os.path.join(temp_dir, file_path)
+                try:
+                    with open(source_path, "r", encoding="utf-8") as source_file:
+                        file_meta["source"] = source_file.read()
+                except FileNotFoundError:
+                    file_meta["source"] = ""
+
             analysis_file = os.path.join(temp_dir, "analysis.json")
             with open(analysis_file, "w", encoding="utf-8") as f:
                 json.dump(analysis_result, f, indent=2)

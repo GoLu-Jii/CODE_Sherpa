@@ -186,15 +186,13 @@ const AssistantMessage = ({ content }) => {
   );
 };
 
-const ChatInterface = () => {
+const ChatInterface = ({ selectedFile }) => {
   const { chatHistory, isLoadingChat, repo } = useAppStore();
   const bottomRef = useRef(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatHistory, isLoadingChat]);
-
-  if (repo.status !== 'ready') return null;
 
   const exchangeCount = Math.floor(
     chatHistory.filter((m) => m.role === 'user').length
@@ -225,9 +223,16 @@ const ChatInterface = () => {
           fontFamily: 'JetBrains Mono, monospace',
         }}
       >
-        <span style={{ fontSize: '10px', color: '#454B66', letterSpacing: '0.1em' }}>
-          SHERPA_INTERFACE
-        </span>
+        <div>
+          <div style={{ fontSize: '10px', color: '#454B66', letterSpacing: '0.1em' }}>
+            SHERPA_INTERFACE
+          </div>
+          {selectedFile && (
+            <div style={{ fontSize: '10px', color: '#A8B4D0', marginTop: '2px' }}>
+              selected: {selectedFile.name}
+            </div>
+          )}
+        </div>
         <span style={{ fontSize: '10px', color: '#454B66' }}>
           {exchangeCount} EXCHANGES
         </span>
@@ -258,9 +263,9 @@ const ChatInterface = () => {
               gap: '6px',
             }}
           >
-            <span>SYSTEM.READY</span>
+            <span>{repo.status === 'ready' ? 'SYSTEM.READY' : 'SYSTEM.INITIALIZING'}</span>
             <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              {'> awaiting query...'}
+              {repo.status === 'ready' ? '> awaiting query...' : '> awaiting repository ingest...'}
               <span
                 style={{
                   width: '8px',

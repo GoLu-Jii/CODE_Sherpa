@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import useAppStore from '../../store/useAppStore';
 import { sendChatMessage } from '../../api/sherpaClient';
 
@@ -7,18 +7,41 @@ const MODES = ['ASK', 'FILE', 'FUNCTION'];
 const QueryInput = () => {
   const [query, setQuery] = useState('');
   const [targetName, setTargetName] = useState('');
-  const [mode, setMode] = useState('ASK');
-  const { addChatMessage, setLoadingChat, isLoadingChat, chatHistory } = useAppStore();
+  const {
+    addChatMessage,
+    setLoadingChat,
+    isLoadingChat,
+    chatHistory,
+    repo,
+    chatMode,
+    setChatMode,
+    chatPrefill,
+    prefillToken,
+  } = useAppStore();
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (prefillToken === 0) return;
+    if (chatMode === 'ASK') {
+      setQuery(chatPrefill.query || '');
+      setTargetName('');
+    } else {
+      setTargetName(chatPrefill.targetName || '');
+      setQuery('');
+    }
+    inputRef.current?.focus();
+  }, [prefillToken, chatPrefill, chatMode]);
 
   const buildQuery = () => {
-    if (mode === 'FILE') return `what does ${targetName.trim()} do`;
-    if (mode === 'FUNCTION') return `what does the function ${targetName.trim()} do`;
+    if (chatMode === 'FILE') return `what does ${targetName.trim()} do`;
+    if (chatMode === 'FUNCTION') return `what does the function ${targetName.trim()} do`;
     return query.trim();
   };
 
   const canSubmit = () => {
-    if (isLoadingChat) return false;
-    if (mode === 'ASK') return query.trim().length > 0;
+    if (isLoadingChat || repo.status !== 'ready') return false;
+    if (chatMode === 'ASK') return query.trim().length > 0;
     return targetName.trim().length > 0;
   };
 
@@ -71,14 +94,7 @@ const QueryInput = () => {
     lineHeight: '1.6',
   };
 
-  const secondaryInputStyle = {
-    ...inputStyle,
-    fontSize: '12px',
-    borderTop: '1px solid #1C2035',
-    paddingTop: '8px',
-    marginTop: '8px',
-    color: '#C8CAD8',
-  };
+  const isDisabled = repo.status !== 'ready' || isLoadingChat;
 
   return (
     <div
@@ -88,22 +104,23 @@ const QueryInput = () => {
         padding: '12px 16px',
         flexShrink: 0,
         fontFamily: 'JetBrains Mono, monospace',
+        opacity: repo.status !== 'ready' ? 0.55 : 1,
       }}
     >
-      {/* Mode toggles */}
       <div style={{ display: 'flex', gap: '6px', marginBottom: '10px' }}>
         {MODES.map((m) => (
           <button
             key={m}
-            onClick={() => setMode(m)}
+            onClick={() => setChatMode(m)}
+            disabled={isDisabled}
             style={{
               padding: '3px 10px',
               fontSize: '10px',
               fontFamily: 'JetBrains Mono, monospace',
               background: 'transparent',
-              border: mode === m ? '1px solid #FF6240' : '1px solid #1C2035',
-              color: mode === m ? '#FF6240' : '#454B66',
-              cursor: 'pointer',
+              border: chatMode === m ? '1px solid #FF6240' : '1px solid #1C2035',
+              color: chatMode === m ? '#FF6240' : '#454B66',
+              cursor: isDisabled ? 'not-allowed' : 'pointer',
               letterSpacing: '0.08em',
               transition: 'border-color 0.15s, color 0.15s',
             }}
@@ -113,13 +130,18 @@ const QueryInput = () => {
         ))}
       </div>
 
-      {/* Main input */}
-      {mode === 'ASK' && (
+      {chatMode === 'ASK' && (
         <textarea
+          ref={inputRef}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="> ask about the codebase..."
+          placeholder={
+            repo.status === 'ready'
+              ? '> ask about the codebase...'
+              : '> awaiting repository ingest...'
+          }
           rows={2}
+          disabled={isDisabled}
           style={{
             ...inputStyle,
             maxHeight: '120px',
@@ -133,11 +155,13 @@ const QueryInput = () => {
         />
       )}
 
-      {mode === 'FILE' && (
+      {chatMode === 'FILE' && (
         <input
+          ref={inputRef}
           value={targetName}
           onChange={(e) => setTargetName(e.target.value)}
           placeholder="> filename e.g. hooks.py"
+          disabled={isDisabled}
           style={{ ...inputStyle }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') handleSubmit();
@@ -145,11 +169,13 @@ const QueryInput = () => {
         />
       )}
 
-      {mode === 'FUNCTION' && (
+      {chatMode === 'FUNCTION' && (
         <input
+          ref={inputRef}
           value={targetName}
           onChange={(e) => setTargetName(e.target.value)}
           placeholder="> function name e.g. Response.content"
+          disabled={isDisabled}
           style={{ ...inputStyle }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') handleSubmit();
@@ -157,7 +183,6 @@ const QueryInput = () => {
         />
       )}
 
-      {/* Hint */}
       <div
         style={{
           marginTop: '8px',
@@ -168,10 +193,14 @@ const QueryInput = () => {
           alignItems: 'center',
         }}
       >
-        <span>Press Enter to send · Shift+Enter for newline</span>
-        {mode !== 'ASK' && (
+        <span>
+          {repo.status === 'ready'
+            ? 'Press Enter to send · Shift+Enter for newline'
+            : 'Chat input locked until ingest completes'}
+        </span>
+        {chatMode !== 'ASK' && repo.status === 'ready' && (
           <span style={{ color: '#454B66', fontStyle: 'italic' }}>
-            {mode === 'FILE'
+            {chatMode === 'FILE'
               ? 'Searches by exact filename'
               : 'Searches by exact function name'}
           </span>
