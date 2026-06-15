@@ -7,12 +7,13 @@ from app.engine_rag.chunker import SmartChunker
 from app.engine_rag.retriever import GraphRetriever
 
 print("Building unified model...")
-analysis_result = build_unified_model("d:/CODE Sherpa/CODE_Sherpa/backend/app/engine_rag")
+target_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../backend/app/engine_rag'))
+analysis_result = build_unified_model(target_dir)
 with open("test_analysis.json", "w") as f:
     json.dump(analysis_result, f, indent=2)
 
 print("Extracting chunks...")
-chunker = SmartChunker("test_analysis.json", "d:/CODE Sherpa/CODE_Sherpa/backend/app/engine_rag")
+chunker = SmartChunker("test_analysis.json", target_dir)
 chunks = chunker.extract_chunks()
 
 print(f"Extracted {len(chunks)} chunks.")
@@ -40,6 +41,9 @@ print("PRIMARY NODES:")
 for node in result["primary_nodes"]:
     print(node["node_id"])
 
-# show prompt
-prompt = retriever.format_llm_prompt(result, "what does the file vector_db.py do?")
+from app.generation.chat import format_graph_chunks
+from app.generation.prompts import build_user_prompt
+
+context = format_graph_chunks(result)
+prompt = build_user_prompt("what does the file vector_db.py do?", context)
 print("PROMPT LENGTH:", len(prompt))

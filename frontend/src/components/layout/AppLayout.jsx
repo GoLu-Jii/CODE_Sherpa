@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useAppStore from '../../store/useAppStore';
 import FloatingCommandBar from '../ui/FloatingCommandBar';
-import ArchitectureGraph, { buildFileData, buildFolderData } from '../graph/ArchitectureGraph';
+import ArchitectureGraph from '../graph/ArchitectureGraph';
+import { buildFileData, buildFolderData } from '../graph/graphHelpers';
 import ChatInterface from '../chat/ChatInterface';
 
 const mono = { fontFamily: 'JetBrains Mono, monospace' };
@@ -22,25 +23,6 @@ const AppLayout = () => {
   const folders = useMemo(() => buildFolderData(repo.raw_ast), [repo.raw_ast]);
   const files = useMemo(() => buildFileData(repo.raw_ast), [repo.raw_ast]);
 
-  // Init folder open state — all collapsed by default
-  useEffect(() => {
-    if (!folders.length) return;
-    setFolderOpenState(prev => {
-      const next = { ...prev };
-      folders.forEach(f => { if (next[f.key] === undefined) next[f.key] = false; });
-      return next;
-    });
-    // All files collapsed by default — user clicks to see functions
-    setFileOpenState(prev => {
-      const next = { ...prev };
-      folders.forEach(folder => {
-        folder.files.forEach(file => {
-          if (next[file.path] === undefined) next[file.path] = false;
-        });
-      });
-      return next;
-    });
-  }, [folders]);
 
   const toggleFolder = useCallback((key) => {
     setFolderOpenState(prev => ({ ...prev, [key]: !prev[key] }));

@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 # Resolve absolute paths
 BASE_DIR = Path(__file__).resolve().parent
-ROOT_DIR = BASE_DIR.parent.parent
+ROOT_DIR = BASE_DIR.parent
 
 ENV_PATH = ROOT_DIR / ".env"
 ANALYSIS_PATH = ROOT_DIR / "demo" / "analysis.json"

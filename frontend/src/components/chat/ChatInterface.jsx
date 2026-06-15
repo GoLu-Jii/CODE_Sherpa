@@ -51,28 +51,18 @@ const renderBodyWithCitations = (body) => {
   if (!body) return null;
 
   // Split on [citation] patterns
-  const parts = body.split(/(\[[^\[\]]+\])/g);
-  const inlineElements = [];
+  const parts = body.split(/(\[[^[\]]+\])/g);
   const citationIds = [];
 
-  parts.forEach((part, i) => {
+  parts.forEach((part) => {
     if (part.startsWith('[') && part.endsWith(']')) {
       const nodeId = part.slice(1, -1);
       // Collect unique citation IDs
       if (!citationIds.includes(nodeId)) citationIds.push(nodeId);
-      // Don't render inline — collect for bottom row
-    } else if (part.trim()) {
-      // Clean up isolated punctuation left by citation removal
-      const cleaned = part.replace(/\s+\.\s*/g, '. ').replace(/^\s*\.\s*/, '');
-      inlineElements.push(
-        <span key={i} style={{ color: '#C8CAD8', lineHeight: '1.7' }}>
-          {cleaned}
-        </span>
-      );
     }
   });
 
-  return { inlineElements, citationIds };
+  return { citationIds };
 };
 
 /**
@@ -81,7 +71,7 @@ const renderBodyWithCitations = (body) => {
 const ResponseSection = ({ heading, body }) => {
   const parsed = renderBodyWithCitations(body);
   if (!parsed) return null;
-  const { inlineElements, citationIds } = parsed;
+  const { citationIds } = parsed;
 
   return (
     <div
@@ -120,7 +110,7 @@ const ResponseSection = ({ heading, body }) => {
           if (!trimmed) return null;
 
           // Strip inline citations from the line for clean rendering
-          const cleanLine = trimmed.replace(/\[[^\[\]]+\]/g, '').trim();
+          const cleanLine = trimmed.replace(/\[[^[\]]+\]/g, '').trim();
           if (!cleanLine || cleanLine === '.') return null;
 
           const isBullet = cleanLine.startsWith('- ') || cleanLine.startsWith('• ');

@@ -1,23 +1,32 @@
+import logging
 import os
-from typing import List, Dict, Any
+from typing import Any, Dict, List
+
 from groq import Groq
 
 from .prompts import SYSTEM_PROMPT, build_user_prompt
 
-api_key = os.getenv("GROQ_API_KEY")
+logger = logging.getLogger(__name__)
+groq_client = None
 
-if not api_key:
-    raise ValueError(f"❌ CRITICAL: Groq API key environment variable is not set!!!")
-else:
-    print(f"✅ Groq Key Loaded Successfully")
 
-groq_client = Groq(api_key=api_key)
+def get_groq_client() -> Groq:
+    global groq_client
+    if groq_client is not None:
+        return groq_client
 
-# 1. FIX: Format the specific arrays inside the Graph dictionary
+    api_key = os.getenv("GROQ_API_KEY")
+    if not api_key:
+        raise ValueError("GROQ_API_KEY environment variable is not set.")
+
+    groq_client = Groq(api_key=api_key)
+    logger.info("Groq client initialized.")
+    return groq_client
+
+
 def format_graph_chunks(retrieval_data: Dict[str, Any]) -> str:
     context_block = []
-    
-    # Format Primary Nodes
+
     for node in retrieval_data.get("primary_nodes", []):
         block = (
             f"PRIMARY NODE [{node.get('node_id')}]\n"
@@ -26,7 +35,6 @@ def format_graph_chunks(retrieval_data: Dict[str, Any]) -> str:
         )
         context_block.append(block)
 
-    # Format Downstream Dependencies
     for dep in retrieval_data.get("downstream_context", []):
         block = (
             f"DEPENDENCY CONTEXT [{dep.get('node_id')}]\n"
@@ -36,32 +44,27 @@ def format_graph_chunks(retrieval_data: Dict[str, Any]) -> str:
 
     return "\n---\n".join(context_block)
 
-# 2. FIX: Extract sources by checking both primary and downstream nodes
-def extract_graph_sources(answer: str, retrieval_data: Dict[str, Any]) -> List[Dict]:
+
+def extract_graph_sources(answer: str, retrieval_data: Dict[str, Any]) -> List[Dict[str, str]]:
     sources = []
-    
-    # Combine all nodes we fed to the LLM
     all_nodes = retrieval_data.get("primary_nodes", []) + retrieval_data.get("downstream_context", [])
-    
+
     for node in all_nodes:
-        c_id = node.get("node_id")
-        # If the LLM cited the node ID in its answer, add it to sources
-        if c_id and f"[{c_id}]" in answer:
-            sources.append({"node_id": c_id})
+        node_id = node.get("node_id")
+        if node_id and f"[{node_id}]" in answer:
+            sources.append({"node_id": node_id})
 
     return sources
 
+
 def generate_answer(
-        query: str,
-        retrieved_chunk: Dict[str, Any],
-        history: List[Dict[str, str]] = None # <-- 1. Added history parameter
-) -> Dict:
-    
-    # Safely handle the case where history isn't provided (e.g., the very first message)
+    query: str,
+    retrieved_chunk: Dict[str, Any],
+    history: List[Dict[str, str]] = None,
+) -> Dict[str, Any]:
     if history is None:
         history = []
 
-    # Check if the primary_nodes array is actually empty
     if not retrieved_chunk.get("primary_nodes"):
         return {
             "answer": "I could not find relevant code in the repository to answer this query.",
@@ -69,29 +72,23 @@ def generate_answer(
             "retrieved_chunks": retrieved_chunk,
         }
 
-    # Pass the dictionary to our updated formatter
     context = format_graph_chunks(retrieved_chunk)
     user_prompt = build_user_prompt(query, context)
 
-    # --- 2. ASSEMBLE THE CONVERSATION MEMORY ---
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
-    
-    # Inject the previous back-and-forth conversation right here
     messages.extend(history)
-    
-    # Append the newest question wrapped in the RAG context at the very end
     messages.append({"role": "user", "content": user_prompt})
 
     try:
-        response = groq_client.chat.completions.create(
+        client = get_groq_client()
+        response = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
-            messages=messages, # <-- 3. Pass the assembled messages array here!
-            temperature=0.1, 
+            messages=messages,
+            temperature=0.1,
             max_tokens=1024,
         )
-
-    except Exception as e:
-        raise RuntimeError(f"Groq request failed: {e}")
+    except Exception as exc:
+        raise RuntimeError(f"Groq request failed: {exc}") from exc
 
     answer_text = response.choices[0].message.content.strip()
 
@@ -102,7 +99,6 @@ def generate_answer(
             "retrieved_chunks": retrieved_chunk,
         }
 
-    # Use the updated extraction function
     sources = extract_graph_sources(answer_text, retrieved_chunk)
 
     return {

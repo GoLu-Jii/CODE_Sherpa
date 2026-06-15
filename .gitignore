@@ -67,3 +67,7 @@ Desktop.ini
 demo/analysis.json
 demo/flowchart.md
 demo/learning_order.json
+
+# Local test data
+tests/chroma_test_data/
+

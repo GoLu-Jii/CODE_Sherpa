@@ -1,10 +1,11 @@
-﻿import React, { useEffect, useRef, useState, useMemo } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import hljs from 'highlight.js/lib/core';
 import python from 'highlight.js/lib/languages/python';
 import javascript from 'highlight.js/lib/languages/javascript';
 import typescript from 'highlight.js/lib/languages/typescript';
 import 'highlight.js/styles/github-dark.css';
 import useAppStore from '../../store/useAppStore';
+import { buildFileData } from './graphHelpers';
 
 hljs.registerLanguage('python', python);
 hljs.registerLanguage('javascript', javascript);
@@ -24,8 +25,6 @@ const highlight = (code, lang) => {
   try { return hljs.highlight(code, { language: lang }).value; }
   catch { return hljs.highlightAuto(code).value; }
 };
-
-const truncate = (s = '', n = 20) => s.length > n ? s.slice(0, n) + '…' : s;
 
 // Node type label derived from file path
 const nodeTypeLabel = (label = '') => {
@@ -99,13 +98,14 @@ const DependencyGraph = ({ raw_ast, onNodeClick, highlightedNodeId }) => {
     return () => ro.disconnect();
   }, []);
 
+  const { positions, width, height, nodeW, nodeH } = useMemo(() => {
+    const nodes = raw_ast?.graph?.nodes || [];
+    const edges = raw_ast?.graph?.edges || [];
+    return computeLayout(nodes, edges, containerWidth);
+  }, [raw_ast, containerWidth]);
+
   const graphNodes = raw_ast?.graph?.nodes || [];
   const graphEdges = raw_ast?.graph?.edges || [];
-
-  const { positions, width, height, nodeW, nodeH } = useMemo(
-    () => computeLayout(graphNodes, graphEdges, containerWidth),
-    [graphNodes, graphEdges, containerWidth]
-  );
 
   if (!graphNodes.length) {
     return (
@@ -283,51 +283,6 @@ const FunctionView = ({ selectedFunction, fileMap, onAsk }) => {
 };
 
 // ─── Main component ──────────────────────────────────────────────────────────
-
-export const buildFolderData = (raw_ast) => {
-  if (!raw_ast?.files) return [];
-  const folderMap = {};
-  Object.entries(raw_ast.files).forEach(([filePath, fileData]) => {
-    const parts = filePath.split('/');
-    const folderKey = parts.length > 1 ? parts[0] : '__root__';
-    if (!folderMap[folderKey]) {
-      folderMap[folderKey] = {
-        key: folderKey,
-        label: folderKey === '__root__' ? '/ (root)' : folderKey,
-        shortLabel: folderKey === '__root__' ? 'root' : folderKey,
-        files: [],
-      };
-    }
-    const functions = fileData?.functions || {};
-    folderMap[folderKey].files.push({
-      path: filePath,
-      name: parts[parts.length - 1],
-      functions,
-      functionCount: Object.keys(functions).length,
-      dependsOn: fileData.depends_on || [],
-      isEntry: raw_ast.entry_point === filePath,
-    });
-  });
-  return Object.values(folderMap).sort((a, b) => a.label.localeCompare(b.label));
-};
-
-export const buildFileData = (raw_ast) => {
-  if (!raw_ast?.files) return [];
-  return Object.entries(raw_ast.files).map(([filePath, fileData]) => {
-    const parts = filePath.split('/');
-    return {
-      path: filePath,
-      name: parts[parts.length - 1],
-      folderKey: parts.length > 1 ? parts[0] : '__root__',
-      functions: fileData?.functions || {},
-      functionCount: Object.keys(fileData?.functions || {}).length,
-      dependsOn: fileData?.depends_on || [],
-      imports: fileData?.imports || [],
-      entry: fileData?.entry || false,
-      source: fileData?.source || '',
-    };
-  });
-};
 
 const ArchitectureGraph = ({ selectedFunction, onAsk }) => {
   const { repo } = useAppStore();
