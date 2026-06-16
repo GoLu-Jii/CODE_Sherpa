@@ -1,188 +1,126 @@
-# CODE Sherpa 🏔️
+# CODE Sherpa
 
-<div align="center">
-  <img src="https://img.shields.io/badge/version-v0.1.0-blue.svg" alt="Version">
-  <img src="https://img.shields.io/badge/python-3.8+-green.svg" alt="Python Version">
-  <img src="https://img.shields.io/badge/react-vite-blue.svg" alt="React Setup">
-  <img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="License">
-</div>
+**A deterministic code understanding engine. The AST is the Judge. The AI is the Narrator.**
 
-<br/>
+[Live Demo](https://code-sherpa-mu.vercel.app/) · Built by [Gaurav Joshi](https://github.com/GoLu-Jii)
 
-**CODE Sherpa** is a deterministic code understanding engine that helps developers **learn and navigate unfamiliar codebases with confidence — without relying on hallucinating AI.**
-
-
-Unlike traditional “chat-with-code” tools, CODE Sherpa separates:
-
-- **Structure (AST)** → Ground truth (100% deterministic)  
-- **Explanation (LLM)** → Human-readable guidance  
-
-> 🧠 *The AST is the Judge. The AI is the Narrator.*
-
-Every explanation is:
-- Traceable to real code  
-- Reproducible across runs  
-- Grounded in verified structure  
-
----
-![UI Screenshot](./assets/logo.png)
----
-
-CODE Sherpa transforms raw repositories into:
-
-- 📊 Interactive architecture graphs  
-- 🧭 Guided learning paths  
-- 🔍 Graph-aware semantic search  
-
-Powered by a FastAPI backend and a developer-first React telemetry UI, the system is optimized for **deep codebase understanding**, not just surface-level querying.
-
-> ⚠️ Version 01 supports Python repositories only.
-
-![UI Screenshot](./assets/main_view.png)
-
-
-## ❗ Why CODE Sherpa?
-
-Understanding existing codebases is one of the hardest problems in software engineering.  
-CODE Sherpa solves this by turning code into a structured, guided learning experience.
-
-## ⚙️ Prerequisites
-
-Before you begin, ensure you have the following installed and set up on your machine:
-
-1. **Python 3.8 or higher**
-2. **Node.js (LTS recommended) & npm**
-3. **Groq API Key:** Required for Large Language Model processing. Grab one from the [Groq Console](https://console.groq.com).
-4. **Chroma Cloud Credentials:** API Key, Tenant, Database
+![CODE Sherpa landing screen](./assets/logo.png)
 
 ---
 
-## 💻 Installation & Setup
+## The problem
 
-### 1. Clone the Repository
+Every "chat with your codebase" tool today works the same way: embed some code, retrieve a few chunks, ask an LLM to explain it. The LLM has no ground truth about the actual structure of the code — it is guessing based on text similarity. Ask it what calls a function, and it will confidently make something up if the retrieval missed the real answer.
+
+CODE Sherpa does not work that way.
+
+## The approach
+
+CODE Sherpa separates two concerns that every other tool conflates:
+
+- **Structure** comes from a real Python AST parser. Every function, class, import, and call relationship is extracted deterministically — no guessing, no embeddings deciding what "structure" means.
+- **Explanation** comes from an LLM (Groq, Llama 3.3 70B) that is only ever shown real code chunks the AST engine already verified exist.
+
+The AST is the source of truth. The LLM only narrates what the AST already proved. Every claim in every response is cited back to a specific function or file — click the citation, see the real code.
+
+## How it's different
+
+| | Typical chat-with-code tools | CODE Sherpa |
+|---|---|---|
+| Retrieval | Pure embedding similarity | Exact AST symbol match → semantic fallback → graph traversal |
+| Citations | Often absent or wrong | Every claim traces to a real function or file node |
+| Dependency mapping | Not available or approximate | Built from actual import resolution and call graph analysis |
+| Cross-file calls | Rarely resolved correctly | Resolved via attribute-chain tracking and instance type inference |
+
+## What it looks like
+
+![Dependency graph and chat interface](./assets/main_view.png)
+
+The left panel is a live file browser generated from the AST — folders, files, and every function inside them. The center panel is the dependency graph, built entirely from resolved import relationships, not a static diagram. The right panel is the chat — every response cites the exact function or file it came from, and clicking a citation jumps you straight to that code.
+
+## Architecture
+
+![Dependency graph and chat interface](./assets/sherpa_architecture.png)
+
+## Tech stack
+
+**Backend:** FastAPI, Python `ast` module for static analysis, Chroma Cloud for vector storage, Groq for LLM inference.
+
+**Frontend:** React, Vite, a custom dependency graph renderer built without a heavyweight graph library, JetBrains Mono throughout for a terminal-grade reading experience.
+
+**Why these choices:** FastAPI over Flask for native async support, since ingestion (clone + parse + embed) runs as a background job with status polling rather than blocking the request. Chroma Cloud over a self-hosted vector DB to avoid managing infrastructure for what is currently a single-tenant tool. Groq over OpenAI for inference speed — Llama 3.3 70B on Groq returns in well under a second, which matters when every response needs to wait on a retrieval step first.
+
+## Key engineering decisions
+
+**Cross-file call resolution without a full type system.** Python has no static types by default, so resolving `self.adapter.send()` to the actual function it calls requires tracking what `self.adapter` was assigned to earlier in the function. The AST engine does this with a lightweight instance-type tracker that follows variable assignments through the function body — not a full type inference engine, but enough to resolve the majority of real-world call chains correctly.
+
+**Hybrid retrieval instead of pure RAG.** Pure embedding retrieval fails on exact lookups — ask "what does `hooks.py` do" and a vector search might return a semantically similar but wrong file. CODE Sherpa checks for exact file and symbol matches first, using AST-derived metadata, and only falls back to embeddings when there is no deterministic match. This is the difference between a tool that retrieves "probably relevant" code and one that retrieves "we know for certain this is what you asked about."
+
+**Background job processing for ingestion.** Cloning a repository and running full AST analysis can take well over the request timeout window on most hosting platforms. Ingestion runs as a background task with a polling status endpoint, so the frontend can show live progress (cloning → analyzing → uploading → charting) instead of a blocking spinner.
+
+## Try it
+
+[code-sherpa-mu.vercel.app](https://code-sherpa-mu.vercel.app/)
+
+Paste any public GitHub repository URL containing Python code. Note: version 1 is scoped to Python only.
+
+## Local setup
+
+<details>
+<summary>Expand for installation instructions</summary>
+
+### Requirements
+
+- Python 3.8+
+- Node.js (LTS) & npm
+- A [Groq API key](https://console.groq.com)
+- [Chroma Cloud](https://www.trychroma.com) credentials (API key, tenant, database)
+
+### Backend
 
 ```bash
 git clone https://github.com/GoLu-Jii/CODE_Sherpa
 cd CODE_Sherpa
-```
-
-### 2️⃣ Backend Setup (API & Engine)
-
-Set up the Python environment from the project root:
-
-```bash
-# Create virtual environment
 python -m venv .venv
-
-# Activate environment
-
-# Windows (PowerShell)
-.venv\Scripts\Activate.ps1
-
-# macOS/Linux
-source .venv/bin/activate
-
-# Install dependencies
+source .venv/bin/activate   # Windows: .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 ```
 
+Create a `.env` file:
 
-## Set up your required environment variables:
-
-```bash
+```
 GROQ_API_KEY=your_groq_api_key
-
 CHROMA_API_KEY=your_chroma_api_key
 CHROMA_TENANT=your_chroma_tenant
 CHROMA_DATABASE=your_chroma_database
 ```
 
-### 🔑 How to Get Chroma Credentials
-
-Follow these steps to obtain your Chroma credentials:
-
-1. Go to [https://www.trychroma.com](https://www.trychroma.com)
-2. Create an account and set up a database
-3. Navigate to **Settings**
-4. Click **Create API & Copy Code**
-5. You will receive something like:
-
-```python
-api_key='YOUR_API_KEY',
-tenant='your_tenant',
-database='your_db_name'
-
-# Chroma environment variables
-CHROMA_API_KEY=YOUR_API_KEY
-CHROMA_TENANT=your_tenant
-CHROMA_DATABASE=your_db_name
+```bash
+cd backend
+python -m uvicorn app.server:app --reload
 ```
 
+Backend runs at `http://localhost:8000`.
 
-### 3. Frontend Environment
-
-Open a new terminal window, navigate to the frontend directory, and install dependencies:
+### Frontend
 
 ```bash
 cd frontend
 npm install
-```
-
-Configure your local environment variables:
-```bash
-cp .env.example .env
-
-# Or manually create 
-frontend/.env
-
-# With
-VITE_API_BASE_URL=http://localhost:8000
-
-# Ensure VITE_API_BASE_URL is pointing to your local backend (e.g., http://localhost:8000)
-```
-
----
-
-## 🏃‍♂️ Running the System
-
-Start both systems to experience the full CODE Sherpa interface.
-
-### Start the Intelligence Backend
-
-```bash
-# Ensure .venv is activated
-cd backend
-python -m uvicorn app.server:app --reload
-```
-*The API will be available at: http://localhost:8000*
-
-### Start the Telemetry UI
-
-```bash
-cd frontend
+cp .env.example .env   # set VITE_API_BASE_URL=http://localhost:8000
 npm run dev
 ```
-*The dashboard will be available at: http://localhost:5173*
 
----
+Frontend runs at `http://localhost:5173`.
 
-## 🧪 How to Use
+</details>
 
+## Roadmap
 
-1. Start backend and frontend
-2. Open http://localhost:5173
-3. Paste a GitHub repository URL
-4. Click "Ingest"
-5. Ask questions like:
-   - "How is authentication implemented?"
-   - "What does compat.py do?"
+- Multi-language support beyond Python
+- Per-session isolated vector collections for concurrent users
+- Call-chain tracing between any two functions in a codebase
 
-You will see:
-- Graph visualization
-- File relationships
-- Grounded explanations
+## License
 
-
-## 📄 License
-
-This project is licensed under the terms of the Apache License. See the [LICENSE](LICENSE) file for more information.
+Apache License. See [LICENSE](LICENSE).
