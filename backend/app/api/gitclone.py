@@ -9,6 +9,9 @@ from typing import Dict, Any
 from fastapi import APIRouter, BackgroundTasks, HTTPException
 from pydantic import BaseModel
 
+import app.server as state
+from app.engine_rag.retriever import GraphRetriever
+
 from app.engine_rag.chunker import SmartChunker
 from app.engine_rag.vector_db import ChromaCloudDB
 from app.engine_ast.analyzer import build_unified_model
@@ -16,7 +19,6 @@ from app.engine_ast.flowchart.flow_builder import build_simple_file_graph
 from app.engine_ast.flowchart.exporter import export_mermaid
 
 logger = logging.getLogger(__name__)
-
 
 # In-memory job store
 jobs: Dict[str, Any] = {}
@@ -61,9 +63,10 @@ def ingest_github_repo(job_id: str, repo_url: str):
             chunks = chunker.extract_chunks()
 
             db = ChromaCloudDB(collection_name="codesherpa_real_repo")
-            logger.info("Clearing collection before ingesting new chunks...")
-            db.clear_collection()
             db.ingest_chunks(chunks)
+
+            state.retriever = GraphRetriever(db)
+            logger.info("Global retriever updated to new collection.")
 
             jobs[job_id] = {"status": "charting", "message": "Generating architecture graph..."}
             graph = build_simple_file_graph(analysis_result)
