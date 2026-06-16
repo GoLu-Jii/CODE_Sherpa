@@ -92,69 +92,76 @@ const AppLayout = () => {
       <FloatingCommandBar />
 
       {/* ── Left panel: file browser ── */}
-      <div style={{ width: leftWidth, minWidth: 200, maxWidth: 380, background: '#0B0F1A', borderRight: '1px solid #1C2035', display: 'flex', flexDirection: 'column', overflow: 'hidden', flexShrink: 0 }}>
-        <div style={{ padding: '16px 14px 12px', borderBottom: '1px solid #1C2035', flexShrink: 0 }}>
-          <div style={{ ...mono, fontSize: 10, color: '#454B66', letterSpacing: '0.16em' }}>FILE BROWSER</div>
+      <div style={{ width: leftWidth, minWidth: 200, maxWidth: 380, background: '#090A0F', borderRight: '1px solid #1E2230', display: 'flex', flexDirection: 'column', overflow: 'hidden', flexShrink: 0 }}>
+        <div style={{ padding: '10px 12px', borderBottom: '1px solid #1E2230', background: '#090A0F', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
+          <div style={{ ...mono, fontSize: 10, color: '#8A91A6', letterSpacing: '0.12em', fontWeight: 600 }}>[SYSTEM::FILE_BROWSER]</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#22c55e', display: 'inline-block', boxShadow: '0 0 8px #22c55e' }} />
+            <span style={{ ...mono, fontSize: 9, color: '#22c55e', fontWeight: 600 }}>ONLINE</span>
+          </div>
         </div>
 
-        <div style={{ flex: 1, overflowY: 'auto', padding: '6px 0' }}>
+        <div style={{ flex: 1, overflowY: 'auto', padding: '2px 0' }}>
           {folders.map(folder => {
             const isOpen = folderOpenState[folder.key];
             return (
-              <div key={folder.key}>
+              <div key={folder.key} style={{ borderBottom: '1px solid rgba(30, 34, 48, 0.4)' }}>
                 {/* Folder row */}
                 <button
                   type="button"
                   onClick={() => toggleFolder(folder.key)}
                   style={{
-                    width: '100%', display: 'flex', alignItems: 'center', gap: 8,
-                    padding: '10px 14px', background: 'transparent', border: 'none',
-                    color: '#E8EAF2', cursor: 'pointer', textAlign: 'left',
-                    ...mono, fontSize: 13,
+                    width: '100%', display: 'flex', alignItems: 'center', gap: 6,
+                    padding: '6px 10px', background: 'transparent', border: 'none',
+                    color: '#FFFFFF', cursor: 'pointer', textAlign: 'left',
+                    ...mono, fontSize: 11, fontWeight: 600,
+                    transition: 'background 0.1s',
                   }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,123,75,0.04)'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                 >
-                  <span style={{ color: '#454B66', fontSize: 11, width: 10, flexShrink: 0 }}>
+                  <span style={{ color: '#FF7B4B', fontSize: 10, width: 10, flexShrink: 0 }}>
                     {isOpen ? '▼' : '▶'}
                   </span>
                   <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {folder.label}
                   </span>
-                  <span style={{ ...mono, fontSize: 11, color: '#454B66', flexShrink: 0 }}>
+                  <span style={{ ...mono, fontSize: 9, color: '#8A91A6', background: 'rgba(30, 34, 48, 0.5)', padding: '1px 4px', borderRadius: 2, flexShrink: 0 }}>
                     {folder.files.length}
                   </span>
                 </button>
 
                 {/* Files inside folder */}
                 {isOpen && (
-                  <div style={{ paddingLeft: 10 }}>
+                  <div style={{ paddingLeft: 12, borderLeft: '1px dotted #1E2230', marginLeft: 14, marginY: 2 }}>
                     {folder.files.map(file => {
                       const isFileOpen = fileOpenState[file.path];
                       const isActive = selectedFilePath === file.path;
                       return (
-                        <div key={file.path}>
+                        <div key={file.path} style={{ borderBottom: '1px solid rgba(30, 34, 48, 0.2)' }}>
                           {/* File row */}
                           <div
                             onMouseEnter={() => setHoveredFilePath(file.path)}
                             onMouseLeave={() => setHoveredFilePath(null)}
                             style={{
                               display: 'flex', alignItems: 'center', gap: 6,
-                              padding: '8px 10px', margin: '2px 0',
-                              background: isActive ? 'rgba(255,98,64,0.07)' : 'transparent',
-                              borderLeft: isActive ? '2px solid #FF6240' : '2px solid transparent',
+                              padding: '4px 8px',
+                              background: isActive ? 'rgba(255,123,75,0.08)' : 'transparent',
+                              borderLeft: isActive ? '2px solid #FF7B4B' : '2px solid transparent',
                               cursor: 'pointer',
+                              transition: 'background 0.1s',
                             }}
+                            onClick={() => toggleFile(file.path)}
                           >
                             {/* Toggle arrow for functions */}
                             <span
-                              onClick={() => toggleFile(file.path)}
-                              style={{ color: '#454B66', fontSize: 10, width: 10, flexShrink: 0, cursor: 'pointer' }}
+                              style={{ color: '#8A91A6', fontSize: 9, width: 8, flexShrink: 0, cursor: 'pointer' }}
                             >
-                              {file.functionCount > 0 ? (isFileOpen ? '▾' : '▸') : ' '}
+                              {file.functionCount > 0 ? (isFileOpen ? '▼' : '▶') : ' '}
                             </span>
                             {/* Filename */}
                             <span
-                              onClick={() => toggleFile(file.path)}
-                              style={{ ...mono, fontSize: 12, color: '#E8EAF2', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                              style={{ ...mono, fontSize: 11, color: isActive ? '#FF7B4B' : '#E8EAF2', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
                             >
                               {file.name}
                             </span>
@@ -164,15 +171,15 @@ const AppLayout = () => {
                                 type="button"
                                 onClick={e => { e.stopPropagation(); handleAsk('FILE', file.name); }}
                                 style={{
-                                  ...mono, fontSize: 10, padding: '2px 7px', flexShrink: 0,
-                                  border: '1px solid rgba(255,98,64,0.4)', background: 'rgba(255,98,64,0.1)',
-                                  color: '#FF6240', cursor: 'pointer',
+                                  ...mono, fontSize: 9, padding: '1px 5px', flexShrink: 0,
+                                  border: '1px solid #FF7B4B', background: 'rgba(255,123,75,0.1)',
+                                  color: '#FF7B4B', cursor: 'pointer',
                                 }}
                               >
                                 Ask ↗
                               </button>
                             ) : (
-                              <span style={{ ...mono, fontSize: 10, color: '#454B66', flexShrink: 0 }}>
+                              <span style={{ ...mono, fontSize: 9, color: '#8A91A6', flexShrink: 0 }}>
                                 {file.functionCount > 0 ? `${file.functionCount} fn` : ''}
                               </span>
                             )}
@@ -180,7 +187,7 @@ const AppLayout = () => {
 
                           {/* Functions list */}
                           {isFileOpen && file.functionCount > 0 && (
-                            <div style={{ paddingLeft: 20, paddingBottom: 4 }}>
+                            <div style={{ paddingLeft: 10, borderLeft: '1px dotted #1E2230', marginLeft: 8, paddingBottom: 2, paddingTop: 2 }}>
                               {Object.keys(file.functions).map(fnName => {
                                 const isFnSelected = selectedFunction?.filePath === file.path && selectedFunction?.functionName === fnName;
                                 return (
@@ -188,18 +195,18 @@ const AppLayout = () => {
                                     key={fnName}
                                     style={{
                                       display: 'flex', alignItems: 'center', gap: 6,
-                                      padding: '6px 8px', margin: '1px 0',
+                                      padding: '3px 6px',
                                       background: isFnSelected ? 'rgba(77,158,255,0.08)' : 'transparent',
                                       borderLeft: isFnSelected ? '2px solid #4D9EFF' : '2px solid transparent',
                                       cursor: 'pointer',
                                     }}
                                   >
-                                    <span style={{ ...mono, fontSize: 11, color: '#454B66', flexShrink: 0 }}>▸</span>
+                                    <span style={{ ...mono, fontSize: 10, color: '#8A91A6', flexShrink: 0 }}>├</span>
                                     <button
                                       type="button"
                                       onClick={() => handleFunctionSelect(file.path, fnName)}
                                       style={{
-                                        ...mono, fontSize: 11, color: isFnSelected ? '#4D9EFF' : '#C8CAD8',
+                                        ...mono, fontSize: 10, color: isFnSelected ? '#4D9EFF' : '#8A91A6',
                                         background: 'none', border: 'none', cursor: 'pointer',
                                         textAlign: 'left', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', padding: 0,
                                       }}
@@ -210,9 +217,9 @@ const AppLayout = () => {
                                       type="button"
                                       onClick={e => { e.stopPropagation(); handleAsk('FUNCTION', fnName); }}
                                       style={{
-                                        ...mono, fontSize: 9, padding: '2px 5px', flexShrink: 0,
-                                        border: '1px solid rgba(255,98,64,0.3)', background: 'transparent',
-                                        color: '#FF6240', cursor: 'pointer',
+                                        ...mono, fontSize: 8, padding: '1px 4px', flexShrink: 0,
+                                        border: '1px solid rgba(255,123,75,0.3)', background: 'transparent',
+                                        color: '#FF7B4B', cursor: 'pointer',
                                       }}
                                     >
                                       Ask
