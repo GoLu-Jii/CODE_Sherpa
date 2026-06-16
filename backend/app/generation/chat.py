@@ -5,6 +5,7 @@ from typing import Any, Dict, List
 from groq import Groq
 
 from .prompts import SYSTEM_PROMPT, build_user_prompt
+from app.engine_ast.flowchart.flow_builder import node_id
 
 logger = logging.getLogger(__name__)
 groq_client = None
@@ -45,6 +46,84 @@ def format_graph_chunks(retrieval_data: Dict[str, Any]) -> str:
     return "\n---\n".join(context_block)
 
 
+def get_node_group(nid: str) -> str:
+    if nid.startswith("src.") or nid.startswith("src/"):
+        return "source"
+    if nid.startswith("tests.") or nid.startswith("tests/"):
+        return "tests"
+    if nid.startswith("docs.") or nid.startswith("docs/"):
+        return "docs"
+    return "project"
+
+
+def generate_mermaid_graph(retrieval_data: Dict[str, Any]) -> str:
+    primary_nodes = retrieval_data.get("primary_nodes", [])
+    downstream_context = retrieval_data.get("downstream_context", [])
+    
+    if not primary_nodes and not downstream_context:
+        return ""
+        
+    lines = ["graph TD"]
+    
+    groups = {
+        "source": "Source",
+        "project": "Project",
+        "tests": "Tests",
+        "docs": "Docs",
+        "unknown": "Unknown"
+    }
+    
+    nodes_by_group = {k: [] for k in groups.keys()}
+    seen_nodes = set()
+    all_retrieved = []
+    
+    # Collect all unique node IDs
+    for node in primary_nodes:
+        nid = node.get("node_id")
+        if nid and nid not in seen_nodes:
+            seen_nodes.add(nid)
+            all_retrieved.append((nid, True))
+            
+    for dep in downstream_context:
+        nid = dep.get("node_id")
+        if nid and nid not in seen_nodes:
+            seen_nodes.add(nid)
+            all_retrieved.append((nid, False))
+
+    for nid, is_primary in all_retrieved:
+        safe_id = node_id(nid)
+        group = get_node_group(nid)
+        label = f"{nid} (Primary)" if is_primary else nid
+        nodes_by_group.setdefault(group, []).append((safe_id, label))
+        
+    # Build subgraphs matching exporter.py style
+    for group_key, group_title in groups.items():
+        nodes = nodes_by_group.get(group_key, [])
+        if not nodes:
+            continue
+        lines.append(f"subgraph {group_title}")
+        for safe_id, label in sorted(nodes, key=lambda x: x[1]):
+            lines.append(f'  {safe_id}["{label}"]')
+        lines.append("end")
+        
+    # Build edges between retrieved nodes
+    retrieved_safe_ids = {node_id(nid) for nid, _ in all_retrieved}
+    
+    for node in primary_nodes:
+        src = node.get("node_id")
+        calls = node.get("calls", [])
+        if not src or not calls:
+            continue
+        safe_src = node_id(src)
+        for dst in calls:
+            safe_dst = node_id(dst)
+            if safe_dst in retrieved_safe_ids:
+                lines.append(f"  {safe_src} --> {safe_dst}")
+                
+    return "\n".join(lines)
+
+
+
 def extract_graph_sources(answer: str, retrieval_data: Dict[str, Any]) -> List[Dict[str, str]]:
     sources = []
     all_nodes = retrieval_data.get("primary_nodes", []) + retrieval_data.get("downstream_context", [])
@@ -72,7 +151,14 @@ def generate_answer(
             "retrieved_chunks": retrieved_chunk,
         }
 
-    context = format_graph_chunks(retrieved_chunk)
+    mermaid_graph = generate_mermaid_graph(retrieved_chunk)
+    chunks_context = format_graph_chunks(retrieved_chunk)
+    
+    if mermaid_graph:
+        context = f"Graph Structure (Mermaid):\n```mermaid\n{mermaid_graph}\n```\n\nCode Chunks:\n{chunks_context}"
+    else:
+        context = chunks_context
+
     user_prompt = build_user_prompt(query, context)
 
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
