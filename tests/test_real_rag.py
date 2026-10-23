@@ -32,7 +32,7 @@ logging.getLogger("chromadb").setLevel(logging.WARNING)
 
 def run_full_pipeline_test():
     print("\n" + "="*60)
-    print("🧠 TESTING FULL GRAPH-RAG PIPELINE (WITH GROQ LLM)")
+    print("🧠 TESTING FULL GRAPH-RAG PIPELINE (WITH OPENROUTER LLM)")
     print("="*60 + "\n")
 
     # 1. Initialize DB (Skipping re-ingestion since it is already in the cloud)
@@ -69,7 +69,7 @@ def run_full_pipeline_test():
     retrieval_data = retriever.retrieve_with_graph_context(query=user_query, n_results=1)
 
     # 3. Generate Answer via LLM
-    print("\n🤖 Sending structured graph context to Groq (Llama-3)...")
+    print("\n🤖 Sending structured graph context to OpenRouter (Llama 3.3 70B)...")
     print(f"\n🎯 Querying Chroma for final symbol query: '{user_query}'")
     print(f"   -> Found {len(retrieval_data.get('primary_nodes', []))} primary nodes.")
     print(f"   -> Found {len(retrieval_data.get('downstream_context', []))} downstream dependencies.")

@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import List, Optional
 
-# Import your Groq generation logic
+# Import your OpenRouter generation logic
 from app.generation.chat import generate_answer
 
 import app.server as state

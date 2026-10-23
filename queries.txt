@@ -1,0 +1,30 @@
+what does function extract_chunks do?
+what does function build_unified_model do?
+how does module chunker.py work?
+who calls build_unified_model?
+what does function retrieve_with_graph_context do?
+how does module retriever.py work?
+what does function _detect_file_query do?
+who calls retrieve_with_graph_context?
+what does function _detect_symbol_query do?
+how does module vector_db.py work?
+what does function ingest_chunks do?
+who calls ingest_chunks?
+what does function clear_collection do?
+what does function generate_answer do?
+who calls generate_answer?
+how does module chat.py work?
+what does function generate_mermaid_graph do?
+who calls generate_mermaid_graph?
+what does function format_graph_chunks do?
+what does function extract_graph_sources do?
+how does module prompts.py work?
+what does function build_user_prompt do?
+how does module gitclone.py work?
+what does function ingest_github_repo do?
+who calls ingest_github_repo?
+how does module flow_builder.py work?
+what does function export_mermaid do?
+who calls export_mermaid?
+how does module analyzer.py work?
+what does function parse_python_file do?

@@ -1,0 +1,31 @@
+query,sherpa_tokens,baseline_tokens,reduction_pct,primary_nodes_count,downstream_nodes_count,unique_files_count
+what does function extract_chunks do?,4990,4244,-17.58%,4,5,3
+what does function build_unified_model do?,1136,3852,70.51%,1,2,1
+how does module chunker.py work?,1921,1376,-39.61%,3,0,1
+who calls build_unified_model?,1932,5104,62.15%,4,2,4
+what does function retrieve_with_graph_context do?,4047,4008,-0.97%,4,5,2
+how does module retriever.py work?,5325,2385,-123.27%,8,5,1
+what does function _detect_file_query do?,1523,5227,70.86%,4,0,3
+who calls retrieve_with_graph_context?,3934,4006,1.80%,4,5,2
+what does function _detect_symbol_query do?,1406,5912,76.22%,4,0,2
+how does module vector_db.py work?,1732,1134,-52.73%,4,0,1
+what does function ingest_chunks do?,4990,4244,-17.58%,4,5,3
+who calls ingest_chunks?,4988,4242,-17.59%,4,5,3
+what does function clear_collection do?,1401,4910,71.47%,4,0,4
+what does function generate_answer do?,2282,2298,0.70%,1,5,2
+who calls generate_answer?,3143,2296,-36.89%,4,5,2
+how does module chat.py work?,4565,2683,-70.15%,9,6,3
+what does function generate_mermaid_graph do?,1108,1949,43.15%,1,1,1
+who calls generate_mermaid_graph?,1928,4117,53.17%,4,1,4
+what does function format_graph_chunks do?,578,1947,70.31%,1,0,1
+what does function extract_graph_sources do?,512,1947,73.70%,1,0,1
+how does module prompts.py work?,873,676,-29.14%,2,0,1
+what does function build_user_prompt do?,453,677,33.09%,1,0,1
+how does module gitclone.py work?,2031,1350,-50.44%,5,0,1
+what does function ingest_github_repo do?,1163,1351,13.92%,1,0,1
+who calls ingest_github_repo?,2419,3137,22.89%,4,2,3
+how does module flow_builder.py work?,2759,1441,-91.46%,6,3,1
+what does function export_mermaid do?,710,616,-15.26%,1,0,1
+who calls export_mermaid?,1530,2494,38.65%,4,0,3
+how does module analyzer.py work?,3136,3850,18.55%,11,3,1
+what does function parse_python_file do?,488,3851,87.33%,1,0,1

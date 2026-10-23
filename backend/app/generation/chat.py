@@ -1,14 +1,18 @@
 import logging
 import os
+import time
+import re
 from typing import Any, Dict, List
 
 from groq import Groq
+from openai import OpenAI
 
 from .prompts import SYSTEM_PROMPT, build_user_prompt
 from app.engine_ast.flowchart.flow_builder import node_id
 
 logger = logging.getLogger(__name__)
 groq_client = None
+openrouter_client = None
 
 
 def get_groq_client() -> Groq:
@@ -20,9 +24,35 @@ def get_groq_client() -> Groq:
     if not api_key:
         raise ValueError("GROQ_API_KEY environment variable is not set.")
 
-    groq_client = Groq(api_key=api_key)
+    groq_client = Groq(api_key=api_key.strip())
     logger.info("Groq client initialized.")
     return groq_client
+
+
+def get_openrouter_client() -> OpenAI:
+    global openrouter_client
+    if openrouter_client is not None:
+        return openrouter_client
+
+    api_key = os.getenv("OPENROUTER_API_KEY")
+    if not api_key:
+        raise ValueError("OPENROUTER_API_KEY environment variable is not set.")
+
+    api_key = api_key.strip()
+    base_url = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
+
+    headers = {
+        "HTTP-Referer": os.getenv("OPENROUTER_REFERER", "https://code-sherpa.vercel.app"),
+        "X-Title": os.getenv("OPENROUTER_APP_TITLE", "CODE Sherpa"),
+    }
+
+    openrouter_client = OpenAI(
+        base_url=base_url,
+        api_key=api_key,
+        default_headers=headers,
+    )
+    logger.info("OpenRouter client initialized.")
+    return openrouter_client
 
 
 def format_graph_chunks(retrieval_data: Dict[str, Any]) -> str:
@@ -165,16 +195,38 @@ def generate_answer(
     messages.extend(history)
     messages.append({"role": "user", "content": user_prompt})
 
-    try:
-        client = get_groq_client()
-        response = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            messages=messages,
-            temperature=0.1,
-            max_tokens=1024,
-        )
-    except Exception as exc:
-        raise RuntimeError(f"Groq request failed: {exc}") from exc
+    model_name = os.getenv("GROQ_MODEL", "qwen/qwen3.8-27b")
+    max_tokens = int(os.getenv("GROQ_MAX_TOKENS", "600"))
+
+    client = get_groq_client()
+    max_retries = 8
+    response = None
+    total_wait = 0.0
+    api_duration = 0.0
+
+    for attempt in range(max_retries):
+        try:
+            t_call = time.perf_counter()
+            response = client.chat.completions.create(
+                model=model_name,
+                messages=messages,
+                temperature=0.1,
+                max_tokens=max_tokens,
+            )
+            api_duration = time.perf_counter() - t_call
+            break
+        except Exception as exc:
+            err_str = str(exc)
+            if "429" in err_str or "rate_limit" in err_str:
+                wait_match = re.search(r"try again in ([\d\.]+)s", err_str)
+                wait_sec = float(wait_match.group(1)) + 1.0 if wait_match else 5.0 * (attempt + 1)
+                total_wait += wait_sec
+                logger.warning(f"Groq rate limit hit. Waiting {wait_sec:.1f}s before retry {attempt + 1}/{max_retries}...")
+                time.sleep(wait_sec)
+            else:
+                raise RuntimeError(f"Groq request failed: {exc}") from exc
+    else:
+        raise RuntimeError("Groq request failed: rate limit exceeded after maximum retries.")
 
     answer_text = response.choices[0].message.content.strip()
 
@@ -183,6 +235,10 @@ def generate_answer(
             "answer": "I don't know.",
             "sources": [],
             "retrieved_chunks": retrieved_chunk,
+            "timing": {
+                "pure_inference_seconds": api_duration,
+                "wait_seconds": total_wait,
+            },
         }
 
     sources = extract_graph_sources(answer_text, retrieved_chunk)
@@ -191,4 +247,8 @@ def generate_answer(
         "answer": answer_text,
         "sources": sources,
         "retrieved_chunks": retrieved_chunk,
+        "timing": {
+            "pure_inference_seconds": api_duration,
+            "wait_seconds": total_wait,
+        },
     }

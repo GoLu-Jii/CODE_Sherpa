@@ -19,7 +19,7 @@ CODE Sherpa does not work that way.
 CODE Sherpa separates two concerns that every other tool conflates:
 
 - **Structure** comes from a real Python AST parser. Every function, class, import, and call relationship is extracted deterministically — no guessing, no embeddings deciding what "structure" means.
-- **Explanation** comes from an LLM (Groq, Llama 3.3 70B) that is only ever shown real code chunks the AST engine already verified exist.
+- **Explanation** comes from an LLM (OpenRouter, Llama 3.3 70B or configured model) that is only ever shown real code chunks the AST engine already verified exist.
 
 The AST is the source of truth. The LLM only narrates what the AST already proved. Every claim in every response is cited back to a specific function or file — click the citation, see the real code.
 
@@ -44,11 +44,11 @@ The left panel is a live file browser generated from the AST — folders, files,
 
 ## Tech stack
 
-**Backend:** FastAPI, Python `ast` module for static analysis, Chroma Cloud for vector storage, Groq for LLM inference.
+**Backend:** FastAPI, Python `ast` module for static analysis, Chroma Cloud for vector storage, OpenRouter for LLM inference.
 
 **Frontend:** React, Vite, a custom dependency graph renderer built without a heavyweight graph library, JetBrains Mono throughout for a terminal-grade reading experience.
 
-**Why these choices:** FastAPI over Flask for native async support, since ingestion (clone + parse + embed) runs as a background job with status polling rather than blocking the request. Chroma Cloud over a self-hosted vector DB to avoid managing infrastructure for what is currently a single-tenant tool. Groq over OpenAI for inference speed — Llama 3.3 70B on Groq returns in well under a second, which matters when every response needs to wait on a retrieval step first.
+**Why these choices:** FastAPI over Flask for native async support, since ingestion (clone + parse + embed) runs as a background job with status polling rather than blocking the request. Chroma Cloud over a self-hosted vector DB to avoid managing infrastructure for what is currently a single-tenant tool. OpenRouter for flexible access to state-of-the-art models (such as Llama 3.3 70B, Claude, or GPT-4o) through a unified OpenAI-compatible interface with low latency.
 
 ## Key engineering decisions
 
@@ -73,7 +73,7 @@ Paste any public GitHub repository URL containing Python code. Note: version 1 i
 
 - Python 3.8+
 - Node.js (LTS) & npm
-- A [Groq API key](https://console.groq.com)
+- An [OpenRouter API key](https://openrouter.ai/keys)
 - [Chroma Cloud](https://www.trychroma.com) credentials (API key, tenant, database)
 
 ### Backend
@@ -89,7 +89,8 @@ pip install -r requirements.txt
 Create a `.env` file:
 
 ```
-GROQ_API_KEY=your_groq_api_key
+OPENROUTER_API_KEY=your_openrouter_api_key
+# Optional: OPENROUTER_MODEL=meta-llama/llama-3.3-70b-instruct
 CHROMA_API_KEY=your_chroma_api_key
 CHROMA_TENANT=your_chroma_tenant
 CHROMA_DATABASE=your_chroma_database

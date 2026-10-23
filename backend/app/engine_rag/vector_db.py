@@ -15,16 +15,27 @@ class ChromaCloudDB:
         chroma_tenant = os.getenv("CHROMA_TENANT")
         chroma_database = os.getenv("CHROMA_DATABASE")
 
-        if not chroma_api_key or not chroma_tenant or not chroma_database:
-            raise ValueError("Missing Chroma credentials: CHROMA_API_KEY, CHROMA_TENANT, and CHROMA_DATABASE must all be set as environment variables.")
+        use_local = os.getenv("CHROMA_LOCAL", "").lower() in ("true", "1", "yes")
+        persist_dir = os.getenv("CHROMA_PERSIST_DIR", "chroma_data")
+
+        if use_local:
+            logger.info(f"Using local Chroma DB at: {persist_dir}")
+            self.client = chromadb.PersistentClient(path=persist_dir)
+        elif not chroma_api_key or not chroma_tenant or not chroma_database:
+            logger.warning("Missing Chroma credentials, falling back to local Chroma DB.")
+            self.client = chromadb.PersistentClient(path=persist_dir)
         else:
-            # Connect to Chroma Cloud using the official CloudClient
-            logger.info(f"Connecting to Chroma Cloud Database: {chroma_database}...")
-            self.client = chromadb.CloudClient(
-                api_key=chroma_api_key,
-                tenant=chroma_tenant,
-                database=chroma_database
-            )
+            try:
+                # Connect to Chroma Cloud using the official CloudClient
+                logger.info(f"Connecting to Chroma Cloud Database: {chroma_database}...")
+                self.client = chromadb.CloudClient(
+                    api_key=chroma_api_key,
+                    tenant=chroma_tenant,
+                    database=chroma_database
+                )
+            except Exception as e:
+                logger.warning(f"Could not connect to Chroma Cloud ({e}). Falling back to local Chroma DB at: {persist_dir}")
+                self.client = chromadb.PersistentClient(path=persist_dir)
             
         # Get or create the collection
         self.collection = self.client.get_or_create_collection(

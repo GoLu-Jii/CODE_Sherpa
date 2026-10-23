@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
-# Load your environment variables for Groq and Chroma
+# Load your environment variables for OpenRouter and Chroma
 load_dotenv()
 
 # Import your separated routers
