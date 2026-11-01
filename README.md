@@ -5,8 +5,7 @@
 > CODE Sherpa maps repository structure, follows real function relationships, and retrieves focused code context for an LLM to explain. In a 30-query benchmark, its hybrid retrieval used **23.2% fewer prompt tokens overall** and **44.7% fewer for function-level questions** than sending the full contents of relevant files. **Currently supports Python-based repositories.**
 
 [![Try the live demo](https://img.shields.io/badge/Live%20Demo-Open%20CODE%20Sherpa-5B5FEF?style=for-the-badge)](https://code-sherpa-mu.vercel.app/)
-[![View source](https://img.shields.io/badge/GitHub-View%20Source-181717?style=for-the-badge&logo=github)](https://github.com/GoLu-Jii/CODE_Sherpa)
-[![Hack The Winter 2025](https://img.shields.io/badge/Built%20at-Hack%20The%20Winter%202025-0B7285?style=for-the-badge)](#project)
+
 
 **Python · FastAPI · React · Python AST · Chroma Cloud · Hybrid Retrieval**
 
