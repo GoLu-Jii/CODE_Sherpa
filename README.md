@@ -1,41 +1,82 @@
-# CODE Sherpa
+<div align="center">
 
-> **Ask a codebase a question. Get an answer grounded in how its code is actually connected.**
->
-> CODE Sherpa maps repository structure, follows real function relationships, and retrieves focused code context for an LLM to explain. In a 30-query benchmark, its hybrid retrieval used **23.2% fewer prompt tokens overall** and **44.7% fewer for function-level questions** than sending the full contents of relevant files. **Currently supports Python-based repositories.**
+<img src="./assets/logo.png" alt="CODE Sherpa" width="640"/>
 
-[![Try the live demo](https://img.shields.io/badge/Live%20Demo-Open%20CODE%20Sherpa-5B5FEF?style=for-the-badge)](https://code-sherpa-mu.vercel.app/)
+# 🧭 CODE Sherpa
 
+### Ask a codebase a question. Get an answer grounded in how its code is actually connected.
 
-**Python · FastAPI · React · Python AST · Chroma Cloud · Hybrid Retrieval**
+CODE Sherpa maps repository structure, follows real function relationships, and retrieves focused code context for an LLM to explain, with citations you can open.
 
-<p align="center">
-  <a href="#results">See the measurements</a> ·
-  <a href="#how-it-works">How it works</a> ·
-  <a href="#try-it">Open the demo</a> ·
-  <a href="#run-locally">Run it locally</a>
-</p>
+<br/>
 
-![CODE Sherpa landing screen](./assets/logo.png)
+[![Live Demo](https://img.shields.io/badge/▶%20Live%20Demo-Open%20CODE%20Sherpa-5B5FEF?style=for-the-badge)](https://code-sherpa-mu.vercel.app/)
+[![Source](https://img.shields.io/badge/GitHub-GoLu--Jii%2FCODE__Sherpa-181717?style=for-the-badge&logo=github)](https://github.com/GoLu-Jii/CODE_Sherpa)
 
-## The short version
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)
+![ChromaDB](https://img.shields.io/badge/Chroma%20Cloud-FF6446?style=flat-square)
+![Groq](https://img.shields.io/badge/Groq-F55036?style=flat-square)
+![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=flat-square)
 
-Most code chat tools search snippets by semantic similarity. CODE Sherpa first builds a map from the source itself: modules, functions, imports, and resolved calls. It uses that map to find exact symbols and files, then follows relevant graph relationships; semantic retrieval is the fallback. The LLM explains retrieved code and attaches citations you can open.
+<br/>
 
-**The result:** code answers you can trace back to actual files and functions, with measured prompt savings on a 30-query benchmark.
+[**Results**](#-results) · [**How it works**](#-how-it-works) · [**Features**](#-features) · [**Try it**](#-try-it) · [**Run locally**](#-run-locally) · [**Roadmap**](#-roadmap)
 
-## Results
+</div>
 
-| Benchmark | Sherpa result | Compared with |
-| --- | ---: | --- |
+<br/>
+
+> **Currently supports Python-based repositories.**
+
+<br/>
+
+## ⚡ The short version
+
+Most code chat tools search snippets by semantic similarity. CODE Sherpa first builds a map from the source itself: **modules, functions, imports, and resolved calls**. It uses that map to find exact symbols and files, then follows relevant graph relationships. Semantic retrieval is the fallback, not the starting point.
+
+The LLM explains the retrieved code and attaches citations you can open.
+
+<div align="center">
+
+| 🎯 Exact before semantic | 🕸️ Relationships stay visible | 🔎 Answers are inspectable |
+| :---: | :---: | :---: |
+| File and symbol lookups use AST metadata first | Imports and resolved calls add downstream context | Every citation opens the real source |
+
+</div>
+
+<br/>
+
+<div align="center">
+
+[![Open the live demo](./assets/main_view.png)](https://code-sherpa-mu.vercel.app/)
+
+*Click the screenshot to open the live demo.*
+
+</div>
+
+<br/>
+
+## 📊 Results
+
+<div align="center">
+
+| 🧪 Benchmark | ✅ Sherpa result | 📏 Compared with |
+| :--- | :---: | :--- |
 | Function-level questions (15 queries) | **44.7% fewer prompt tokens** | Full contents of the relevant files |
-| Mixed benchmark (30 queries) | **23.2% fewer prompt tokens overall** | Full contents of the relevant files |
+| Mixed benchmark (30 queries) | **23.2% fewer prompt tokens** | Full contents of the relevant files |
 | Local retrieval (20 queries) | **0.12 s average** | Retrieval only; excludes LLM inference |
 
-In the mixed token benchmark, Sherpa sent fewer tokens on **18 of 30 queries**. The savings depend on the question: broad module-level questions can need more context than the full-file baseline. The strongest savings come from asking about a specific function or symbol, where exact AST matches avoid sending unrelated code.
+</div>
+
+In the mixed token benchmark, Sherpa sent fewer tokens on **18 of 30 queries**. Savings depend on the question: broad module-level questions can need more context than the full-file baseline. The strongest savings come from asking about a specific function or symbol, where exact AST matches avoid sending unrelated code.
 
 <details>
-<summary>How these numbers were measured</summary>
+<summary><b>📐 How these numbers were measured</b></summary>
+
+<br/>
 
 - `bm_tokens_v2.py` ran 30 questions through the real retriever and counted prompt tokens with `tiktoken` (`cl100k_base`). Its baseline used the full contents of each file containing a retrieved chunk. The percentages above compare the aggregate token totals for each group.
 - `bm_latency_v2.py` measured retrieval for 20 questions against the local persistent Chroma collection. The **0.12 s** figure is the mean of the recorded retrieval times; it does not include the LLM call, network latency, or deployed-server overhead.
@@ -43,13 +84,9 @@ In the mixed token benchmark, Sherpa sent fewer tokens on **18 of 30 queries**. 
 
 </details>
 
-## See CODE Sherpa
+<br/>
 
-[![Open the live demo](./assets/main_view.png)](https://code-sherpa-mu.vercel.app/)
-
-Open the demo, paste a public GitHub repository URL with Python code, wait for ingestion, then ask about a file, function, or call relationship. Select a citation to jump to its source.
-
-## How it works
+## 🧠 How it works
 
 ```mermaid
 flowchart LR
@@ -66,48 +103,85 @@ flowchart LR
     J --> K[LLM answer with citations]
 ```
 
-1. **Parse structure.** The AST analyzer extracts Python modules, classes, functions, imports, and call relationships. A lightweight assignment tracker resolves common cross-file method calls without running repository code.
-2. **Ingest useful units.** The chunker creates function-level and file-level records with AST-derived identifiers and graph metadata. Chroma Cloud stores and retrieves them.
-3. **Retrieve by intent.** The retriever recognizes file and symbol questions for exact lookup, adds known graph dependencies, and uses semantic search when no deterministic match is found.
-4. **Explain with evidence.** The LLM gets the retrieved code and graph context. Responses cite source nodes, and the UI connects citations to the repository browser.
+| Step | What happens |
+| :--- | :--- |
+| **1 · Parse structure** | The AST analyzer extracts Python modules, classes, functions, imports, and call relationships. A lightweight assignment tracker resolves common cross-file method calls without running repository code. |
+| **2 · Ingest useful units** | The chunker creates function-level and file-level records with AST-derived identifiers and graph metadata. Chroma Cloud stores and retrieves them. |
+| **3 · Retrieve by intent** | The retriever recognizes file and symbol questions for exact lookup, adds known graph dependencies, and uses semantic search when no deterministic match is found. |
+| **4 · Explain with evidence** | The LLM gets the retrieved code and graph context. Responses cite source nodes, and the UI connects citations to the repository browser. |
 
-## Why the AST matters
+<br/>
 
-An embedding can find code that sounds related. It cannot prove that a function calls another function or that a symbol belongs to a particular file. CODE Sherpa keeps those structural facts grounded in parsed source:
+<div align="center">
+
+<img src="./assets/sherpa_architecture.png" alt="CODE Sherpa architecture" width="820"/>
+
+</div>
+
+<br/>
+
+## 🤔 Why the AST matters
+
+An embedding can find code that *sounds* related. It cannot prove that a function calls another function, or that a symbol belongs to a particular file. CODE Sherpa keeps those structural facts grounded in parsed source.
+
+| | Embedding-only code chat | **CODE Sherpa** |
+| :--- | :--- | :--- |
+| Finds a named function | Nearest-neighbour guess | **Exact AST match first** |
+| Knows who calls what | Inferred from text similarity | **Resolved call graph** |
+| Context sent to the LLM | Snippets or whole files | **Focused function + graph neighbours** |
+| Can you verify the answer? | Hard | **Citations open the source** |
+| Fallback | n/a | **Semantic search when no exact match** |
+
+<br/>
+
+## ✨ Features
 
 - **Exact before semantic.** File and symbol lookups use AST metadata first; vector search is the fallback.
-- **Relationships stay visible.** Imports and resolved calls form a graph that can add relevant downstream code to the answer context.
-- **Answers are inspectable.** Citations point to retrieved code nodes, and the UI lets you open the corresponding source.
-- **Ingestion does not block the request.** FastAPI queues repository processing and exposes job status for polling.
+- **Graph-aware context.** Imports and resolved calls form a graph that adds relevant downstream code to the answer context.
+- **Traceable citations.** Citations point to retrieved code nodes, and the UI lets you open the corresponding source.
+- **Non-blocking ingestion.** FastAPI queues repository processing and exposes job status for polling, so the request never hangs on a clone.
+- **No code execution.** Repositories are analyzed statically with Python's `ast`; nothing from the target repo is run.
 
-## Project
+<br/>
 
-Built by [Gaurav Joshi](https://github.com/GoLu-Jii) for **Hack The Winter 2025**. CODE Sherpa is a Python-focused code understanding tool with a React frontend and a FastAPI analysis and retrieval backend.
+## 🚀 Try it
 
-| Area | Tools |
-| --- | --- |
-| Frontend | React, Vite |
-| API and ingestion | FastAPI, background jobs |
-| Code structure | Python `ast`, custom dependency and call resolution |
-| Retrieval | Chroma Cloud, exact AST lookup, semantic fallback, graph traversal |
-| Answer generation | Groq API, configurable through environment variables |
+<div align="center">
 
-## Try it
+### **[▶ Launch the live demo](https://code-sherpa-mu.vercel.app/)** · **[📂 Browse the source](https://github.com/GoLu-Jii/CODE_Sherpa)**
 
-**[Launch the live demo](https://code-sherpa-mu.vercel.app/)** · **[Browse the source](https://github.com/GoLu-Jii/CODE_Sherpa)**
+</div>
 
-Paste a public GitHub URL containing Python code. Once ingestion completes, ask questions such as:
+Paste a public GitHub URL containing Python code. Once ingestion completes, ask questions like:
 
-- “What does `backend/app/api/gitclone.py` do?”
-- “What does `build_unified_model` do?”
-- “Who calls `retrieve_with_graph_context`?”
+```text
+What does `backend/app/api/gitclone.py` do?
+What does `build_unified_model` do?
+Who calls `retrieve_with_graph_context`?
+```
 
-The current analyzer is scoped to Python repositories.
+Select a citation to jump to its source. The current analyzer is scoped to Python repositories.
 
-## Run locally
+<br/>
+
+## 🛠️ Tech stack
+
+| Area | Tools | Role |
+| :--- | :--- | :--- |
+| **Frontend** | React, Vite | Chat UI and repository browser |
+| **API and ingestion** | FastAPI, background jobs | Clone, analyze, and expose job status |
+| **Code structure** | Python `ast`, custom dependency and call resolution | Modules, functions, imports, resolved calls |
+| **Retrieval** | Chroma Cloud, exact AST lookup, semantic fallback, graph traversal | Pick the smallest useful context |
+| **Answer generation** | Groq API, configurable through environment variables | Explain retrieved code with citations |
+
+<br/>
+
+## 💻 Run locally
 
 <details>
-<summary>Expand setup instructions</summary>
+<summary><b>Expand setup instructions</b></summary>
+
+<br/>
 
 ### Requirements
 
@@ -162,23 +236,39 @@ The frontend runs at `http://localhost:5173`.
 
 </details>
 
-## Tests and benchmarks
+<br/>
 
-- `tests/test_retriever.py` covers file-query parsing, basename matching, and exact file retrieval with a dummy collection.
-- `tests/test_real_rag.py` is a manual integration script that exercises retrieval and answer generation against an already-ingested Chroma Cloud collection; it expects the configured database and LLM credentials.
-- `tests/verify.py` is a manual local analysis/chunking/retrieval check using a local Chroma collection.
-- `bm_tokens_v2.py` and `bm_latency_v2.py` reproduce the prompt-size and latency measurements described above. They use the local `chroma_data/` collection and the query set in `queries.txt`.
+## 🧪 Tests and benchmarks
 
-## Architecture
+| File | Purpose |
+| :--- | :--- |
+| `tests/test_retriever.py` | File-query parsing, basename matching, and exact file retrieval with a dummy collection |
+| `tests/test_real_rag.py` | Manual integration script: retrieval and answer generation against an already-ingested Chroma Cloud collection (needs the configured database and LLM credentials) |
+| `tests/verify.py` | Manual local check of analysis, chunking, and retrieval using a local Chroma collection |
+| `bm_tokens_v2.py` · `bm_latency_v2.py` | Reproduce the prompt-size and latency measurements. They use the local `chroma_data/` collection and the query set in `queries.txt` |
 
-![CODE Sherpa architecture](./assets/sherpa_architecture.png)
+<br/>
 
-## Next
+## 🛣️ Roadmap
 
-- Add support for languages beyond Python.
-- Isolate collections per repository or user for concurrent sessions.
-- Trace call chains between selected functions.
+- [ ] Support for languages beyond Python
+- [ ] Isolated collections per repository or user for concurrent sessions
+- [ ] Trace call chains between selected functions
 
-## License
+<br/>
+
+## 👤 Author
+
+Built by **[Gaurav Joshi](https://github.com/GoLu-Jii)** for **Hack The Winter 2025**.
+
+## 📜 License
 
 Apache License 2.0. See [`LICENSE`](./LICENSE).
+
+<div align="center">
+
+<br/>
+
+**If CODE Sherpa helped you understand a codebase faster, consider giving it a ⭐**
+
+</div>
